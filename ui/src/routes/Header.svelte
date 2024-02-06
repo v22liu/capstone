@@ -1,35 +1,33 @@
 <script>
 	import { page } from '$app/stores';
-	import logo from '$lib/images/svelte-logo.svg';
 	import github from '$lib/images/github.svg';
 </script>
 
 <header>
-	<div class="corner">
-		<a href="https://kit.svelte.dev">
-			<img src={logo} alt="SvelteKit" />
-		</a>
+	<div class="flex bg-red-500 items-center">
+		<p>
+			Cacha <span class="font-bold">Clinic Manager</span>
+		</p>
+		<nav>
+			<ul>
+				<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
+					<a href="/">Home</a>
+				</li>
+				<li aria-current={$page.url.pathname === '/lookup' ? 'page' : undefined}>
+					<a href="/lookup">Patient Lookup</a>
+				</li>
+				<li aria-current={$page.url.pathname === '/create' ? 'page' : undefined}>
+					<a href="/create">New Patient</a>
+				</li>
+				<li aria-current={$page.url.pathname === '/catalogue' ? 'page' : undefined}>
+					<a href="/catalogue">Drug Catalogue</a>
+				</li>
+			</ul>
+		</nav>
 	</div>
 
-	<nav>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
-		</svg>
-		<ul>
-			<li aria-current={$page.url.pathname === '/' ? 'page' : undefined}>
-				<a href="/">Home</a>
-			</li>
-			<li aria-current={$page.url.pathname.startsWith('/input') ? 'page' : undefined}>
-				<a href="/input">Cam/Mic</a>
-			</li>
-		</ul>
-		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
-		</svg>
-	</nav>
-
 	<div class="corner">
-		<a href="https://github.com/sveltejs/kit">
+		<a href="">
 			<img src={github} alt="GitHub" />
 		</a>
 	</div>
@@ -64,12 +62,6 @@
 		display: flex;
 		justify-content: center;
 		--background: rgba(255, 255, 255, 0.7);
-	}
-
-	svg {
-		width: 2em;
-		height: 3em;
-		display: block;
 	}
 
 	path {
@@ -112,7 +104,7 @@
 		align-items: center;
 		padding: 0 0.5rem;
 		color: var(--color-text);
-		font-weight: 700;
+		/* font-weight: 700; */
 		font-size: 0.8rem;
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
