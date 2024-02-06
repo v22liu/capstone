@@ -1,8 +1,12 @@
 <script>
 	import Header from './Header.svelte';
-	import './styles.css';
+	// import './styles.css';
 	import '../app.css';
 </script>
+
+<svelte:head>
+	<link rel="stylesheet" href="https://unpkg.com/carbon-components-svelte/css/all.css" />
+</svelte:head>
 
 <div class="app">
 	<Header />
