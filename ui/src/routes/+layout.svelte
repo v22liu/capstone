@@ -1,12 +1,8 @@
 <script>
 	import Header from './Header.svelte';
-	// import './styles.css';
+	import './tailwind-base.css';
 	import '../app.css';
 </script>
-
-<svelte:head>
-	<link rel="stylesheet" href="https://unpkg.com/carbon-components-svelte/css/all.css" />
-</svelte:head>
 
 <div class="app">
 	<Header />
