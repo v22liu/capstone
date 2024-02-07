@@ -1,11 +1,10 @@
 <script>
+	// @ts-nocheck
 	import { Tag, ProgressBar, Button } from 'carbon-components-svelte';
 	import CheckmarkOutline from 'carbon-icons-svelte/lib/CheckmarkOutline.svelte';
 	import Camera from 'carbon-icons-svelte/lib/Camera.svelte';
 
-	// @ts-ignore
 	let stream;
-	// @ts-ignore
 	let videoRef;
 
 	async function getStream() {
