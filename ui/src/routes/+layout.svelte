@@ -1,19 +1,29 @@
 <script>
-	import Header from './Header.svelte';
-	import './tailwind-base.css';
+	import { page } from '$app/stores';
+	// import './tailwind-base.css';
 	import '../app.css';
+	import { Header, HeaderNav, HeaderNavItem } from 'carbon-components-svelte';
 </script>
 
 <div class="app">
-	<Header />
+	<Header company="CACHA" platformName="Clinic Manager">
+		<HeaderNav>
+			<HeaderNavItem href="/" isSelected={$page.url.pathname === '/'}>Home</HeaderNavItem>
+			<HeaderNavItem href="/lookup" isSelected={$page.url.pathname === '/lookup'}
+				>Patient Lookup</HeaderNavItem
+			>
+			<HeaderNavItem href="/create" isSelected={$page.url.pathname === '/create'}
+				>New Patient</HeaderNavItem
+			>
+			<HeaderNavItem href="/catalogue" isSelected={$page.url.pathname === '/catalogue'}
+				>Drug Catalogue</HeaderNavItem
+			>
+		</HeaderNav>
+	</Header>
 
 	<main>
 		<slot />
 	</main>
-
-	<footer>
-		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
-	</footer>
 </div>
 
 <style>
@@ -29,26 +39,7 @@
 		flex-direction: column;
 		padding: 1rem;
 		width: 100%;
-		max-width: 64rem;
-		margin: 0 auto;
+		margin: 3rem auto 0;
 		box-sizing: border-box;
-	}
-
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 12px;
-	}
-
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
 	}
 </style>

@@ -1,42 +1,45 @@
 <script>
-	// @ts-ignore
-	let stream;
-	// @ts-ignore
-	let videoRef;
-
-	async function getStream() {
-		try {
-			stream = await navigator.mediaDevices.getUserMedia({
-				video: true,
-				audio: false
-			});
-			videoRef.srcObject = stream;
-		} catch (err) {
-			console.error(err);
-		}
-		// console.log(stream.getTracks()[0])
-	}
-
-	async function stopStream() {
-		stream.getTracks().forEach((track) => track.stop());
-		videoRef.srcObject = null;
-	}
+	import PatientForm from './PatientForm.svelte';
+	import VoiceCapture from './VoiceCapture.svelte';
+	import VideoCapture from './VideoCapture.svelte';
 </script>
 
 <svelte:head>
-	<title>Input</title>
+	<title>Lookup</title>
 	<meta name="description" content="About this app" />
 </svelte:head>
 
-<section class="container mx-auto px-4">
-	<h1 class="text-4xl text-blue-500 my-4">Webcam Stream Mastery</h1>
-	<button class="rounded-sm bg-slate-600 text-white px-4 py-2" on:click={getStream}
-		>Start Stream</button
-	>
-	<button class="rounded-sm bg-red-600 text-white px-4 py-2" on:click={stopStream}
-		>Stop Stream</button
-	>
-	<video class="mt-4 rounded-sm" width="640" height="480" autoplay={true} bind:this={videoRef}>
-		<track kind="captions" />
-	</video>
+<section class="container" style="background-color: #F4F4F4;">
+	<h2 class="title">Search for Patient</h2>
+	<h2>Input available info and biomarkers, then press search.</h2>
+	<p class="subtitle">
+		The database can be searched even if not all fields are filled, input as much information as
+		possible.
+	</p>
 </section>
+<section class="capture-container" style="background-color: #F4F4F4;">
+	<PatientForm />
+	<VoiceCapture />
+	<VideoCapture />
+</section>
+
+<style>
+	.container {
+		display: flex;
+		flex-direction: column;
+		background-color: '#f4f4f4';
+		padding: 1rem 2rem;
+	}
+	.title {
+		font-weight: bold;
+	}
+	.subtitle {
+		font-size: 1.25rem;
+	}
+	.capture-container {
+		display: flex;
+		background-color: '#f4f4f4';
+		padding: 1rem 2rem;
+		gap: 3rem;
+	}
+</style>
