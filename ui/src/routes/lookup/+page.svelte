@@ -36,7 +36,9 @@
 			<Tag icon={CheckmarkFilled} type="outline">Speech to Text</Tag>
 			<Tag icon={CheckmarkFilled} type="outline">Photo Recognition</Tag>
 		</div>
-		<Button icon={Search}>Search for Patient</Button>
+		<a href="/patient">
+			<Button icon={Search}>Search for Patient</Button>
+		</a>
 	</div>
 </section>
 

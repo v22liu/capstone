@@ -27,7 +27,7 @@
 
 <style>
 	div {
-		width: 35%;
+		width: 37.5%;
 	}
 	h4 {
 		font-weight: bold;

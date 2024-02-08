@@ -24,8 +24,8 @@
 			</Select>
 		</FormGroup>
 		<FormGroup>
-			<DatePicker light datePickerType="single" style="width: 100%">
-				<DatePickerInput labelText="Date of Birth" placeholder="mm/dd/yyy" />
+			<DatePicker light datePickerType="single">
+				<DatePickerInput labelText="Date of Birth" placeholder="mm/dd/yyyy" />
 			</DatePicker>
 		</FormGroup>
 		<FormGroup>
@@ -43,7 +43,7 @@
 
 <style>
 	div {
-		width: 30%;
+		width: 25%;
 	}
 	h4 {
 		font-weight: bold;
