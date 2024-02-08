@@ -38,9 +38,10 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		align-items: start;
-		height: 100%;
-		padding: 30rem 10rem;
+		align-items: flex-start;
+		height: 90vh;
+		width: 100vw;
+		padding: 0 10vw;
 	}
 	h2 {
 		font-size: 2.5rem;
@@ -49,13 +50,14 @@
 	}
 	div {
 		display: flex;
-		gap: 10rem;
+		justify-content: space-between;
+		width: 100%;
 	}
 	button {
 		font-size: 1.5rem;
 		border: none;
-		height: 15rem;
-		width: 15rem;
+		height: 12rem;
+		width: 12rem;
 	}
 	p {
 		font-size: 1.25rem;
