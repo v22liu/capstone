@@ -9,13 +9,13 @@
 	<Header company="CACHA" platformName="Clinic Manager">
 		<HeaderNav>
 			<HeaderNavItem href="/" isSelected={$page.url.pathname === '/'}>Home</HeaderNavItem>
-			<HeaderNavItem href="/lookup" isSelected={$page.url.pathname === '/lookup'}
+			<HeaderNavItem href="/lookup" isSelected={$page.url.pathname.includes('/lookup')}
 				>Patient Lookup</HeaderNavItem
 			>
-			<HeaderNavItem href="/create" isSelected={$page.url.pathname === '/create'}
+			<HeaderNavItem href="/create" isSelected={$page.url.pathname.includes('/create')}
 				>New Patient</HeaderNavItem
 			>
-			<HeaderNavItem href="/catalogue" isSelected={$page.url.pathname === '/catalogue'}
+			<HeaderNavItem href="/catalogue" isSelected={$page.url.pathname.includes('/catalogue')}
 				>Drug Catalogue</HeaderNavItem
 			>
 		</HeaderNav>
