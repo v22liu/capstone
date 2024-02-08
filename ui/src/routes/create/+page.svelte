@@ -32,7 +32,7 @@
 		<track kind="captions" />
 	</video>
 
-	<a href="/create/patientId">
+	<a href="/create/id">
 		<Button kind="secondary" on:click={getStream}>Take photo</Button>
 	</a>
 </div>

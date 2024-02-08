@@ -1,5 +1,5 @@
 <script>
-	import PatientForm from '../../../components/PatientForm.svelte';
+	import PatientForm from './PatientForm.svelte';
 	import { Button } from 'carbon-components-svelte';
 	import Add from 'carbon-icons-svelte/lib/Add.svelte';
 	import Camera from 'carbon-icons-svelte/lib/Camera.svelte';
