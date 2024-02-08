@@ -5,6 +5,7 @@
 	import { Button, Tag } from 'carbon-components-svelte';
 	import CheckmarkFilled from 'carbon-icons-svelte/lib/CheckmarkFilled.svelte';
 	import ErrorFilled from 'carbon-icons-svelte/lib/ErrorFilled.svelte';
+	import Search from 'carbon-icons-svelte/lib/Search.svelte';
 </script>
 
 <svelte:head>
@@ -27,15 +28,15 @@
 </section>
 <section class="search-container" style="background-color: #F4F4F4;">
 	<div
-		style="display: flex; align-items: center; justify-content: space-between; background-color: white; width: 70%; padding: 0.75rem"
+		style="display: flex; align-items: center; gap: 3rem; background-color: white; width: fit-content; padding: 0.75rem"
 	>
-		<div style="display: flex; justify-content: space-between; align-items: center">
+		<div style="display: flex; gap: 1rem; align-items: center;">
 			<p style="font-size: 0.9rem">Search With:</p>
 			<Tag icon={ErrorFilled} type="outline">Personal Identifiers</Tag>
 			<Tag icon={CheckmarkFilled} type="outline">Speech to Text</Tag>
 			<Tag icon={CheckmarkFilled} type="outline">Photo Recognition</Tag>
 		</div>
-		<Button style="width:max-content">Search for Patient</Button>
+		<Button icon={Search}>Search for Patient</Button>
 	</div>
 </section>
 
