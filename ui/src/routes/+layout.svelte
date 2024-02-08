@@ -2,7 +2,16 @@
 	import { page } from '$app/stores';
 	// import './tailwind-base.css';
 	import '../app.css';
-	import { Header, HeaderNav, HeaderNavItem } from 'carbon-components-svelte';
+	import {
+		Header,
+		HeaderNav,
+		HeaderNavItem,
+		HeaderUtilities,
+		HeaderAction,
+		HeaderPanelLinks,
+		HeaderPanelLink
+	} from 'carbon-components-svelte';
+	import UserAvatarFilledAlt from 'carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte';
 </script>
 
 <div class="app">
@@ -21,6 +30,13 @@
 				>Drug Catalogue</HeaderNavItem
 			>
 		</HeaderNav>
+		<HeaderUtilities>
+			<HeaderAction icon={UserAvatarFilledAlt}>
+				<HeaderPanelLinks>
+					<HeaderPanelLink href="/login">Sign Out</HeaderPanelLink>
+				</HeaderPanelLinks>
+			</HeaderAction>
+		</HeaderUtilities>
 	</Header>
 
 	<main>
