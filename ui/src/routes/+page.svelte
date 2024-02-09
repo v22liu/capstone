@@ -45,9 +45,9 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: flex-start;
-		height: 90vh;
-		width: 100vw;
-		padding: 0 10vw;
+		height: 80vh;
+		width: 65vw;
+		margin: 0 auto;
 	}
 	h2 {
 		font-size: 2.5rem;
@@ -62,8 +62,8 @@
 	button {
 		font-size: 1.5rem;
 		border: none;
-		height: 12rem;
-		width: 12rem;
+		height: 15rem;
+		width: 15rem;
 	}
 	p {
 		font-size: 1.25rem;

@@ -1,5 +1,5 @@
 <script>
-	import PatientForm from './PatientForm.svelte';
+	import PersonalIdentifier from './PersonalIdentifier.svelte';
 	import VoiceCapture from './VoiceCapture.svelte';
 	import VideoCapture from './VideoCapture.svelte';
 	import { Button, Tag } from 'carbon-components-svelte';
@@ -22,7 +22,7 @@
 	</p>
 </section>
 <section class="capture-container" style="background-color: #F4F4F4;">
-	<PatientForm />
+	<PersonalIdentifier />
 	<VoiceCapture />
 	<VideoCapture />
 </section>
