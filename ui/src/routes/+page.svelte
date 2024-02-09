@@ -4,9 +4,6 @@
 	import Undo from 'carbon-icons-svelte/lib/Undo.svelte';
 	import AddAlt from 'carbon-icons-svelte/lib/AddAlt.svelte';
 	import Catalog from 'carbon-icons-svelte/lib/Catalog.svelte';
-	import PatientCard from './PatientCard.svelte';
-	import PatientForm from './PatientForm.svelte';
-	import NewPatientCard from './NewPatientCard.svelte';
 </script>
 
 <svelte:head>
@@ -34,9 +31,7 @@
 			<p>Drug Catalogue</p></button
 		>
 	</div>
-	<PatientCard />
-	<NewPatientCard />
-	<PatientForm />
+	
 </section>
 
 <style>

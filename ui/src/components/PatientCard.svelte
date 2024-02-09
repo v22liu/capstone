@@ -1,6 +1,5 @@
 <script>
     import Button from "carbon-components-svelte/src/Button/Button.svelte";
-    import TextInput from "carbon-components-svelte/src/Button/Button.svelte";
     import profilePic from "$lib/images/profile_photo.png";
 </script>
 <div class="card">
@@ -26,7 +25,7 @@
     </p>
 </div>
 
-<div class = "button_group">
+<div class= "button_group">
     <Button kind='secondary'>
         Patient Record
     </Button>
@@ -34,9 +33,6 @@
         Prescribe
     </Button>
 </div>
-
-<TextInput id="text-input-1" type='text' labelText="Conditions">
-</TextInput>
 
 </div>
 
@@ -57,14 +53,6 @@
         gap:16px
       }
     
-    Button {
-        /* padding-right=16px;
-        Button text  */
-        /* display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center; */
-    }
     .button_group {
         display: flex;
         flex-flow: space-between;
