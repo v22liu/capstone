@@ -5,6 +5,8 @@
 	import CheckmarkFilled from 'carbon-icons-svelte/lib/CheckmarkFilled.svelte';
 	import ErrorFilled from 'carbon-icons-svelte/lib/ErrorFilled.svelte';
 	import Search from 'carbon-icons-svelte/lib/Search.svelte';
+
+	export let data;
 </script>
 
 <svelte:head>
@@ -33,10 +35,17 @@
 			<Tag icon={ErrorFilled} type="outline">Personal Identifiers</Tag>
 			<Tag icon={CheckmarkFilled} type="outline">Speech to Text</Tag>
 		</div>
-		<a href="/patient">
-			<Button icon={Search}>Search for Patient</Button>
-		</a>
+		<Button icon={Search}>Search for Patient</Button>
 	</div>
+</section>
+<section>
+	{#each data.records as { name, sex, village, phone, dob }}
+		<p>{name}</p>
+		<p>{sex}</p>
+		<p>{village}</p>
+		<p>{phone}</p>
+		<p>{dob}</p>
+	{/each}
 </section>
 
 <style>
