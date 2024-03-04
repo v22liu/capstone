@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import type { PatientRecord } from './types/PatientRecord';
+import type { PatientRecord } from './lib/types/PatientRecord';
 
 export const currentRecord = writable({
 	id: '',

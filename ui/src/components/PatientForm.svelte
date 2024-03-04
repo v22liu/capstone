@@ -10,11 +10,19 @@
 		Button
 	} from 'carbon-components-svelte';
 	import Add from 'carbon-icons-svelte/lib/Add.svelte';
+
+	export let patient = {
+		name: null,
+		dob: null,
+		sex: null,
+		village: null,
+		phone: null
+	};
 </script>
 
 <Form method="POST" action="?/createPatient">
 	<FormGroup>
-		<TextInput light labelText="Name" placeholder="John Doe" name="name" />
+		<TextInput light labelText="Name" placeholder={patient.name ?? 'John Doe'} name="name" />
 	</FormGroup>
 	<FormGroup>
 		<Select labelText="Sex" light name="sex">
@@ -25,7 +33,11 @@
 	</FormGroup>
 	<FormGroup>
 		<DatePicker light datePickerType="single">
-			<DatePickerInput labelText="Date of Birth" placeholder="mm/dd/yyyy" name="dob" />
+			<DatePickerInput
+				labelText="Date of Birth"
+				placeholder={patient.dob ?? 'mm/dd/yyyy'}
+				name="dob"
+			/>
 		</DatePicker>
 	</FormGroup>
 	<FormGroup>
@@ -36,7 +48,12 @@
 		</Select>
 	</FormGroup>
 	<FormGroup>
-		<TextInput light labelText="Phone Number" placeholder="123-456-7890" name="phone" />
+		<TextInput
+			light
+			labelText="Phone Number"
+			placeholder={patient.phone ?? '123-456-7890'}
+			name="phone"
+		/>
 	</FormGroup>
 	<div style="display: flex">
 		<Button icon={Add} style="width: 60%; margin-left: auto" type="submit">Save Changes</Button>

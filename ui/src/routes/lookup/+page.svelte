@@ -42,7 +42,8 @@
 	</div>
 </section>
 <section>
-	{#each data.records as { name, sex, village, phone, dob }}
+	{#each data.records as { id, name, sex, village, phone, dob }}
+		<p>id: {id}</p>
 		<p>{name}</p>
 		<p>{sex}</p>
 		<p>{village}</p>

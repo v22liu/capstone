@@ -3,6 +3,8 @@
 	import { Button } from 'carbon-components-svelte';
 	import Camera from 'carbon-icons-svelte/lib/Camera.svelte';
 	import BlankProfile from '$lib/images/blank-profile.png';
+
+	export let patient = {};
 </script>
 
 <div>
@@ -15,7 +17,7 @@
 	/>
 	<Button kind="tertiary" style="width: 170px; margin: 1rem auto" icon={Camera}>Update Photo</Button
 	>
-	<PatientForm />
+	<PatientForm {patient} />
 </div>
 
 <style>

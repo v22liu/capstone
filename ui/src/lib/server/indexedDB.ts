@@ -1,4 +1,4 @@
-import type { PatientRecord } from '../../types/PatientRecord';
+import type { PatientRecord } from '../types/PatientRecord';
 import Dexie, { type Table } from 'dexie';
 
 export class MyDexieExtension extends Dexie {

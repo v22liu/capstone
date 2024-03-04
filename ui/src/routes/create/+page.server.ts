@@ -1,6 +1,6 @@
-import { createRecord, getPatientRecords } from '$lib/server/db';
+import { createRecord } from '$lib/server/db';
 import { fail } from '@sveltejs/kit';
-import type { PatientRecord } from '../../types/PatientRecord.js';
+import type { PatientRecord } from '../../lib/types/PatientRecord.js';
 
 export const actions = {
 	createPatient: async ({ request }) => {
@@ -11,7 +11,7 @@ export const actions = {
 		// }
 
 		const record: PatientRecord = {
-			id: formData.get('id')?.toString() || '',
+			id: Math.floor(Math.random() * 1000000) + 1;,
 			name: formData.get('name')?.toString() || '',
 			dob: formData.get('dob')?.toString() || '',
 			sex: formData.get('sex')?.toString() || '',
