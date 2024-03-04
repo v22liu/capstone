@@ -23,7 +23,7 @@
 				isSelected={$page.url.pathname.includes('/lookup') ||
 					$page.url.pathname.includes('/patient')}>Patient Lookup</HeaderNavItem
 			>
-			<HeaderNavItem href="/create" isSelected={$page.url.pathname.includes('/create')}
+			<HeaderNavItem href="/photo" isSelected={$page.url.pathname.includes('/photo')}
 				>New Patient</HeaderNavItem
 			>
 			<HeaderNavItem href="/catalogue" isSelected={$page.url.pathname.includes('/catalogue')}
