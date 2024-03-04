@@ -17,7 +17,6 @@
 	<Button kind="tertiary" style="width: 170px; margin: 1rem auto" icon={Camera}>Update Photo</Button
 	>
 	<PatientForm />
-	<Button icon={Add} style="width: 60%; margin-left: auto" disabled>Save Changes</Button>
 </div>
 
 <style>
