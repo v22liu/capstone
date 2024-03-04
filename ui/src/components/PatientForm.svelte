@@ -6,87 +6,33 @@
 		Form,
 		FormGroup,
 		DatePicker,
-		DatePickerInput
+		DatePickerInput,
+		Button
 	} from 'carbon-components-svelte';
-	import { db } from "$lib/db"
+	import Add from 'carbon-icons-svelte/lib/Add.svelte';
+	import { currentRecord } from '../stores';
+	import { db } from '$lib/db';
 
 	async function createEntry() {
-		console.log("Creating entry")
+		const form = document.querySelector('form');
+
+		if (!form) {
+			return;
+		}
+
+		const formData = new FormData(form);
+		const data = Object.fromEntries(formData);
+		console.log(data.dob.toString());
+
 		await db.patientData.add({
-			id:"test",
-			name: "ethan",
-			dob: Date.now(),
-			sex: "Male",
-			village: "Dar es Salaam",
-			phone: "123-456-7890"
-		})
+			id: Date.now().toString(),
+			name: data.name.toString(),
+			sex: data.sex.toString(),
+			village: data.village.toString(),
+			phone: data.phoneNumber.toString(),
+			dob: data.dob.toString(),
+		});
 	}
-
-	// // Open IndexedDB database
-	// const dbName = 'myDatabase';
-	// const dbVersion = 1;
-	// const request = indexedDB.open(dbName, dbVersion);
-
-	// request.onerror = function(event) {
-	// 	console.error('Error opening database:', event.target.error);
-	// };
-
-	// request.onupgradeneeded = function(event) {
-	// 	const db = event.target.result;
-
-	// 	// Create object store
-	// 	const objectStore = db.createObjectStore('patients', { keyPath: 'id', autoIncrement: true });
-
-	// 	// Create indexes
-	// 	objectStore.createIndex('name', 'name', { unique: false });
-	// 	objectStore.createIndex('sex', 'sex', { unique: false });
-	// 	objectStore.createIndex('dob', 'dob', { unique: false });
-	// 	objectStore.createIndex('village', 'village', { unique: false });
-	// 	objectStore.createIndex('phoneNumber', 'phoneNumber', { unique: false });
-	// };
-
-	// request.onsuccess = function(event) {
-	// 	const db = event.target.result;
-
-	// 	// Handle form submission
-	// 	function handleSubmit(event) {
-	// 		event.preventDefault();
-
-	// 		// Get form values
-	// 		const name = event.target.elements.name.value;
-	// 		const sex = event.target.elements.sex.value;
-	// 		const dob = event.target.elements.dob.value;
-	// 		const village = event.target.elements.village.value;
-	// 		const phoneNumber = event.target.elements.phoneNumber.value;
-
-	// 		// Create patient object
-	// 		const patient = {
-	// 			name,
-	// 			sex,
-	// 			dob,
-	// 			village,
-	// 			phoneNumber
-	// 		};
-
-	// 		// Store patient object in IndexedDB
-	// 		const transaction = db.transaction(['patients'], 'readwrite');
-	// 		const objectStore = transaction.objectStore('patients');
-	// 		const request = objectStore.add(patient);
-
-	// 		request.onsuccess = function(event) {
-	// 			console.log('Patient added to IndexedDB');
-	// 		};
-
-	// 		request.onerror = function(event) {
-	// 			console.error('Error adding patient to IndexedDB:', event.target.error);
-	// 		};
-	// 	}
-
-	// 	// Add event listener to form submission
-	// 	const form = document.querySelector('form');
-	// 	form.addEventListener('submit', handleSubmit);
-	// }
-
 </script>
 
 <Form>
@@ -113,7 +59,11 @@
 		</Select>
 	</FormGroup>
 	<FormGroup>
-		<TextInput light labelText="Phone Number" placeholder="123-456-7890" name="phoneNumber" />
+		<TextInput light labelText="Phone Number" placeholder="123-456-7890" name="phone" />
 	</FormGroup>
-	<button on:click={createEntry}></button>
+	<div style="display: flex">
+		<Button icon={Add} style="width: 60%; margin-left: auto" on:click={createEntry}>
+			Save Changes
+		</Button>
+	</div>
 </Form>
