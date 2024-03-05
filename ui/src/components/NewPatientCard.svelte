@@ -11,8 +11,9 @@
 <style>
     
     div{
-        width: 290px;
-        height: 682px;
+        max-width:25VW;
+        min-width: 340px;
+        height: 530px;
         padding: 16px;
         background: #E0E0E0;
         display: flex;
