@@ -1,37 +1,85 @@
 <script>
-	import { Button, Tabs, Tab, TextArea } from 'carbon-components-svelte';
+	import { Button, Tabs, Tab, TabContent, TextArea,} from 'carbon-components-svelte';
 	import Add from 'carbon-icons-svelte/lib/Add.svelte';
 </script>
 
 <div class="container">
-	<Tabs>
-		<Tab label="Conditions" />
-		<Tab label="Clinic Records" />
-	</Tabs>
-	<div class="text-area-container">
-		<TextArea style="margin-top: 1rem;" placeholder="Placeholder text (optional)" light rows={33} />
-	</div>
-	<div class="cta-container">
-		<Button icon={Add}>Save</Button>
-		<Button>Save & Prescribe</Button>
-	</div>
-</div>
+	<Tabs style="margin-bottom: 1rem">
+		<Tab label="Patient Info"/>
+		<Tab label="Medical Records" />
 
+		<svelte:fragment slot="content">
+			<TabContent>
+				<div class="PatientInfo">
+					<TextArea labelText="Current Medication" placeholder="Placeholder textoptional)" light rows={7} />
+					<TextArea labelText="Allergies" placeholder="Placeholder textoptional)" light rows={7} />
+					<TextArea labelText="Conditions" placeholder="Placeholder textoptional)" light rows={7} />
+				</div>
+				<div class="buttons">
+					<Button icon={Add}>Save</Button>
+					<Button>Save & Prescribe</Button>
+				</div>
+			</TabContent>
+			<TabContent>
+				<section>
+					<div class = "medicalRecords">
+						<div class = "RecordsList">
+							<div> rec 1 </div>
+							<div> rec 1 </div>
+							<div> rec 1 </div>
+							<div> rec 1 </div>
+							<div> rec 1 </div>
+							<div> rec 1 </div>
+							<div> rec 1 </div>
+							<div> rec 1 </div>
+
+						</div>
+						<TextArea placeholder="Placeholder textoptional)" light rows={33} />
+					</div>
+				</section>
+				<div class="buttons">
+					<Button icon={Add}>Save</Button>
+					<Button>Save & Prescribe</Button>
+				</div>
+			</TabContent>
+		</svelte:fragment>
+	</Tabs>
+</div>
 <style>
 	.container {
 		display: flex;
 		flex: 1;
 		flex-direction: column;
-		background-color: #f4f4f4;
 		padding: 1rem;
+		background-color: #f4f4f4;
 	}
-	.cta-container {
+	.buttons {
 		display: flex;
 		justify-content: flex-end;
+		margin-top: 1rem;
 		gap: 1rem;
 	}
-	.text-area-container {
-		flex: 1;
-		/* background-color: red; */
+	.medicalRecords{
+		display: flex;
+		flex-direction: row;
+		gap: 16px;
+		height: 100%;
 	}
+	.RecordsList{
+		display: flex;
+		width: 15%;
+		padding: 16px;
+		gap: 8px;
+		border-bottom: #8D8D8D;
+		flex-direction: column;
+		background-color: white;
+	}
+	.PatientInfo{
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		
+	}	
+	
+	
 </style>

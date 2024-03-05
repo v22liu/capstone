@@ -23,7 +23,7 @@
 	</FormGroup>
 	<FormGroup>
 		<DatePicker light datePickerType="single">
-			<DatePickerInput labelText="Date of Birth" placeholder="mm/dd/yyyy" />
+			<DatePickerInput labelText="Date of Birth" placeholder="mm/dd/yyyy"/>
 		</DatePicker>
 	</FormGroup>
 	<FormGroup>
@@ -34,6 +34,6 @@
 		</Select>
 	</FormGroup>
 	<FormGroup>
-		<TextInput light labelText="Phone Number" placeholder="123-456-7890" />
+		<TextInput light labelText="Phone Number" placeholder="123-456-7890"/>
 	</FormGroup>
 </Form>

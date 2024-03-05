@@ -8,6 +8,9 @@
 </div>
 
 <style>
+	div{
+		width:30%;
+	}
 	h4 {
 		font-weight: bold;
 	}

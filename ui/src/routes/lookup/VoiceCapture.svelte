@@ -22,12 +22,12 @@
 		<Button kind="secondary" icon={Microphone}>Record</Button>
 	</div>
 
-	<TextInput labelText="Name Identified" placeholder="John Doe" />
+	<TextInput labelText="Name Identified" placeholder="John Doe" style="width:400px" />
 </div>
 
 <style>
 	div {
-		width: 37.5%;
+		width: 70%;
 	}
 	h4 {
 		font-weight: bold;
