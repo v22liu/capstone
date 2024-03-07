@@ -1,11 +1,12 @@
 <script>
 	import PersonalIdentifier from './PersonalIdentifier.svelte';
 	import VoiceCapture from './VoiceCapture.svelte';
-	import VideoCapture from './VideoCapture.svelte';
 	import { Button, Tag } from 'carbon-components-svelte';
 	import CheckmarkFilled from 'carbon-icons-svelte/lib/CheckmarkFilled.svelte';
 	import ErrorFilled from 'carbon-icons-svelte/lib/ErrorFilled.svelte';
 	import Search from 'carbon-icons-svelte/lib/Search.svelte';
+
+	export let data;
 </script>
 
 <svelte:head>
@@ -22,9 +23,8 @@
 	</p>
 </section>
 <section class="capture-container" style="background-color: #F4F4F4;">
-	<PersonalIdentifier />
+	<PersonalIdentifier/>
 	<VoiceCapture />
-	<VideoCapture />
 </section>
 <section class="search-container" style="background-color: #F4F4F4;">
 	<div
@@ -34,12 +34,19 @@
 			<p style="font-size: 0.9rem">Search With:</p>
 			<Tag icon={ErrorFilled} type="outline">Personal Identifiers</Tag>
 			<Tag icon={CheckmarkFilled} type="outline">Speech to Text</Tag>
-			<Tag icon={CheckmarkFilled} type="outline">Photo Recognition</Tag>
 		</div>
-		<a href="/patient">
-			<Button icon={Search}>Search for Patient</Button>
-		</a>
+		<Button icon={Search}>Search for Patient</Button>
 	</div>
+</section>
+<section>
+	{#each data.records as { id, name, sex, village, phone, dob }}
+		<p>id: {id}</p>
+		<p>{name}</p>
+		<p>{sex}</p>
+		<p>{village}</p>
+		<p>{phone}</p>
+		<p>{dob}</p>
+	{/each}
 </section>
 
 <style>

@@ -1,5 +1,5 @@
 <script>
-	import { Button, Tabs, Tab, TabContent, TextArea,} from 'carbon-components-svelte';
+	import { Button, Tabs, Tab, TabContent, TextArea, TextInput, Select, SelectItem, MultiSelect} from 'carbon-components-svelte';
 	import Add from 'carbon-icons-svelte/lib/Add.svelte';
 </script>
 
@@ -7,6 +7,7 @@
 	<Tabs style="margin-bottom: 1rem">
 		<Tab label="Patient Info"/>
 		<Tab label="Medical Records" />
+		<Tab label="Prescribe" />
 
 		<svelte:fragment slot="content">
 			<TabContent>
@@ -14,12 +15,6 @@
 					<TextArea labelText="Current Medication" placeholder="Placeholder textoptional)" light rows={7} />
 					<TextArea labelText="Allergies" placeholder="Placeholder textoptional)" light rows={7} />
 					<TextArea labelText="Conditions" placeholder="Placeholder textoptional)" light rows={7} />
-				</div>
-				<div class="buttons">
-					<Button icon={Add}>Save</Button>
-					<a href="/prescribe">
-						<Button>Save & Prescribe</Button>
-					</a>
 				</div>
 			</TabContent>
 			<TabContent>
@@ -39,15 +34,37 @@
 						<TextArea placeholder="Placeholder textoptional)" light rows={33} />
 					</div>
 				</section>
+			</TabContent>
+				
+			<TabContent>
+				<h1>Medication</h1>
+				<div class="medication">
+					<TextInput labelText="Drug Search" light/>
+					<Select labelText="Dosage" light/>
+				</div>
+				<div class="medication">
+					<div>Location: Bin X</div> <div>Remaining Stock: X units</div>
+				</div>
+				<hr>
+				<h1>Prescription Instructions</h1>
+				<div class="contain">
+					<Select labelText="Reason for Prescription" style="max-width:800px" light/>
+					<div class="InstructionStatement">
+						<div style="height:30px">take</div> <Select labelText="Dosage" light/>
+						<div style="height:30px">pills</div> <Select labelText="Frequency" light/>
+						<div style="height:30px">for</div> <Select labelText="Usage Period" light/>	
+						<div style="height:30px">days.</div><div style="height:30px">X units dispensed.</div>
+					</div>
+					<Select labelText="Time of Day (if specific)" style="max-width:300px" light/>
+					<MultiSelect titleText="Drug Warnings or Special Instructions (select up to 3)" style="max-width:800px" light/>
+				</div>
 				<div class="buttons">
-					<Button icon={Add}>Save</Button>
 					<a href="/prescribe">
-						<Button>Save & Prescribe</Button>
+						<Button>Prescribe</Button>
 					</a>
 					
 				</div>
 			</TabContent>
-			
 		</svelte:fragment>
 	</Tabs>
 </div>
@@ -86,6 +103,25 @@
 		gap: 16px;
 		
 	}	
+
+	.medication{
+		display: flex;
+		padding: 8px;
+		gap: 16px;
+	}
+
+	.InstructionStatement{
+		display: flex;
+		align-items: end;
+		padding: 8px;
+		gap: 16px;
+	}
+
+	.contain{
+		display: flex;
+		flex-direction: column;
+		gap: 32px;
+	}
 	
 	
 </style>
