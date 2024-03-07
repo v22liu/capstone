@@ -4,6 +4,9 @@
 	import Camera from 'carbon-icons-svelte/lib/Camera.svelte';
 	import BlankProfile from '$lib/images/blank-profile.png';
 
+	/**
+	 * @type {any}
+	 */
 	export let patient = {};
 </script>
 
