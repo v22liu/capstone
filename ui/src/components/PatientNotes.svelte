@@ -35,7 +35,7 @@
 					/>
 				</div>
 				<div class="buttons">
-					<Button icon={Add}>Save</Button>
+					<!-- <Button icon={Add}>Save</Button> -->
 					<a href="/prescribe/{id}">
 						<Button>Save & Prescribe</Button>
 					</a>
@@ -58,7 +58,7 @@
 					</div>
 				</section>
 				<div class="buttons">
-					<Button icon={Add}>Save</Button>
+					<!-- <Button icon={Add}>Save</Button> -->
 					<a href="/prescribe/{id}">
 						<Button>Save & Prescribe</Button>
 					</a>

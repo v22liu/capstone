@@ -36,10 +36,16 @@
 			<Tag icon={ErrorFilled} type="outline">Personal Identifiers</Tag>
 			<Tag icon={CheckmarkFilled} type="outline">Speech to Text</Tag>
 		</div>
-		<Button icon={Search}>Search for Patient</Button>
+		<Button
+			icon={Search}
+			on:click={() => {
+				const section = document.getElementById('patient-section');
+				section.scrollIntoView({ behavior: 'smooth' });
+			}}>Search for Patient</Button
+		>
 	</div>
 </section>
-<section>
+<section id="patient-section">
 	<div style="display: flex;">
 		{#each data.records as patient}
 			<PatientCard {patient} />
