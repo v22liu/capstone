@@ -18,7 +18,7 @@
 	 */
 	export let cta = null;
 
-	let { id, name, sex, dob, village, phone } = patient;
+	let { id, name, sex, dob, village, phone, natID } = patient;
 </script>
 
 <Form method="POST" action="?/createPatient">
@@ -58,6 +58,9 @@
 			bind:value={phone}
 			name="phone"
 		/>
+	</FormGroup>
+	<FormGroup>
+		<TextInput light labelText="National ID" placeholder="1234567" name="natID" bind:value={natID} />
 	</FormGroup>
 	{#if cta !== null}
 		<div style="display: flex">

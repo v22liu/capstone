@@ -9,7 +9,8 @@ const db = new Map<string, PatientRecord>([
 			dob: '01/01/1990',
 			sex: 'Male',
 			phone: '123-456-7890',
-			village: 'Village A'
+			village: 'Village A',
+			natID: '1234567'
 		}
 	],
 	[
@@ -20,7 +21,9 @@ const db = new Map<string, PatientRecord>([
 			dob: '02/02/1995',
 			sex: 'Female',
 			phone: '987-654-3210',
-			village: 'Village B'
+			village: 'Village B',
+			natID: '1234567'
+
 		}
 	],
 	[
@@ -31,7 +34,8 @@ const db = new Map<string, PatientRecord>([
 			dob: '05/05/1985',
 			sex: 'Female',
 			phone: '555-555-5555',
-			village: 'Village C'
+			village: 'Village C',
+			natID: '1234567'
 		}
 	],
 	[
@@ -42,7 +46,8 @@ const db = new Map<string, PatientRecord>([
 			dob: '08/08/1998',
 			sex: 'Other',
 			phone: '999-999-9999',
-			village: 'Village D'
+			village: 'Village D',
+			natID: '1234567'
 		}
 	]
 ]);
@@ -54,6 +59,7 @@ export interface PatientRecord {
 	sex: string;
 	phone: string;
 	village: string;
+	natID: string;
 }
 
 export async function createRecord(record: PatientRecord) {
