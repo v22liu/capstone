@@ -4,8 +4,10 @@
 </script>
 
 <div>
+    <a href="/create">
         <img src={User}/>
         <Button kind='secondary'> New Patient </Button>
+    </a>
 </div>
 
 <style>

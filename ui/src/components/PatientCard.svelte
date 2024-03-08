@@ -25,7 +25,6 @@
 
     </p>
 </div>
-
 <div class= "button_group">
     <Button kind='secondary'>
         Patient Record
@@ -34,7 +33,6 @@
         Prescribe
     </Button>
 </div>
-
 </div>
 
 <style>
