@@ -40,7 +40,8 @@
 			icon={Search}
 			on:click={() => {
 				const section = document.getElementById('patient-section');
-				section.scrollIntoView({ behavior: 'smooth' });
+
+				if (section) section.scrollIntoView({ behavior: 'smooth' });
 			}}>Search for Patient</Button
 		>
 	</div>

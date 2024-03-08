@@ -92,7 +92,7 @@
 					/>
 				</div>
 				<div class="buttons">
-					<a href="/prescribe">
+					<a href="/label">
 						<Button>Prescribe</Button>
 					</a>
 				</div>
