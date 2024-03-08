@@ -6,9 +6,9 @@ const db = new Map<string, PatientRecord>([
 		{
 			id: '1',
 			name: 'Ethan Alvizo',
-			dob: '1990-01-01',
+			dob: '01/01/1990',
 			sex: 'Male',
-			phone: '1234567890',
+			phone: '123-456-7890',
 			village: 'Village A'
 		}
 	],
@@ -17,9 +17,9 @@ const db = new Map<string, PatientRecord>([
 		{
 			id: '2',
 			name: 'Hannah Tario',
-			dob: '1995-02-02',
+			dob: '02/02/1995',
 			sex: 'Female',
-			phone: '9876543210',
+			phone: '987-654-3210',
 			village: 'Village B'
 		}
 	],
@@ -28,9 +28,9 @@ const db = new Map<string, PatientRecord>([
 		{
 			id: '3',
 			name: 'Valerie Liu',
-			dob: '1985-05-05',
+			dob: '05/05/1985',
 			sex: 'Female',
-			phone: '5555555555',
+			phone: '555-555-5555',
 			village: 'Village C'
 		}
 	],
@@ -39,9 +39,9 @@ const db = new Map<string, PatientRecord>([
 		{
 			id: '4',
 			name: 'Duru Uluk',
-			dob: '1998-08-08',
+			dob: '08/08/1998',
 			sex: 'Other',
-			phone: '9999999999',
+			phone: '999-999-9999',
 			village: 'Village D'
 		}
 	]

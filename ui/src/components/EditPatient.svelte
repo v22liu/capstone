@@ -8,6 +8,11 @@
 	 * @type {any}
 	 */
 	export let patient = {};
+
+	/**
+	 * @type {string | null}
+	 */
+	export let cta = null;
 </script>
 
 <div>
@@ -20,7 +25,7 @@
 	/>
 	<Button kind="tertiary" style="width: 170px; margin: 1rem auto" icon={Camera}>Update Photo</Button
 	>
-	<PatientForm {patient} />
+	<PatientForm {patient} {cta} />
 </div>
 
 <style>

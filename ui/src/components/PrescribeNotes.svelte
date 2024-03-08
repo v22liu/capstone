@@ -24,12 +24,22 @@
 				<div class="PatientInfo">
 					<TextArea
 						labelText="Current Medication"
-						placeholder="Placeholder textoptional)"
+						placeholder="Placeholder text (optional)"
 						light
 						rows={7}
 					/>
-					<TextArea labelText="Allergies" placeholder="Placeholder textoptional)" light rows={7} />
-					<TextArea labelText="Conditions" placeholder="Placeholder textoptional)" light rows={7} />
+					<TextArea
+						labelText="Allergies"
+						placeholder="Placeholder text (optional)"
+						light
+						rows={7}
+					/>
+					<TextArea
+						labelText="Conditions"
+						placeholder="Placeholder text (optional)"
+						light
+						rows={7}
+					/>
 				</div>
 			</TabContent>
 			<TabContent>
@@ -45,7 +55,7 @@
 							<div>rec 1</div>
 							<div>rec 1</div>
 						</div>
-						<TextArea placeholder="Placeholder textoptional)" light rows={33} />
+						<TextArea placeholder="Placeholder text (optional)" light rows={33} />
 					</div>
 				</section>
 			</TabContent>

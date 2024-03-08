@@ -1,6 +1,12 @@
 <script>
 	import Button from 'carbon-components-svelte/src/Button/Button.svelte';
 	import profilePic from '$lib/images/profile_photo.png';
+
+	export let patient = {};
+	/**
+	 * @type {any}
+	 */
+	let { name, sex, dob, village, phone, id } = patient;
 </script>
 
 <div class="card">
@@ -13,16 +19,20 @@
 		<p>
 			Name:
 			<br /> Sex:
-			<br /> Brithday:
+			<br /> Birthday:
 			<br /> Village:
 			<br /> Phone Number:
 		</p>
 		<p class="patient_info">
-			Abbas Juma <!--Name-->
-			<br />Male <!--Sex-->
-			<br />January 4, 1980 <!--Birthday-->
-			<br />Dar es Salamm<!--Village-->
-			<br />123-456-7890 <!--Phone Number-->
+			{name}
+			<br />
+			{sex}
+			<br />
+			{dob}
+			<br />
+			{village}
+			<br />
+			{phone}
 		</p>
 	</div>
 

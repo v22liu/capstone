@@ -15,7 +15,7 @@
 	<meta name="description" content="About this app" />
 </svelte:head>
 
-<section class="container" style="background-color: #F4F4F4;">
+<section class="container" style="background-color: #F4F4F4; flex: 1">
 	<h2 class="title">Search for Patient</h2>
 	<h2>Input available info and biomarkers, then press search.</h2>
 	<p class="subtitle">
