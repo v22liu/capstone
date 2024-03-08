@@ -52,11 +52,12 @@
 	.card {
 		max-width: max-content;
 		min-width: fit-content;
-		height: 530px;
+		height: 550px;
 		padding: 16px;
 		display: flex;
 		flex-direction: column;
 		gap: 16px;
+		background-color: white;
 	}
 
 	.card_info {

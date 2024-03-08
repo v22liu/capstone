@@ -6,6 +6,7 @@
 	import CheckmarkFilled from 'carbon-icons-svelte/lib/CheckmarkFilled.svelte';
 	import ErrorFilled from 'carbon-icons-svelte/lib/ErrorFilled.svelte';
 	import Search from 'carbon-icons-svelte/lib/Search.svelte';
+	import NewPatient from '../../components/NewPatientCard.svelte';
 
 	export let data;
 </script>
@@ -29,7 +30,7 @@
 </section>
 <section class="search-container" style="background-color: #F4F4F4;">
 	<div
-		style="display: flex; align-items: center; gap: 3rem; background-color: white; width: fit-content; padding: 0.75rem"
+		style="display: flex; align-items: center; gap:2rem; background-color: white; width: fit-content; padding: 0.75rem"
 	>
 		<div style="display: flex; gap: 1rem; align-items: center;">
 			<p style="font-size: 0.9rem">Search With:</p>
@@ -46,11 +47,13 @@
 		>
 	</div>
 </section>
-<section id="patient-section">
-	<div style="display: flex;">
+
+<section class="patient-section" id="patient-section" >
+	<div style="display: flex; flex-wrap:wrap; gap:32px;">
 		{#each data.records as patient}
 			<PatientCard {patient} />
 		{/each}
+			<NewPatient/>
 	</div>
 </section>
 
@@ -75,8 +78,15 @@
 	}
 	.search-container {
 		display: flex;
-		background-color: '#f4f4f4';
 		justify-content: flex-end;
 		padding: 1rem 2rem;
+	}
+	.patient-section {
+		display: flex;
+		flex-wrap: wrap;	
+		background-color: #F4F4F4; 
+		margin-top: 2rem;
+		padding: 1rem 2rem; 
+		
 	}
 </style>

@@ -4,18 +4,17 @@
 </script>
 
 <div>
-    <a href="/create">
+    
         <img src={User}/>
-        <Button kind='secondary'> New Patient </Button>
-    </a>
+        <a href="/create"><Button kind='secondary'> New Patient </Button></a>
 </div>
 
 <style>
     
     div{
         max-width:25VW;
-        min-width: 340px;
-        height: 530px;
+        min-width: 350px;
+        height: 550px;
         padding: 16px;
         background: #E0E0E0;
         display: flex;
