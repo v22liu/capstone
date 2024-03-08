@@ -39,7 +39,9 @@
 		<a href="/patient/{id}">
 			<Button kind="secondary">Patient Record</Button>
 		</a>
-		<Button>Prescribe</Button>
+		<a href="/prescribe/{id}">
+			<Button>Prescribe</Button>
+		</a>
 	</div>
 </div>
 

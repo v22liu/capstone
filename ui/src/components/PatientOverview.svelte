@@ -37,7 +37,9 @@
 	</div>
 
 	<div class="button_group">
-		<Button kind="tertiary">Update Patient Record</Button>
+		<a href="/patient/{id}">
+			<Button kind="tertiary">Update Patient Record</Button>
+		</a>
 	</div>
 </div>
 

@@ -11,29 +11,18 @@
 	} from 'carbon-components-svelte';
 	import Add from 'carbon-icons-svelte/lib/Add.svelte';
 
-	export let patient = {
-		id: null,
-		name: 'John Doe',
-		sex: 'Male',
-		dob: '01-01-2024',
-		village: 'Dar es Salaam',
-		phone: '123-456-7890'
-	};
+	export let patient = {};
 
 	/**
 	 * @type {string | null}
 	 */
 	export let cta = null;
 
-	let name = patient.name;
-	let sex = patient.sex;
-	let dob = patient.dob;
-	let village = patient.village;
-	let phone = patient.phone;
+	let { id, name, sex, dob, village, phone } = patient;
 </script>
 
 <Form method="POST" action="?/createPatient">
-	<input type="hidden" name="id" value={patient.id} />
+	<input type="hidden" name="id" value={id} />
 	<FormGroup>
 		<TextInput light labelText="Name" placeholder="John Doe" bind:value={name} name="name" />
 	</FormGroup>
@@ -62,7 +51,13 @@
 		</Select>
 	</FormGroup>
 	<FormGroup>
-		<TextInput light labelText="Phone Number" placeholder="123-456-7890" name="phone" />
+		<TextInput
+			light
+			labelText="Phone Number"
+			placeholder="123-456-7890"
+			bind:value={phone}
+			name="phone"
+		/>
 	</FormGroup>
 	{#if cta !== null}
 		<div style="display: flex">

@@ -1,6 +1,10 @@
 <script>
 	import { Button, Tabs, Tab, TabContent, TextArea } from 'carbon-components-svelte';
 	import Add from 'carbon-icons-svelte/lib/Add.svelte';
+
+	export let patient = {};
+
+	let { id } = patient;
 </script>
 
 <div class="container">
@@ -17,12 +21,22 @@
 						light
 						rows={7}
 					/>
-					<TextArea labelText="Allergies" placeholder="Placeholder text (optional)" light rows={7} />
-					<TextArea labelText="Conditions" placeholder="Placeholder text (optional)" light rows={7} />
+					<TextArea
+						labelText="Allergies"
+						placeholder="Placeholder text (optional)"
+						light
+						rows={7}
+					/>
+					<TextArea
+						labelText="Conditions"
+						placeholder="Placeholder text (optional)"
+						light
+						rows={7}
+					/>
 				</div>
 				<div class="buttons">
 					<Button icon={Add}>Save</Button>
-					<a href="/prescribe">
+					<a href="/prescribe/{id}">
 						<Button>Save & Prescribe</Button>
 					</a>
 				</div>
@@ -45,7 +59,7 @@
 				</section>
 				<div class="buttons">
 					<Button icon={Add}>Save</Button>
-					<a href="/prescribe">
+					<a href="/prescribe/{id}">
 						<Button>Save & Prescribe</Button>
 					</a>
 				</div>

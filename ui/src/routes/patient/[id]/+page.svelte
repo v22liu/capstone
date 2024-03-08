@@ -7,7 +7,7 @@
 
 <section>
 	<EditPatient patient={data.record} cta="Save Changes" />
-	<PatientNotes />
+	<PatientNotes patient={data.record} />
 </section>
 
 <style>
