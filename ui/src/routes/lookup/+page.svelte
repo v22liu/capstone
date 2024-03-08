@@ -1,6 +1,7 @@
 <script>
 	import PersonalIdentifier from './PersonalIdentifier.svelte';
 	import VoiceCapture from './VoiceCapture.svelte';
+	import PatientCard from '../../components/PatientCard.svelte';
 	import { Button, Tag } from 'carbon-components-svelte';
 	import CheckmarkFilled from 'carbon-icons-svelte/lib/CheckmarkFilled.svelte';
 	import ErrorFilled from 'carbon-icons-svelte/lib/ErrorFilled.svelte';
@@ -14,7 +15,7 @@
 	<meta name="description" content="About this app" />
 </svelte:head>
 
-<section class="container" style="background-color: #F4F4F4;">
+<section class="container" style="background-color: #F4F4F4; flex: 1">
 	<h2 class="title">Search for Patient</h2>
 	<h2>Input available info and biomarkers, then press search.</h2>
 	<p class="subtitle">
@@ -23,7 +24,7 @@
 	</p>
 </section>
 <section class="capture-container" style="background-color: #F4F4F4;">
-	<PersonalIdentifier/>
+	<PersonalIdentifier />
 	<VoiceCapture />
 </section>
 <section class="search-container" style="background-color: #F4F4F4;">
@@ -35,18 +36,22 @@
 			<Tag icon={ErrorFilled} type="outline">Personal Identifiers</Tag>
 			<Tag icon={CheckmarkFilled} type="outline">Speech to Text</Tag>
 		</div>
-		<Button icon={Search}>Search for Patient</Button>
+		<Button
+			icon={Search}
+			on:click={() => {
+				const section = document.getElementById('patient-section');
+
+				if (section) section.scrollIntoView({ behavior: 'smooth' });
+			}}>Search for Patient</Button
+		>
 	</div>
 </section>
-<section>
-	{#each data.records as { id, name, sex, village, phone, dob }}
-		<p>id: {id}</p>
-		<p>{name}</p>
-		<p>{sex}</p>
-		<p>{village}</p>
-		<p>{phone}</p>
-		<p>{dob}</p>
-	{/each}
+<section id="patient-section">
+	<div style="display: flex;">
+		{#each data.records as patient}
+			<PatientCard {patient} />
+		{/each}
+	</div>
 </section>
 
 <style>

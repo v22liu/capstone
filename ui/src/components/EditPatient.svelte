@@ -4,7 +4,15 @@
 	import Camera from 'carbon-icons-svelte/lib/Camera.svelte';
 	import BlankProfile from '$lib/images/blank-profile.png';
 
+	/**
+	 * @type {any}
+	 */
 	export let patient = {};
+
+	/**
+	 * @type {string | null}
+	 */
+	export let cta = null;
 </script>
 
 <div>
@@ -15,9 +23,10 @@
 		style="height: 10rem; width: 10rem; margin: 1rem auto 0;"
 		aria-hidden="true"
 	/>
-	<Button kind="tertiary" style="width: 170px; margin: 1rem auto" icon={Camera}>Update Photo</Button
-	>
-	<PatientForm {patient} />
+	<a href="/photo" style="width: 170px; margin: 1rem auto">
+		<Button kind="tertiary" icon={Camera}>Update Photo</Button>
+	</a>
+	<PatientForm {patient} {cta} />
 </div>
 
 <style>

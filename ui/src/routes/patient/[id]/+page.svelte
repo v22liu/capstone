@@ -6,8 +6,8 @@
 </script>
 
 <section>
-	<EditPatient patient={data.record} />
-	<PatientNotes />
+	<EditPatient patient={data.record} cta="Save Changes" />
+	<PatientNotes patient={data.record} />
 </section>
 
 <style>

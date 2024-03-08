@@ -11,7 +11,7 @@ export const actions = {
 		// }
 
 		const record: PatientRecord = {
-			id: Math.floor(Math.random() * 1000000) + 1;,
+			id: (Math.floor(Math.random() * 1000000) + 1).toString(),
 			name: formData.get('name')?.toString() || '',
 			dob: formData.get('dob')?.toString() || '',
 			sex: formData.get('sex')?.toString() || '',
