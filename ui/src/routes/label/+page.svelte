@@ -5,5 +5,9 @@
 
 <div style="display: flex; flex-direction:column; gap: 20px; align-items:center">
 	<ScriptLabel />
-	<Button disabled>Print</Button>
+	<Button
+		on:click={() => {
+			window.print();
+		}}>Print</Button
+	>
 </div>
