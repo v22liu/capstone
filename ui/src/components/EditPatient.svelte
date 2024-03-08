@@ -23,8 +23,9 @@
 		style="height: 10rem; width: 10rem; margin: 1rem auto 0;"
 		aria-hidden="true"
 	/>
-	<Button kind="tertiary" style="width: 170px; margin: 1rem auto" icon={Camera}>Update Photo</Button
-	>
+	<a href="/photo" style="width: 170px; margin: 1rem auto">
+		<Button kind="tertiary" icon={Camera}>Update Photo</Button>
+	</a>
 	<PatientForm {patient} {cta} />
 </div>
 
