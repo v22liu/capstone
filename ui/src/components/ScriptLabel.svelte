@@ -11,11 +11,16 @@
 	import imgPill from '$lib/images/pill.svg';
 	import imgCream from '$lib/images/Cream.png';
 	import imgInhaler from '$lib/images/Inhaler.png';
+
+	/**
+	 * @type {string}
+	 */
+	export let name = 'Drug';
 </script>
 
 <div class="Label">
 	<div class="Header">
-		<div>Drug Name</div>
+		<div>{name}</div>
 		<div>Bin Number</div>
 	</div>
 

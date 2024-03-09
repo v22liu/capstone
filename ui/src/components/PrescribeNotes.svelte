@@ -11,6 +11,17 @@
 		MultiSelect
 	} from 'carbon-components-svelte';
 	import Add from 'carbon-icons-svelte/lib/Add.svelte';
+	import ScriptLabel from './ScriptLabel.svelte';
+
+	function printLabel() {
+		let label = document.getElementById('label')?.innerHTML;
+		let originalContents = window.document.body.innerHTML;
+		window.document.body.innerHTML = label ?? '';
+		window.print();
+		document.body.innerHTML = originalContents;
+	}
+
+	$: name = undefined;
 </script>
 
 <div class="container">
@@ -63,7 +74,7 @@
 			<TabContent>
 				<h1>Medication</h1>
 				<div class="medication">
-					<TextInput labelText="Drug Search" light />
+					<TextInput labelText="Drug Search" light bind:value={name} />
 					<Select labelText="Dosage" light />
 				</div>
 				<div class="medication">
@@ -92,13 +103,15 @@
 					/>
 				</div>
 				<div class="buttons">
-					<a href="/label">
-						<Button>Prescribe</Button>
-					</a>
+					<Button on:click={printLabel}>Prescribe</Button>
 				</div>
 			</TabContent>
 		</svelte:fragment>
 	</Tabs>
+</div>
+
+<div style="display: none" id="label">
+	<ScriptLabel {name} />
 </div>
 
 <style>
