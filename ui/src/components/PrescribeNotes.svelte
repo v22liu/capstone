@@ -8,10 +8,43 @@
 		TextInput,
 		Select,
 		SelectItem,
-		MultiSelect
+		MultiSelect,
+		NumberInput
 	} from 'carbon-components-svelte';
 	import Add from 'carbon-icons-svelte/lib/Add.svelte';
 	import ScriptLabel from './ScriptLabel.svelte';
+	import { PrescriptionReason, Dosages } from '$lib/prescription/prescription';
+
+	let name = 'Name',
+		dosage,
+		reason,
+		count = 1,
+		frequency = 0,
+		usagePeriod = 1,
+		timeOfDay,
+		warnings;
+
+	const bins = {
+		A: 1,
+		B: 2,
+		Name: '#'
+	};
+
+	$: bin = bins[name];
+
+	$: prescription = {
+		name,
+		bin,
+		dosage,
+		reason,
+		count,
+		frequency,
+		usagePeriod,
+		timeOfDay,
+		warnings
+	};
+
+	$: console.log(prescription);
 
 	function printLabel() {
 		let label = document.getElementById('label')?.innerHTML;
@@ -20,8 +53,6 @@
 		window.print();
 		document.body.innerHTML = originalContents;
 	}
-
-	$: name = undefined;
 </script>
 
 <div class="container">
@@ -75,25 +106,45 @@
 				<h1>Medication</h1>
 				<div class="medication">
 					<TextInput labelText="Drug Search" light bind:value={name} />
-					<Select labelText="Dosage" light />
+					<Select
+						labelText="Dosage"
+						light
+						bind:selected={dosage}
+						on:change={(e) => (dosage = e.target.value)}
+					>
+						{#each Dosages as opt}
+							<SelectItem value={opt} text={opt} />
+						{/each}
+					</Select>
 				</div>
 				<div class="medication">
-					<div>Location: Bin X</div>
+					<div>Location: Bin {bin}</div>
 					<div>Remaining Stock: X units</div>
 				</div>
 				<hr />
 				<h1>Prescription Instructions</h1>
 				<div class="contain">
-					<Select labelText="Reason for Prescription" style="max-width:800px" light />
+					<!-- not sure why I need both the bind and onchange -->
+					<Select
+						labelText="Reason for Prescription"
+						style="max-width:800px"
+						light
+						bind:selected={reason}
+						on:change={(e) => (reason = e.target.value)}
+					>
+						{#each Object.entries(PrescriptionReason) as [opt, translatedOpt]}
+							<SelectItem value={translatedOpt} text={opt} />
+						{/each}
+					</Select>
 					<div class="InstructionStatement">
 						<div style="height:30px">take</div>
-						<Select labelText="Dosage" light />
+						<NumberInput label="Count" light bind:value={count} />
 						<div style="height:30px">pills</div>
 						<Select labelText="Frequency" light />
 						<div style="height:30px">for</div>
-						<Select labelText="Usage Period" light />
+						<NumberInput label="Usage Period" light bind:value={usagePeriod} />
 						<div style="height:30px">days.</div>
-						<div style="height:30px">X units dispensed.</div>
+						<div style="height:30px">{count * frequency * usagePeriod} units dispensed.</div>
 					</div>
 					<Select labelText="Time of Day (if specific)" style="max-width:300px" light />
 					<MultiSelect
@@ -110,8 +161,8 @@
 	</Tabs>
 </div>
 
-<div style="display: none" id="label">
-	<ScriptLabel {name} />
+<div style="display: block" id="label">
+	<ScriptLabel {...prescription} />
 </div>
 
 <style>

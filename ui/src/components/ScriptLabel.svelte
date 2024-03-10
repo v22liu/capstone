@@ -12,20 +12,26 @@
 	import imgCream from '$lib/images/Cream.png';
 	import imgInhaler from '$lib/images/Inhaler.png';
 
-	/**
-	 * @type {string}
-	 */
-	export let name = 'Drug';
+	export let name;
+	export let bin;
+	export let dosage;
+	export let reason;
+	export let count;
+	export let frequency;
+	export let usagePeriod;
+	export let timeOfDay;
+	export let warnings;
 </script>
 
 <div class="Label">
 	<div class="Header">
-		<div>{name}</div>
-		<div>Bin Number</div>
+		<div>{name} ({dosage})</div>
+		<div>Bin {bin}</div>
 	</div>
 
 	<div class="Reason">
-		<img src={imgReason} /> Indication for use
+		<img src={imgReason} />
+		{reason}
 	</div>
 
 	<div class="Warnings">
@@ -46,8 +52,8 @@
 		<table width="100%">
 			<tbody>
 				<tr>
-					<td class="TableHeader"> <h1>2 X 3</h1> </td>
-					<td class="TableHeader"> <h1>7/7</h1> </td>
+					<td class="TableHeader"> <h1>{count} X {frequency}</h1> </td>
+					<td class="TableHeader"> <h1>{usagePeriod}/7</h1> </td>
 				</tr>
 				<tr>
 					<td> <img src={imgWakeUp} class="TableTimes" /> </td>
@@ -74,10 +80,8 @@
 				<tr>
 					<td> <img src={imgBedtime} class="TableTimes" /> </td>
 					<td>
-						<img src={imgPill} class="TableMedication" /><img
-							src={imgPill}
-							class="TableMedication"
-						/>
+						<img src={imgPill} class="TableMedication" />
+						<img src={imgPill} class="TableMedication" />
 					</td>
 				</tr>
 			</tbody>
