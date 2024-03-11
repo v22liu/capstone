@@ -19,7 +19,7 @@
 		dosage,
 		reason,
 		count = 1,
-		frequency = 0,
+		frequency = 1,
 		usagePeriod = 1,
 		timeOfDay,
 		warnings;
@@ -47,11 +47,29 @@
 	$: console.log(prescription);
 
 	function printLabel() {
-		let label = document.getElementById('label')?.innerHTML;
-		let originalContents = window.document.body.innerHTML;
-		window.document.body.innerHTML = label ?? '';
+		const element = document.getElementById('label');
+		if (!element) return;
+		const clone = element.cloneNode(true);
+
+		const body = document.body;
+		const originalChildren = [...body.children];
+
+		while (body.firstChild) {
+			body.firstChild.remove();
+		}
+
+		body.appendChild(clone);
+
 		window.print();
-		document.body.innerHTML = originalContents;
+
+		while (body.firstChild) {
+			// @ts-ignore
+			body.firstChild.remove();
+		}
+
+		for (const child of originalChildren) {
+			body.appendChild(child);
+		}
 	}
 </script>
 
@@ -140,7 +158,7 @@
 						<div style="height:30px">take</div>
 						<NumberInput label="Count" light bind:value={count} />
 						<div style="height:30px">pills</div>
-						<Select labelText="Frequency" light />
+						<NumberInput label="Frequency" light bind:value={frequency} />
 						<div style="height:30px">for</div>
 						<NumberInput label="Usage Period" light bind:value={usagePeriod} />
 						<div style="height:30px">days.</div>
