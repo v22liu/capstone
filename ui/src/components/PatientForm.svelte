@@ -5,8 +5,6 @@
 		SelectItem,
 		Form,
 		FormGroup,
-		DatePicker,
-		DatePickerInput,
 		Button
 	} from 'carbon-components-svelte';
 	import Add from 'carbon-icons-svelte/lib/Add.svelte';
@@ -18,7 +16,7 @@
 	 */
 	export let cta = null;
 
-	let { id, name, sex, dob, village, phone, natID } = patient;
+	let { id, name, sex, dobD, dobM, dobY, village, phone, natID } = patient;
 </script>
 
 <Form method="POST" action="?/createPatient">
@@ -33,15 +31,25 @@
 			<SelectItem value="Other" text="Other" />
 		</Select>
 	</FormGroup>
-	<FormGroup>
-		<DatePicker light datePickerType="single">
-			<DatePickerInput
-				labelText="Date of Birth"
-				placeholder="mm/dd/yyyy"
-				name="dob"
-				bind:value={dob}
-			/>
-		</DatePicker>
+	<FormGroup legendText = "Date of Birth">
+	<div style="display: flex; flex-direction: row; gap: 8px">
+		<Select labelText="Month" light name="date of birth Month" bind:selected={dobM}>
+			<SelectItem value="Jan" text="Jan" />
+			<SelectItem value="Feb" text="Feb" />
+			<SelectItem value="Mar" text="Mar" />
+			<SelectItem value="Apr" text="Apr" />
+			<SelectItem value="May" text="May" />
+			<SelectItem value="Jun" text="Jun" />
+			<SelectItem value="Jul" text="Jul" />
+			<SelectItem value="Aug" text="Aug" />
+			<SelectItem value="Sept" text="Sept" />
+			<SelectItem value="Oct" text="Oct" />
+			<SelectItem value="Nov" text="Nov" />
+			<SelectItem value="Dec" text="Dec" />
+		</Select>
+		<TextInput light labelText="Day" placeholder="01" bind:value={dobD} name="date of birth day" />
+		<TextInput light labelText="Year" placeholder="1990" bind:value={dobY} name="date of birth year" />
+	</div>
 	</FormGroup>
 	<FormGroup>
 		<Select labelText="Village" light name="village" bind:selected={village}>

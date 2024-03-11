@@ -42,13 +42,14 @@
 			on:click={() => {
 				const section = document.getElementById('patient-section');
 
-				if (section) section.scrollIntoView({ behavior: 'smooth' });
+				if (section) section.scrollIntoView({behavior: 'smooth'});
 			}}>Search for Patient</Button
 		>
 	</div>
 </section>
 
 <section class="patient-section" id="patient-section" >
+	<h1>Possible Patient Matches</h1>
 	<div style="display: flex; flex-wrap:wrap; gap:32px;">
 		{#each data.records as patient}
 			<PatientCard {patient} />
@@ -84,9 +85,11 @@
 	.patient-section {
 		display: flex;
 		flex-wrap: wrap;	
-		background-color: #F4F4F4; 
+		background-color: #f4f4f4; 
 		margin-top: 2rem;
 		padding: 1rem 2rem; 
+		gap: 8px;
+		scroll-margin-top: 55px;
 		
 	}
 </style>
