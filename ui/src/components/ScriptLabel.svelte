@@ -97,7 +97,7 @@
 		flex-direction: column;
 		justify-content: space-between;
 		padding: 16px;
-		border: solid;
+		background-color: white;
 	}
 	.Header {
 		display: flex;
