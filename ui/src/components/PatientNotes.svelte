@@ -1,6 +1,7 @@
 <script>
 	import { Button, Tabs, Tab, TabContent, TextArea} from 'carbon-components-svelte';
 	import Add from 'carbon-icons-svelte/lib/Add.svelte';
+	import MedicalRecords from './MedicalRecords.svelte';
 
 	export let patient = {};
 
@@ -40,31 +41,8 @@
 					</a>
 				</div>
 			</TabContent>
-			<TabContent>
-				<section>
-					<div class="medicalRecords">
-						<div class="RecordsList">
-							<div>
-							<div>rec 1</div>
-							<div>rec 1</div>
-							<div>rec 1</div>
-							<div>rec 1</div>
-							<div>rec 1</div>
-							<div>rec 1</div>
-							<div>rec 1</div>
-							</div>
-							<Button icon={Add}>New Record</Button>
-						</div>
-						<TextArea placeholder="Placeholder text (optional)" light rows={33} />
-					</div>
-				</section>
-				<div class="buttons">
-					<!-- <Button icon={Add}>Save</Button> -->
-					<a href="/prescribe/{id}">
-						<Button>Save & Prescribe</Button>
-					</a>
-				</div>
-			</TabContent>
+				
+			<TabContent><MedicalRecords/></TabContent>
 		</svelte:fragment>
 	</Tabs>
 </div>

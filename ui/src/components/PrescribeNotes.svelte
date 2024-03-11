@@ -11,8 +11,9 @@
 		MultiSelect,
 		NumberInput
 	} from 'carbon-components-svelte';
-	import Add from 'carbon-icons-svelte/lib/Add.svelte';
+	
 	import ScriptLabel from './ScriptLabel.svelte';
+	import MedicalRecords from './MedicalRecords.svelte'; 
 	import { PrescriptionReason, Dosages } from '$lib/prescription/prescription';
 
 	let name = 'Name',
@@ -103,21 +104,7 @@
 				</div>
 			</TabContent>
 			<TabContent>
-				<section>
-					<div class="medicalRecords">
-						<div class="RecordsList">
-							<div>rec 1</div>
-							<div>rec 1</div>
-							<div>rec 1</div>
-							<div>rec 1</div>
-							<div>rec 1</div>
-							<div>rec 1</div>
-							<div>rec 1</div>
-							<div>rec 1</div>
-						</div>
-						<TextArea placeholder="Placeholder text (optional)" light rows={33} />
-					</div>
-				</section>
+				<MedicalRecords> </MedicalRecords> 	
 			</TabContent>
 
 			<TabContent>
@@ -179,7 +166,8 @@
 	</Tabs>
 </div>
 
-<div style="display: block" id="label">
+<div style="display: block; background-color:#f4f4f4; padding: 16px" id="label">
+	<h1>Label Preview</h1>
 	<ScriptLabel {...prescription} />
 </div>
 
@@ -188,7 +176,7 @@
 		display: flex;
 		flex: 1;
 		flex-direction: column;
-		padding: 1rem;
+		padding: 16px;
 		background-color: #f4f4f4;
 	}
 	.buttons {
