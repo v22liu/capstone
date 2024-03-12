@@ -1,0 +1,4 @@
+
+fastapi==0.110.0
+fastjsonschema==2.19.1
+ffmpeg==1.4
