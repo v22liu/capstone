@@ -9,6 +9,7 @@ api = Api(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../../db/database.sqlite'
 db = SQLAlchemy(app)
 
+## Database Models
 class Patient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255))
@@ -23,6 +24,9 @@ class Patient(db.Model):
     voice_clip = db.Column(db.BLOB)  # Short voice clip stored in the database
     photo_file_path = db.Column(db.String(255))  # File path to the high-resolution photo stored externally
     voice_recording_path = db.Column(db.String(255))  # File path to the longer voice recording stored externally
+    current_medication = db.Column(db.String(255))
+    allergies = db.Column(db.String(255))
+    conditions = db.Column(db.String(255))
 
     def serialize(self):
         return {
@@ -38,10 +42,21 @@ class Patient(db.Model):
             'photo_thumbnail': self.photo_thumbnail,
             'voice_clip': self.voice_clip,
             'photo_file_path': self.photo_file_path,
-            'voice_recording_path': self.voice_recording_path
+            'voice_recording_path': self.voice_recording_path,
+            'current_medication': self.current_medication,
+            'allergies': self.allergies,
+            'conditions': self.conditions
+        }
+    
+    def serialize_overview(self):
+        return {
+            'id': self.id,
+            'current_medication': self.current_medication,
+            'allergies': self.allergies,
+            'conditions': self.conditions
         }
 
-class ClinicNote(db.Model):
+class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'), nullable=False)
     title = db.Column(db.String(255))
@@ -56,23 +71,26 @@ class ClinicNote(db.Model):
             'date': self.date,
             'notes': self.notes
         }
-class PatientOverview(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'), nullable=False)
-    current_medication = db.Column(db.String(255))
-    allergies = db.Column(db.String(255))
-    conditions = db.Column(db.String(255))
 
-    def serialize(self):
-        return {
-            'id': self.id,
-            'patient_id': self.patient_id,
-            'current_medication': self.current_medication,
-            'allergies': self.allergies,
-            'conditions': self.conditions
-        }
+# class PatientOverview(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'), nullable=False)
+#     current_medication = db.Column(db.String(255))
+#     allergies = db.Column(db.String(255))
+#     conditions = db.Column(db.String(255))
 
-class PatientResources(Resource):
+#     def serialize(self):
+#         return {
+#             'id': self.id,
+#             'patient_id': self.patient_id,
+#             'current_medication': self.current_medication,
+#             'allergies': self.allergies,
+#             'conditions': self.conditions
+#         }
+
+
+## API Resources
+class PatientResource(Resource):
     def get(self):
         patients = Patient.query.all()
         return [patient.serialize() for patient in patients]
@@ -131,42 +149,49 @@ class PatientByIdResource(Resource):
         else:
             return {'message': 'Patient not found'}, 404
 
-class ClinicNoteResources(Resource):
+class NoteResource(Resource):
     def get(self):
-        clinic_notes = ClinicNote.query.filter_by(patient_id=json_data.get('patient_id')).all()
-        return [clinic_note.serialize() for clinic_note in clinic_notes]
+        patient_filter = request.args.get('patient_id')
+        if patient_filter:
+            notes = Note.query.filter_by(patient_id=patient_filter).all()
+            if not notes:
+                return {'message': 'No clinic notes found for the patient'}, 404
+            return [note.serialize() for note in notes]
+        else:
+            notes = Note.query.all()
+            return [note.serialize() for note in notes]
 
     def post(self):
         json_data = request.get_json()
 
-        clinic_note = ClinicNote(
+        note = Note(
             patient_id=json_data.get('patient_id'),
             title=json_data.get('title'),
             date=json_data.get('date'),
             notes=json_data.get('notes')
         )
 
-        db.session.add(clinic_note)
+        db.session.add(note)
         db.session.commit()
 
         return {'message': 'Clinic note created successfully'}, 201
 
-class ClinicNoteByIdResource(Resource):
-    def get(self, clinic_note_id):
-        clinic_note = ClinicNote.query.get(clinic_note_id)
-        if clinic_note:
-            return clinic_note.serialize()
+class NoteByIdResource(Resource):
+    def get(self, note_id):
+        note = Note.query.get(note_id)
+        if note:
+            return note.serialize()
         else:
             return {'message': 'Clinic note not found'}, 404
 
-    def put(self, clinic_note_id):
-        clinic_note = ClinicNote.query.get(clinic_note_id)
-        if clinic_note:
+    def put(self, note_id):
+        note = Note.query.get(note_id)
+        if note:
             json_data = request.get_json()
 
-            clinic_note.title = json_data.get('title')
-            clinic_note.date = json_data.get('date')
-            clinic_note.notes = json_data.get('notes')
+            note.title = json_data.get('title')
+            note.date = json_data.get('date')
+            note.notes = json_data.get('notes')
 
             db.session.commit()
             return {'message': 'Clinic note updated successfully'}
@@ -175,14 +200,16 @@ class ClinicNoteByIdResource(Resource):
 
 class PatientOverviewByIdResource(Resource):
     def get(self, patient_id):
-        patient_overview = PatientOverview.query.filter_by(patient_id=patient_id).first()
+        # patient_overview = PatientOverview.query.filter_by(patient_id=patient_id).first()
+        patient_overview = Patient.query.get(patient_id)
         if patient_overview:
-            return patient_overview.serialize()
+            return patient_overview.serialize_overview()
         else:
             return {'message': 'Patient overview not found'}, 404
 
     def put(self, patient_id):
-        patient_overview = PatientOverview.query.filter_by(patient_id=patient_id)
+        # patient_overview = PatientOverview.query.filter_by(patient_id=patient_id)
+        patient_overview = Patient.query.get(patient_id)
         if patient_overview:
             json_data = request.get_json()
 
@@ -195,11 +222,11 @@ class PatientOverviewByIdResource(Resource):
         else:
             return {'message': 'Patient overview not found'}, 404
 
-api.add_resource(PatientResources, '/patients')
+api.add_resource(PatientResource, '/patients')
 api.add_resource(PatientByIdResource, '/patients/<int:patient_id>')
-api.add_resource(ClinicNoteResources, '/clinic-notes/<int:patient_id>')
-api.add_resource(ClinicNoteByIdResource, '/clinic-notes/<int:clinic_note_id>')
+api.add_resource(NoteResource, '/notes')
+api.add_resource(NoteByIdResource, '/notes/<int:note_id>')
 api.add_resource(PatientOverviewByIdResource, '/patient-overview/<int:patient_id>')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=8000, debug=True)
