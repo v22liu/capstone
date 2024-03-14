@@ -6,7 +6,7 @@
 	/**
 	 * @type {any}
 	 */
-	let { name, sex, dobD, dobM, dobY, village, phone, id, natID } = patient;
+	let { name, sex, day_of_birth, month_of_birth, year_of_birth, village, phone, id, natID } = patient;
 </script>
 
 <div class="card">
@@ -28,7 +28,7 @@
 			<br />
 			{sex}
 			<br />
-			{dobM} {dobD} {dobY}
+			{month_of_birth}/{day_of_birth}/{year_of_birth}
 			<br />
 			{village}
 			<br />
