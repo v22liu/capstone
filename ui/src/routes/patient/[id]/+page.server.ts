@@ -48,7 +48,7 @@ export const actions = {
 	overview: async ({ request }) => {
 		const formData = await request.formData();
 
-		const patient_id = formData.get('id')?.toString() || '';
+		const patient_id = formData.get('patient_id')?.toString() || '';
 		const overview: PatientOverview = {
 			current_medication: formData.get('current_medication')?.toString() || '',
 			allergies: formData.get('allergies')?.toString() || '',

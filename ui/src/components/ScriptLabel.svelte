@@ -24,7 +24,6 @@
 	import Allergies from '$lib/prescription/reasons/allergies.png';
 	import Asthma from '$lib/prescription/reasons/asthma.jpg';
 	import MentalHealth from '$lib/prescription/reasons/mental-health.jpg';
-	// import Vagina from '$lib/prescription/reasons'	
 	import Cough from '$lib/prescription/reasons/cough.jpg';
 	import SkinInfection from '$lib/prescription/reasons/skin-infection.jpg';
 	import Pain from '$lib/prescription/reasons/pain.jpg';
@@ -49,7 +48,7 @@
 	import Water from '$lib/prescription/warnings/water.png';
 	import Pills from '$lib/prescription/warnings/pills.gif'
 
-	import { PrescriptionTimings, PrescriptionWarnings } from '$lib/prescription/prescription';
+	import { PrescriptionTimings, PrescriptionWarnings, PrescriptionReason } from '$lib/prescription/prescription';
 
 	export let name;
 	export let bin;
@@ -111,7 +110,7 @@
 
 	<div class="Reason">
 		<img src={reasonToImg[reason]} alt={reason}/>
-		{reason}
+		{PrescriptionReason[reason]}
 	</div>
 
 	{#if warnings.length > 0 || timeOfDay}
@@ -141,30 +140,51 @@
 				<tr>
 					<td> <img src={imgWakeUp} class="TableTimes" /> </td>
 					<td>
-						<img src={imgPill} class="TableMedication" />
-						<img src={imgPill} class="TableMedication" />
+						{#if (frequency == 1 && timeOfDay != "Before Bed") || frequency > 1}
+							{#each Array(count) as _, i}
+								<img src={imgPill} class="TableMedication" key={i} alt="pil;"/>
+							{/each}
+						{/if}
 					</td>
 				</tr>
 				<tr>
 					<td> <img src={imgBreakfast} class="TableTimes" /> </td>
-					<td> </td>
+					<td> 
+						{#if frequency == 5}
+							{#each Array(count) as _, i}
+								<img src={imgPill} class="TableMedication" key={i} alt="pil;"/>
+							{/each}
+						{/if}
+					</td>
 				</tr>
 				<tr>
 					<td> <img src={imgLunch} class="TableTimes" /> </td>
 					<td>
-						<img src={imgPill} class="TableMedication" />
-						<img src={imgPill} class="TableMedication" />
+						{#if frequency >= 3}
+							{#each Array(count) as _, i}
+								<img src={imgPill} class="TableMedication" key={i} alt="pil;"/>
+							{/each}
+						{/if}
 					</td>
 				</tr>
 				<tr>
 					<td> <img src={imgDinner} class="TableTimes" /> </td>
-					<td> </td>
+					<td> 
+						{#if frequency >= 4}
+							{#each Array(count) as _, i}
+								<img src={imgPill} class="TableMedication" key={i} alt="pil;"/>
+							{/each}
+						{/if}
+					</td>
 				</tr>
 				<tr>
 					<td> <img src={imgBedtime} class="TableTimes" /> </td>
 					<td>
-						<img src={imgPill} class="TableMedication" />
-						<img src={imgPill} class="TableMedication" />
+						{#if frequency >= 2 || timeOfDay == "Before Bed"}
+							{#each Array(count) as _, i}
+								<img src={imgPill} class="TableMedication" key={i} alt="pil;"/>
+							{/each}
+						{/if}
 					</td>
 				</tr>
 			</tbody>

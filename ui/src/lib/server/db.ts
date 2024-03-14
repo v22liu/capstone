@@ -1,6 +1,6 @@
 import type { PatientRecord, PatientOverview, ClinicNotes } from '$lib/types/types';
 
-const BASE_URL = 'http://127.0.0.1:5000';
+const BASE_URL = 'http://127.0.0.1:8000';
 
 export async function createRecord(record: Omit<PatientRecord, 'id'>) {
 	try {
@@ -53,22 +53,21 @@ export async function updatePatientRecord(record: PatientRecord) {
 
 export async function getPatientOverview(patient_id: string) {
 	console.log('retrieving overview for', patient_id);
-	// `${BASE_URL}/patient-overview/${patient_id}`;
-	// const response = await fetch(`${BASE_URL}/patient-overview/${patient_id}`);
-	// const data = await response.json();
+	const response = await fetch(`${BASE_URL}/patient-overview/${patient_id}`);
+	const data = await response.json();
 
-	// return data;
+	return data;
 }
 
 export async function updatePatientOverview(patient_id: string, overview: PatientOverview) {
 	console.log('updating overview for', patient_id, overview);
-	// const response = await fetch(`${BASE_URL}/patient-overview/${patient_id}`, {
-	// 	method: 'PUT',
-	// 	headers: {
-	// 		'Content-Type': 'application/json'
-	// 	},
-	// 	body: JSON.stringify(overview)
-	// });
+	const response = await fetch(`${BASE_URL}/patient-overview/${patient_id}`, {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(overview)
+	});
 
 	// const data = await response.json();
 	// console.log(data.message);

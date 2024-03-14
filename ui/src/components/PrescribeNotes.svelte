@@ -21,6 +21,9 @@
 	import MedicalRecords from './MedicalRecords.svelte'; 
 	import { PrescriptionReason, Dosages, PrescriptionWarnings, PrescriptionTimings } from '$lib/prescription/prescription';
 
+	export let overview = {};
+
+	let { current_medication, allergies, conditions } = overview;
 	let name = 'Name',
 		dosage,
 		reason,
@@ -93,18 +96,24 @@
 						placeholder="Placeholder text (optional)"
 						light
 						rows={7}
+						bind:value={current_medication}
+						readonly
 					/>
 					<TextArea
 						labelText="Allergies"
 						placeholder="Placeholder text (optional)"
 						light
 						rows={7}
+						bind:value={allergies}
+						readonly
 					/>
 					<TextArea
 						labelText="Conditions"
 						placeholder="Placeholder text (optional)"
 						light
 						rows={7}
+						bind:value={conditions}
+						readonly
 					/>
 				</div>
 			</TabContent>
@@ -147,11 +156,11 @@
 					</Select>
 					<div class="InstructionStatement">
 						<div style="height:30px">take</div>
-						<NumberInput label="Count" light bind:value={count} />
+						<NumberInput label="Count" light bind:value={count} min={1} max={4} />
 						<div style="height:30px">pills</div>
-						<NumberInput label="Frequency" light bind:value={frequency} />
+						<NumberInput label="Frequency" light bind:value={frequency} min={1} max={5} />
 						<div style="height:30px">for</div>
-						<NumberInput label="Usage Period" light bind:value={usagePeriod} />
+						<NumberInput label="Usage Period" light bind:value={usagePeriod} min={1}/>
 						<div style="height:30px">days.</div>
 						<div style="height:30px">{count * frequency * usagePeriod} units dispensed.</div>
 					</div>

@@ -4,8 +4,10 @@
 	import MedicalRecords from './MedicalRecords.svelte';
 
 	export let patient = {};
+	export let overview = {};
 
 	let { id } = patient;
+	let { current_medication, allergies, conditions } = overview;
 </script>
 
 <div class="container">
@@ -16,7 +18,7 @@
 		<svelte:fragment slot="content">
 			<TabContent>
 				<Form method="POST" action="?/overview">
-					<input type="hidden" name="patient_id" value={1} />
+					<input type="hidden" name="patient_id" value={id} />
 					<div class="PatientInfo">
 						<TextArea
 							labelText="Current Medication"
@@ -24,6 +26,7 @@
 							light
 							rows={7}
 							name="current_medication"
+							bind:value={current_medication}
 						/>
 						<TextArea
 							labelText="Allergies"
@@ -31,6 +34,7 @@
 							light
 							rows={7}
 							name="allergies"
+							bind:value={allergies}
 						/>
 						<TextArea
 							labelText="Conditions"
@@ -38,6 +42,7 @@
 							light
 							rows={7}
 							name="conditions"
+							bind:value={conditions}
 						/>
 					</div>
 					<div class="buttons">
@@ -49,7 +54,7 @@
 				</Form>
 			</TabContent>
 				
-			<TabContent><MedicalRecords/></TabContent>
+			<TabContent><MedicalRecords /></TabContent>
 		</svelte:fragment>
 	</Tabs>
 </div>
