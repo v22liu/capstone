@@ -35,3 +35,21 @@ export const Dosages = [
 	'400mg',
 	'500mg'
 ];
+
+export const PrescriptionWarnings = {
+	'Chew Tablets': 'Tafuna Zote',
+	'Do Not Take While Pregnant': 'Si Wakati Wa Ujauzito',
+	'After Eating': 'Baaba Ya Kula',
+	'Stay Close to Toilet': 'Kufunga Choo',
+	'Insert Into Rectum': 'Weka Kidonge Kwenye Mjiko',
+	'Insert Into Vagina': 'Sehemu Ya Siri',
+	'Drink Water': 'Kunywa Maji Mengi',
+	'Do Not Drink Alcohol': 'Usinuwe Pombe',
+	'Take With Meals': 'Kwa Ya Chakula'
+};
+
+export const PrescriptionTimings = {
+	'As Needed': 'Inapo Hitajika',
+	Morning: 'Asubuhi',
+	'Before Bed': 'Katika Usiku'
+};

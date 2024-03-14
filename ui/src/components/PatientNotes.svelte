@@ -1,5 +1,5 @@
 <script>
-	import { Button, Tabs, Tab, TabContent, TextArea} from 'carbon-components-svelte';
+	import { Button, Tabs, Tab, TabContent, TextArea, Form } from 'carbon-components-svelte';
 	import Add from 'carbon-icons-svelte/lib/Add.svelte';
 	import MedicalRecords from './MedicalRecords.svelte';
 
@@ -15,31 +15,38 @@
 
 		<svelte:fragment slot="content">
 			<TabContent>
-				<div class="PatientInfo">
-					<TextArea
-						labelText="Current Medication"
-						placeholder="Placeholder text (optional)"
-						light
-						rows={7}
-					/>
-					<TextArea
-						labelText="Allergies"
-						placeholder="Placeholder text (optional)"
-						light
-						rows={7}
-					/>
-					<TextArea
-						labelText="Conditions"
-						placeholder="Placeholder text (optional)"
-						light
-						rows={7}
-					/>
-				</div>
-				<div class="buttons">
-					<a href="/prescribe/{id}">
-						<Button>Save & Prescribe</Button>
-					</a>
-				</div>
+				<Form method="POST" action="?/overview">
+					<input type="hidden" name="patient_id" value={1} />
+					<div class="PatientInfo">
+						<TextArea
+							labelText="Current Medication"
+							placeholder="Placeholder text (optional)"
+							light
+							rows={7}
+							name="current_medication"
+						/>
+						<TextArea
+							labelText="Allergies"
+							placeholder="Placeholder text (optional)"
+							light
+							rows={7}
+							name="allergies"
+						/>
+						<TextArea
+							labelText="Conditions"
+							placeholder="Placeholder text (optional)"
+							light
+							rows={7}
+							name="conditions"
+						/>
+					</div>
+					<div class="buttons">
+						<Button type="submit" kind="secondary">Save</Button>
+						<a href="/prescribe/{id}">
+							<Button type="submit">Save & Prescribe</Button>
+						</a>
+					</div>
+				</Form>
 			</TabContent>
 				
 			<TabContent><MedicalRecords/></TabContent>

@@ -2,6 +2,45 @@
 	import { ProgressBar, Button, TextInput } from 'carbon-components-svelte';
 	import Microphone from 'carbon-icons-svelte/lib/Microphone.svelte';
 	import Soundwave from '$lib/images/soundwave.jpg';
+
+	import { onMount } from 'svelte';
+	/**
+	 * @type {BlobPart[] | undefined}
+	 */
+	let media = [];
+	/**
+	 * @type {MediaRecorder | null}
+	 */
+	let mediaRecorder = null;
+	onMount(async () => {
+		const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+		mediaRecorder = new MediaRecorder(stream);
+		mediaRecorder.onstart = () => console.log('recording started');
+		mediaRecorder.ondataavailable = (e) => media.push(e.data);
+		mediaRecorder.onstop = function () {
+			console.log('stopped');
+			if (media.length === 0) {
+				console.log('no data');
+				return;
+			}
+			const audio = document.querySelector('audio');
+			if (!audio) {
+				console.log('no audio');
+				return;
+			}
+			const blob = new Blob(media, { type: 'audio/ogg; codecs=opus' });
+			media = [];
+			audio.src = window.URL.createObjectURL(blob);
+		};
+	});
+	function startRecording() {
+		// @ts-ignore
+		mediaRecorder.start();
+	}
+	function stopRecording() {
+		// @ts-ignore
+		mediaRecorder.stop();
+	}
 </script>
 
 <div>
@@ -19,7 +58,9 @@
 			status="finished"
 			style="width: 100%"
 		/>
-		<Button kind="secondary" icon={Microphone}>Record</Button>
+		<audio controls style="display: block;"></audio>
+		<Button kind="secondary" icon={Microphone} on:click={startRecording}>Record</Button>
+		<Button kind="danger" icon={Microphone} on:click={stopRecording}>Stop</Button>
 	</div>
 
 	<TextInput labelText="Name Identified" placeholder="John Doe" style="width:400px" />

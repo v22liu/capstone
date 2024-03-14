@@ -1,97 +1,111 @@
-// import type { PatientRecord } from "../../types/PatientRecord"
+import type { PatientRecord, PatientOverview, ClinicNotes } from '$lib/types/types';
 
-const db = new Map<string, PatientRecord>([
-	[
-		'1',
-		{
-			id: '1',
-			name: 'Ethan Alvizo',
-			dobD: '01',
-			dobM: 'Jan',
-			dobY: '1990',
-			sex: 'Male',
-			phone: '123-456-7890',
-			village: 'Village A',
-			natID: '1234567'
-		}
-	],
-	[
-		'2',
-		{
-			id: '2',
-			name: 'Hannah Tario',
-			dobD: '01',
-			dobM: 'Feb',
-			dobY: '1990',
-			sex: 'Female',
-			phone: '987-654-3210',
-			village: 'Village B',
-			natID: '1234567'
+const BASE_URL = 'http://127.0.0.1:5000';
 
-		}
-	],
-	[
-		'3',
-		{
-			id: '3',
-			name: 'Valerie Liu',
-			dobD: '01',
-			dobM: 'Mar',
-			dobY: '1990',
-			sex: 'Female',
-			phone: '555-555-5555',
-			village: 'Village C',
-			natID: '1234567'
-		}
-	],
-	[
-		'4',
-		{
-			id: '4',
-			name: 'Duru Uluk',
-			dobD: '01',
-			dobM: 'Apr',
-			dobY: '1990',
-			sex: 'Other',
-			phone: '999-999-9999',
-			village: 'Village D',
-			natID: '1234567'
-		}
-	]
-]);
+export async function createRecord(record: Omit<PatientRecord, 'id'>) {
+	try {
+		const response = await fetch(`${BASE_URL}/patients`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(record)
+		});
 
-export interface PatientRecord {
-	id: string;
-	name: string;
-	dobD: string,
-	dobM: string,
-	dobY: string,
-	sex: string;
-	phone: string;
-	village: string;
-	natID: string;
-}
-
-export async function createRecord(record: PatientRecord) {
-	db.set(record.id, record);
+		console.log(response);
+	} catch (error) {
+		console.error('Error creating patient record:', error);
+		throw error;
+	}
 }
 
 export async function getPatientRecords() {
-	return Array.from(db.values());
+	const response = await fetch(`${BASE_URL}/patients`);
+	const data = await response.json();
+
+	return data;
 }
 
 export async function getPatientRecord(id: string) {
-	return db.get(id);
-}
+	const response = await fetch(`${BASE_URL}/patients/${id}`);
+	const data = await response.json();
 
-export async function deletePatientRecord(id: string) {
-	db.delete(id);
+	return data;
 }
 
 export async function updatePatientRecord(record: PatientRecord) {
-	db.set(record.id, record);
+	try {
+		const response = await fetch(`${BASE_URL}/patients/${record.id}`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(record)
+		});
+
+		const data = await response.json();
+		console.log(data.message);
+	} catch (error) {
+		console.error('Error updating patient record:', error);
+		throw error;
+	}
 }
 
-export async function clearPatientRecords() {
-	db.clear();
+export async function getPatientOverview(patient_id: string) {
+	console.log('retrieving overview for', patient_id);
+	// `${BASE_URL}/patient-overview/${patient_id}`;
+	// const response = await fetch(`${BASE_URL}/patient-overview/${patient_id}`);
+	// const data = await response.json();
+
+	// return data;
+}
+
+export async function updatePatientOverview(patient_id: string, overview: PatientOverview) {
+	console.log('updating overview for', patient_id, overview);
+	// const response = await fetch(`${BASE_URL}/patient-overview/${patient_id}`, {
+	// 	method: 'PUT',
+	// 	headers: {
+	// 		'Content-Type': 'application/json'
+	// 	},
+	// 	body: JSON.stringify(overview)
+	// });
+
+	// const data = await response.json();
+	// console.log(data.message);
+}
+
+export async function getClinicNotes(patient_id: string) {
+	console.log('retrieving notes for', patient_id);
+	// const response = await fetch(`${BASE_URL}/clinic-notes/${patient_id}`);
+	// const data = await response.json();
+
+	// return data;
+}
+
+export async function createClinicNote(note: Omit<ClinicNotes, 'date'>) {
+	console.log('creating notes for', note.id, note);
+	// const response = await fetch(`${BASE_URL}/clinic-notes`, {
+	// 	method: 'POST',
+	// 	headers: {
+	// 		'Content-Type': 'application/json'
+	// 	},
+	// 	body: JSON.stringify(note)
+	// });
+
+	// const data = await response.json();
+	// console.log(data.message);
+}
+
+export async function updateClinicNote(note: Omit<ClinicNotes, 'date'>) {
+	console.log('updating notes for', note.id, note);
+	// const response = await fetch(`${BASE_URL}/clinic-notes/${notes.id}`, {
+	// 	method: 'PUT',
+	// 	headers: {
+	// 		'Content-Type': 'application/json'
+	// 	},
+	// 	body: JSON.stringify(note)
+	// });
+
+	// const data = await response.json();
+	// console.log(data.message);
 }
