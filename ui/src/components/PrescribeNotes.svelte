@@ -87,6 +87,31 @@
 
 		<svelte:fragment slot="content">
 			<TabContent>
+				<div class="PatientInfo">
+					<TextArea
+						labelText="Current Medication"
+						placeholder="Placeholder text (optional)"
+						light
+						rows={7}
+					/>
+					<TextArea
+						labelText="Allergies"
+						placeholder="Placeholder text (optional)"
+						light
+						rows={7}
+					/>
+					<TextArea
+						labelText="Conditions"
+						placeholder="Placeholder text (optional)"
+						light
+						rows={7}
+					/>
+				</div>
+			</TabContent>
+			<TabContent>
+				<MedicalRecords> </MedicalRecords> 	
+			</TabContent>
+			<TabContent>
 				<h1>Medication</h1>
 				<div class="medication">
 					<TextInput labelText="Drug Search" light bind:value={name} />
@@ -155,32 +180,6 @@
 					<Button on:click={printLabel}>Prescribe</Button>
 				</div>
 			</TabContent>
-			<TabContent>
-				<div class="PatientInfo">
-					<TextArea
-						labelText="Current Medication"
-						placeholder="Placeholder text (optional)"
-						light
-						rows={7}
-					/>
-					<TextArea
-						labelText="Allergies"
-						placeholder="Placeholder text (optional)"
-						light
-						rows={7}
-					/>
-					<TextArea
-						labelText="Conditions"
-						placeholder="Placeholder text (optional)"
-						light
-						rows={7}
-					/>
-				</div>
-			</TabContent>
-			<TabContent>
-				<MedicalRecords> </MedicalRecords> 	
-			</TabContent>
-
 			
 		</svelte:fragment>
 	</Tabs>
