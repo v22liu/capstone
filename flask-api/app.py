@@ -41,6 +41,37 @@ class Patient(db.Model):
             'voice_recording_path': self.voice_recording_path
         }
 
+class ClinicNote(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'), nullable=False)
+    title = db.Column(db.String(255))
+    date = db.Column(db.Date)
+    notes = db.Column(db.Text)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'patient_id': self.patient_id,
+            'title': self.title,
+            'date': self.date,
+            'notes': self.notes
+        }
+class PatientOverview(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'), nullable=False)
+    current_medication = db.Column(db.String(255))
+    allergies = db.Column(db.String(255))
+    conditions = db.Column(db.String(255))
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'patient_id': self.patient_id,
+            'current_medication': self.current_medication,
+            'allergies': self.allergies,
+            'conditions': self.conditions
+        }
+
 class PatientResources(Resource):
     def get(self):
         patients = Patient.query.all()
@@ -100,8 +131,75 @@ class PatientByIdResource(Resource):
         else:
             return {'message': 'Patient not found'}, 404
 
+class ClinicNoteResources(Resource):
+    def get(self):
+        clinic_notes = ClinicNote.query.filter_by(patient_id=json_data.get('patient_id')).all()
+        return [clinic_note.serialize() for clinic_note in clinic_notes]
+
+    def post(self):
+        json_data = request.get_json()
+
+        clinic_note = ClinicNote(
+            patient_id=json_data.get('patient_id'),
+            title=json_data.get('title'),
+            date=json_data.get('date'),
+            notes=json_data.get('notes')
+        )
+
+        db.session.add(clinic_note)
+        db.session.commit()
+
+        return {'message': 'Clinic note created successfully'}, 201
+
+class ClinicNoteByIdResource(Resource):
+    def get(self, clinic_note_id):
+        clinic_note = ClinicNote.query.get(clinic_note_id)
+        if clinic_note:
+            return clinic_note.serialize()
+        else:
+            return {'message': 'Clinic note not found'}, 404
+
+    def put(self, clinic_note_id):
+        clinic_note = ClinicNote.query.get(clinic_note_id)
+        if clinic_note:
+            json_data = request.get_json()
+
+            clinic_note.title = json_data.get('title')
+            clinic_note.date = json_data.get('date')
+            clinic_note.notes = json_data.get('notes')
+
+            db.session.commit()
+            return {'message': 'Clinic note updated successfully'}
+        else:
+            return {'message': 'Clinic note not found'}, 404
+
+class PatientOverviewByIdResource(Resource):
+    def get(self, patient_id):
+        patient_overview = PatientOverview.query.filter_by(patient_id=patient_id).first()
+        if patient_overview:
+            return patient_overview.serialize()
+        else:
+            return {'message': 'Patient overview not found'}, 404
+
+    def put(self, patient_id):
+        patient_overview = PatientOverview.query.filter_by(patient_id=patient_id)
+        if patient_overview:
+            json_data = request.get_json()
+
+            patient_overview.current_medication = json_data.get('current_medication')
+            patient_overview.allergies = json_data.get('allergies')
+            patient_overview.conditions = json_data.get('conditions')
+
+            db.session.commit()
+            return {'message': 'Patient overview updated successfully'}
+        else:
+            return {'message': 'Patient overview not found'}, 404
+
 api.add_resource(PatientResources, '/patients')
-api.add_resource(PatientByIdResource, '/patients/<int:patient_id>')  # New route for getting patient by ID
+api.add_resource(PatientByIdResource, '/patients/<int:patient_id>')
+api.add_resource(ClinicNoteResources, '/clinic-notes/<int:patient_id>')
+api.add_resource(ClinicNoteByIdResource, '/clinic-notes/<int:clinic_note_id>')
+api.add_resource(PatientOverviewByIdResource, '/patient-overview/<int:patient_id>')
 
 if __name__ == '__main__':
     app.run(debug=True)

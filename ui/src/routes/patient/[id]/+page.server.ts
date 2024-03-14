@@ -1,17 +1,28 @@
-import { getPatientRecord, updatePatientRecord } from '$lib/server/db';
+import {
+	getPatientRecord,
+	updatePatientRecord,
+	getPatientOverview,
+	updatePatientOverview,
+	getClinicNotes,
+	updateClinicNote
+} from '$lib/server/db';
 import { fail } from '@sveltejs/kit';
-import type { PatientRecord } from '$lib/types/PatientRecord.js';
+import type { PatientRecord, PatientOverview, ClinicNotes } from '$lib/types/types.js';
 
 export async function load({ params }) {
 	const record = await getPatientRecord(params.id);
+	const overview = await getPatientOverview(params.id);
+	const notes = await getClinicNotes(params.id);
 
 	return {
-		record
+		record,
+		overview,
+		notes
 	};
 }
 
 export const actions = {
-	createPatient: async ({ request }) => {
+	patient: async ({ request }) => {
 		const formData = await request.formData();
 
 		if (!formData.get('id')?.toString()) {
@@ -31,6 +42,33 @@ export const actions = {
 		};
 
 		await updatePatientRecord(record);
+
+		return { success: true };
+	},
+	overview: async ({ request }) => {
+		const formData = await request.formData();
+
+		const patient_id = formData.get('id')?.toString() || '';
+		const overview: PatientOverview = {
+			current_medication: formData.get('current_medication')?.toString() || '',
+			allergies: formData.get('allergies')?.toString() || '',
+			conditions: formData.get('conditions')?.toString() || ''
+		};
+
+		await updatePatientOverview(patient_id, overview);
+
+		return { success: true };
+	},
+	notes: async ({ request }) => {
+		const formData = await request.formData();
+
+		const notes: Omit<ClinicNotes, 'date'> = {
+			id: formData.get('id')?.toString() || '',
+			title: formData.get('title')?.toString() || '',
+			notes: formData.get('notes')?.toString() || ''
+		};
+
+		await updateClinicNote(notes);
 
 		return { success: true };
 	}

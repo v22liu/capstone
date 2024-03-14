@@ -19,7 +19,7 @@
 	let { id, name, sex, dobD, dobM, dobY, village, phone, natID } = patient;
 </script>
 
-<Form method="POST" action="?/createPatient">
+<Form method="POST" action="?/patient">
 	<input type="hidden" name="id" value={id} />
 	<FormGroup>
 		<TextInput light labelText="Name" placeholder="John Doe" bind:value={name} name="name" />
