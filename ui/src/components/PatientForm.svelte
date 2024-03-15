@@ -10,6 +10,7 @@
 		Button
 	} from 'carbon-components-svelte';
 	import Add from 'carbon-icons-svelte/lib/Add.svelte';
+	import { Villages } from '$lib/prescription/prescription';
 
 	export let patient = {};
 
@@ -28,8 +29,6 @@
 	phone = patient.phone
 	natID = patient.natID
 
-	// { id, name, sex, day_of_birth, month_of_birth, year_of_birth, village, phone, natID } = patient;
-
 	$: if (name || phone || natID) {
 		toggle()
 	}
@@ -42,7 +41,6 @@
 	</FormGroup>
 	<FormGroup>
 		<Select labelText="Sex" light name="sex" bind:selected={sex}>
-			<SelectItem value={null} text="" />
 			<SelectItem value="Male" text="Male" />
 			<SelectItem value="Female" text="Female" />
 			<SelectItem value="Other" text="Other" />
@@ -70,9 +68,9 @@
 	</FormGroup>
 	<FormGroup>
 		<Select labelText="Village" light name="village" bind:selected={village}>
-			<SelectItem value="Dar es Salaam" text="Dar es Salaam" />
-			<SelectItem value="Dodoma" text="Dodoma" />
-			<SelectItem value="Nansio" text="Nansio" />
+			{#each Villages as village}
+				<SelectItem value={village} text={village} />
+			{/each}
 		</Select>
 	</FormGroup>
 	<FormGroup>

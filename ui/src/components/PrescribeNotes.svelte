@@ -19,12 +19,13 @@
 	
 	import ScriptLabel from './ScriptLabel.svelte';
 	import MedicalRecords from './MedicalRecords.svelte'; 
-	import { PrescriptionReason, Dosages, PrescriptionWarnings, PrescriptionTimings } from '$lib/prescription/prescription';
+	import { PrescriptionReason, Dosages, PrescriptionWarnings, PrescriptionTimings, Medications, DefaultDrugSettings } from '$lib/prescription/prescription';
 
 	export let overview = {};
 
+	let bin, type;
 	let { current_medication, allergies, conditions } = overview;
-	let name = 'Name',
+	let name = 'Albendazole',
 		dosage,
 		reason,
 		count = 1,
@@ -33,13 +34,22 @@
 		timeOfDay,
 		warnings = [];
 
-	const bins = {
-		A: 1,
-		B: 2,
-		Name: '#'
-	};
+	$: if (name) {
+		dosage = DefaultDrugSettings[name].dosage;
+		bin = DefaultDrugSettings[name].bin;
+		reason = DefaultDrugSettings[name].reason;
+		count = parseFloat(DefaultDrugSettings[name].count);
+		type = DefaultDrugSettings[name].type;
+		frequency = parseInt(DefaultDrugSettings[name].frequency);
+		usagePeriod = parseInt(DefaultDrugSettings[name].usagePeriod);
+		timeOfDay = DefaultDrugSettings[name].timeOfDay;
+		warnings = DefaultDrugSettings[name].warnings ?? [];
 
-	$: bin = bins[name];
+		if (type !== 'pill') {
+			count = 1;
+			frequency = 1
+		}
+	}
 
 	$: prescription = {
 		name,
@@ -50,7 +60,8 @@
 		frequency,
 		usagePeriod,
 		timeOfDay,
-		warnings
+		warnings,
+		type
 	};
 
 	$: console.log(prescription);
@@ -123,7 +134,16 @@
 			<TabContent>
 				<h1>Medication</h1>
 				<div class="medication">
-					<TextInput labelText="Drug Search" light bind:value={name} />
+					<Select 
+						labelText="Drug Search" 
+						light 
+						bind:value={name} 
+						on:change={(e) => (name = e.target.value)}
+					>
+						{#each Medications as opt}
+							<SelectItem value={opt} text={opt} />
+						{/each}
+					</Select>
 					<Select
 						labelText="Dosage"
 						light
@@ -136,7 +156,7 @@
 					</Select>
 				</div>
 				<div class="medication">
-					<div>Location: Bin {bin}</div>
+					<div>Location: {bin ? `Bin ${bin}` : 'Unknown'}</div>
 					<div>Remaining Stock: X units</div>
 				</div>
 				<hr />
@@ -157,7 +177,7 @@
 					<div class="InstructionStatement">
 						<div style="height:30px">take</div>
 						<NumberInput label="Count" light bind:value={count} min={1} max={4} />
-						<div style="height:30px">pills</div>
+						<div style="height:30px">{type}</div>
 						<NumberInput label="Frequency" light bind:value={frequency} min={1} max={5} />
 						<div style="height:30px">for</div>
 						<NumberInput label="Usage Period" light bind:value={usagePeriod} min={1}/>
@@ -173,7 +193,7 @@
 						{/each}
 					</RadioButtonGroup>
 					{#each Object.entries(PrescriptionWarnings) as [opt, translatedOpt]}
-						<Checkbox labelText={opt} value={opt} bind:warnings on:change={() => {
+						<Checkbox labelText={opt} value={opt} bind:warnings checked={warnings.includes(opt)} on:change={() => {
 							if (warnings.includes(opt)) {
 								warnings = warnings.filter((w) => w !== opt);
 							} else {
