@@ -29,6 +29,7 @@
 			audio.src = window.URL.createObjectURL(blob);
 		};
 	});
+	
 	function startRecording() {
 		// @ts-ignore
 		mediaRecorder.start();
