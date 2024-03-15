@@ -253,9 +253,10 @@ class SpeakerRecognition(Resource):
                 continue
 
             try:
-                isMatch = asr_utils.speaker_recognition(file_path, voice_clip_path)
-                if isMatch:
-                    matching_patients.append(patient.serialize())
+                # isMatch = asr_utils.speaker_recognition(file_path, voice_clip_path)
+                # if isMatch:
+                #     matching_patients.append(patient.serialize())
+                matching_patients.append(patient.serialize())
             except Exception as e:
                 return {'message': 'An error occurred with audio conversion or speaker model: ' + str(e)}, 500
         return {'matching_patients': matching_patients}

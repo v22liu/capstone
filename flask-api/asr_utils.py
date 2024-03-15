@@ -1,7 +1,7 @@
 import glob
 from pydub import AudioSegment
 import os
-import nemo.collections.asr.models as nemo_asr_models
+# import nemo.collections.asr.models as nemo_asr_models
 
 def convert_audio_file(input_file, output_file):
     # Load the audio file
@@ -27,10 +27,10 @@ Output:
 - True if two provided audio files are from the same speaker 
 - False otherwise
 """
-def speaker_recognition(file_path_1, file_path_2):
-	speaker_model = nemo_asr_models.EncDecSpeakerLabelModel.from_pretrained(model_name='titanet_large')
-	decision = speaker_model.verify_speakers(file_path_1, file_path_2)
-	return decision
+# def speaker_recognition(file_path_1, file_path_2):
+# 	speaker_model = nemo_asr_models.EncDecSpeakerLabelModel.from_pretrained(model_name='titanet_large')
+# 	decision = speaker_model.verify_speakers(file_path_1, file_path_2)
+# 	return decision
 
 # TODO: add function for cleaning audio files (remove noise, etc.)
 
