@@ -155,7 +155,7 @@ export const DefaultDrugSettings = {
 		warnings: null
 	},
 
-	'Amoxicillin Tab.': {
+	'Amoxicillin Tab': {
 		dosage: '250mg',
 		bin: '42',
 		reason: 'Stomach',
