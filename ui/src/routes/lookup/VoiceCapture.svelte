@@ -28,9 +28,16 @@
 				console.log('no audio');
 				return;
 			}
-			const blob = new Blob(media, { type: 'audio/ogg; codecs=opus' });
+			const blob = new Blob(media, { type: 'audio/wav' });
 			media = [];
 			audio.src = window.URL.createObjectURL(blob);
+			console.log(audio.src);
+
+			var data = new FormData();
+			data.append('audio', blob, 'audio.wav');
+			console.log(data);
+
+			// TODO: send to server
 		};
 	});
 	function startRecording() {
