@@ -1,7 +1,7 @@
-from flask import Flask
+from flask import Flask, request
 from flask_restful import Api, Resource
 from flask_sqlalchemy import SQLAlchemy
-from flask import request
+import asr_utils
 
 app = Flask(__name__)
 api = Api(app)
@@ -71,22 +71,6 @@ class Note(db.Model):
             'date': self.date,
             'notes': self.notes
         }
-
-# class PatientOverview(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'), nullable=False)
-#     current_medication = db.Column(db.String(255))
-#     allergies = db.Column(db.String(255))
-#     conditions = db.Column(db.String(255))
-
-#     def serialize(self):
-#         return {
-#             'id': self.id,
-#             'patient_id': self.patient_id,
-#             'current_medication': self.current_medication,
-#             'allergies': self.allergies,
-#             'conditions': self.conditions
-#         }
 
 
 ## API Resources
@@ -222,11 +206,68 @@ class PatientOverviewByIdResource(Resource):
         else:
             return {'message': 'Patient overview not found'}, 404
 
+class SpeakerRecognition(Resource):
+    # for matching between two given audio files
+    # def post(self):
+    #     json_data = request.get_json()
+
+    #     file_path_1 = json_data.get('file_path_1')
+    #     file_path_2 = json_data.get('file_path_2')
+
+    #     # convert audio files to WAV, sample rate 16000, 1 channel
+    #     try:
+    #         asr_utils.convert_audio_file(file_path_1, file_path_1[:-4] + '.wav')
+    #         file_path_1 = file_path_1[:-4] + '.wav'
+    #         asr_utils.convert_audio_file(file_path_2, file_path_2[:-4] + '.wav')
+    #         file_path_2 = file_path_2[:-4] + '.wav'
+    #     except Exception as e:
+    #         return {'message': 'An error occurred with audio conversion: ' + str(e)}, 500
+
+    #     try:
+    #         isMatch = asr_utils.speaker_recognition(file_path_1, file_path_2)
+    #     except Exception as e:
+    #         return {'message': 'An error occurred with speaker model: ' + str(e)}, 500
+
+    #     return {'isMatch': isMatch}
+    
+    """
+    Matching between an input audio file and all patients' voice recordings
+    """
+    def post(self):
+        json_data = request.get_json()
+
+        # TODO: add filters for other patient details
+
+        file_path = json_data.get('file_path')
+        try:
+            asr_utils.convert_audio_file(file_path, file_path[:-4] + '.wav')
+            file_path = file_path[:-4] + '.wav'
+        except Exception as e:
+            return {'message': 'An error occurred with audio conversion: ' + str(e)}, 500
+
+        patients = Patient.query.all()
+        matching_patients = []
+        for patient in patients:
+            voice_clip_path = patient.voice_recording_path    # should already be in correct audio format
+            if not voice_clip_path:
+                continue
+
+            try:
+                isMatch = asr_utils.speaker_recognition(file_path, voice_clip_path)
+                if isMatch:
+                    matching_patients.append(patient.serialize())
+            except Exception as e:
+                return {'message': 'An error occurred with audio conversion or speaker model: ' + str(e)}, 500
+        return {'matching_patients': matching_patients}
+
+
 api.add_resource(PatientResource, '/patients')
 api.add_resource(PatientByIdResource, '/patients/<int:patient_id>')
 api.add_resource(NoteResource, '/notes')
 api.add_resource(NoteByIdResource, '/notes/<int:note_id>')
 api.add_resource(PatientOverviewByIdResource, '/patient-overview/<int:patient_id>')
+
+api.add_resource(SpeakerRecognition, '/speaker-recognition')
 
 if __name__ == '__main__':
     app.run(port=8000, debug=True)
