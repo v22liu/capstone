@@ -172,7 +172,6 @@
 							<RadioButton labelText={opt} value={opt} />
 						{/each}
 					</RadioButtonGroup>
-					<!-- <div style="display: flex;"> -->
 					{#each Object.entries(PrescriptionWarnings) as [opt, translatedOpt]}
 						<Checkbox labelText={opt} value={opt} bind:warnings on:change={() => {
 							if (warnings.includes(opt)) {
@@ -183,7 +182,6 @@
 						
 						}} />
 					{/each}
-					<!-- </div> -->
 				</div>
 				<div class="buttons">
 					<Button on:click={printLabel}>Prescribe</Button>
