@@ -3,6 +3,15 @@ from pydub import AudioSegment
 import os
 # import nemo.collections.asr.models as nemo_asr_models
 
+def convert_blob_to_wav(blob, output_file):
+    # Save the blob to a file
+    with open(output_file, 'wb') as f:
+        f.write(blob)
+
+    # Convert the file to WAV
+    convert_audio_file(output_file, output_file)
+    
+
 def convert_audio_file(input_file, output_file):
     # Load the audio file
     audio = AudioSegment.from_file(input_file)
