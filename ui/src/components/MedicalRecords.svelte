@@ -3,6 +3,7 @@
 	import Add from 'carbon-icons-svelte/lib/Add.svelte';
 
 	export let patient = {};
+	export let noEdit= false;
 	export let notes = []
 	let { id } = patient;
 
@@ -31,7 +32,7 @@
 </script>
 
 <div class="medicalRecords">
-	<div class="RecordsList">
+	<div class="RecordsList" style="min-width:200px">
 		<ButtonSet stacked>
 			{#each fakeNotes as note, index}
 				<Button kind="ghost" size="lg" on:click={() => selectedNote = fakeNotes[index]}>
@@ -46,18 +47,20 @@
 				</Button>
 			{/each}
 		</ButtonSet>
-		<Button icon={Add}>
-			New Record
-		</Button>
+		{#if !noEdit}
+			<Button icon={Add}>New Record</Button>
+		{/if}
+		
 	</div>
 	<section id="FullRecord">
-		<TextInput light labelText="Record Name" placeholder="Clinic Notes" bind:value={selectedNote.title}></TextInput>
+		<TextArea light labelText="Record Name" placeholder="Clinic Notes" bind:value={selectedNote.title} readonly={noEdit} rows={1}></TextArea>
 		<TextArea
 			labelText="Record Details"
 			placeholder="Placeholder text (optional)"
 			light
 			rows={25}
 			bind:value={selectedNote.notes}
+			readonly={noEdit}
 		/>
 	</section>
 </div>
@@ -85,6 +88,7 @@
 		margin-top: 1rem;
 		gap: 1rem;
 	}
+	
 	section {
 		width: 100%;
 	}

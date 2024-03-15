@@ -91,6 +91,7 @@
 			body.appendChild(child);
 		}
 	}
+	let noEdit=true;
 </script>
 
 <div class="container">
@@ -126,10 +127,14 @@
 						bind:value={conditions}
 						readonly
 					/>
+					
+					<div style="display:flex; justify-content:end; margin:8px"><Button kind="tertiary">Update Patient Record</Button></div>
 				</div>
 			</TabContent>
 			<TabContent>
-				<MedicalRecords> </MedicalRecords> 	
+				<div style="height:630px"> <MedicalRecords {noEdit}> </MedicalRecords> </div>
+				<div style="display:flex; justify-content:end; margin:8px"><Button kind="tertiary">Update Patient Record</Button></div>
+				
 			</TabContent>
 			<TabContent>
 				<h1>Medication</h1>
