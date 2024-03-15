@@ -19,7 +19,7 @@
 	let { id, name, sex, dobD, dobM, dobY, village, phone, natID } = patient;
 </script>
 
-<Form method="POST" action="?/createPatient">
+<Form method="POST" action="?/patient">
 	<input type="hidden" name="id" value={id} />
 	<FormGroup>
 		<TextInput light labelText="Name" placeholder="John Doe" bind:value={name} name="name" />
@@ -33,22 +33,22 @@
 	</FormGroup>
 	<FormGroup legendText = "Date of Birth">
 	<div style="display: flex; flex-direction: row; gap: 8px">
-		<Select labelText="Month" light name="date of birth Month" bind:selected={dobM}>
-			<SelectItem value="Jan" text="Jan" />
-			<SelectItem value="Feb" text="Feb" />
-			<SelectItem value="Mar" text="Mar" />
-			<SelectItem value="Apr" text="Apr" />
-			<SelectItem value="May" text="May" />
-			<SelectItem value="Jun" text="Jun" />
-			<SelectItem value="Jul" text="Jul" />
-			<SelectItem value="Aug" text="Aug" />
-			<SelectItem value="Sept" text="Sept" />
-			<SelectItem value="Oct" text="Oct" />
-			<SelectItem value="Nov" text="Nov" />
-			<SelectItem value="Dec" text="Dec" />
+		<Select labelText="Month" light name="month_of_birth" bind:selected={dobM}>
+			<SelectItem value=1 text="Jan" />
+			<SelectItem value=2 text="Feb" />
+			<SelectItem value=3 text="Mar" />
+			<SelectItem value=4 text="Apr" />
+			<SelectItem value=5 text="May" />
+			<SelectItem value=6 text="Jun" />
+			<SelectItem value=7 text="Jul" />
+			<SelectItem value=8 text="Aug" />
+			<SelectItem value=9 text="Sept" />
+			<SelectItem value=10 text="Oct" />
+			<SelectItem value=11 text="Nov" />
+			<SelectItem value=12 text="Dec" />
 		</Select>
-		<TextInput light labelText="Day" placeholder="01" bind:value={dobD} name="date of birth day" />
-		<TextInput light labelText="Year" placeholder="1990" bind:value={dobY} name="date of birth year" />
+		<TextInput light labelText="Day" placeholder="01" bind:value={dobD} name="day_of_birth" />
+		<TextInput light labelText="Year" placeholder="1990" bind:value={dobY} name="year_of_birth" />
 	</div>
 	</FormGroup>
 	<FormGroup>

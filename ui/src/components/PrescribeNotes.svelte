@@ -1,6 +1,9 @@
 <script>
+// @ts-nocheck
+
 	import {
 		Button,
+		Checkbox,
 		Tabs,
 		Tab,
 		TabContent,
@@ -9,13 +12,18 @@
 		Select,
 		SelectItem,
 		MultiSelect,
-		NumberInput
+		NumberInput,
+		RadioButtonGroup,
+		RadioButton
 	} from 'carbon-components-svelte';
 	
 	import ScriptLabel from './ScriptLabel.svelte';
 	import MedicalRecords from './MedicalRecords.svelte'; 
-	import { PrescriptionReason, Dosages } from '$lib/prescription/prescription';
+	import { PrescriptionReason, Dosages, PrescriptionWarnings, PrescriptionTimings } from '$lib/prescription/prescription';
 
+	export let overview = {};
+
+	let { current_medication, allergies, conditions } = overview;
 	let name = 'Name',
 		dosage,
 		reason,
@@ -23,7 +31,7 @@
 		frequency = 1,
 		usagePeriod = 1,
 		timeOfDay,
-		warnings;
+		warnings = [];
 
 	const bins = {
 		A: 1,
@@ -88,25 +96,30 @@
 						placeholder="Placeholder text (optional)"
 						light
 						rows={7}
+						bind:value={current_medication}
+						readonly
 					/>
 					<TextArea
 						labelText="Allergies"
 						placeholder="Placeholder text (optional)"
 						light
 						rows={7}
+						bind:value={allergies}
+						readonly
 					/>
 					<TextArea
 						labelText="Conditions"
 						placeholder="Placeholder text (optional)"
 						light
 						rows={7}
+						bind:value={conditions}
+						readonly
 					/>
 				</div>
 			</TabContent>
 			<TabContent>
 				<MedicalRecords> </MedicalRecords> 	
 			</TabContent>
-
 			<TabContent>
 				<h1>Medication</h1>
 				<div class="medication">
@@ -138,30 +151,45 @@
 						on:change={(e) => (reason = e.target.value)}
 					>
 						{#each Object.entries(PrescriptionReason) as [opt, translatedOpt]}
-							<SelectItem value={translatedOpt} text={opt} />
+							<SelectItem value={opt} text={opt} />
 						{/each}
 					</Select>
 					<div class="InstructionStatement">
 						<div style="height:30px">take</div>
-						<NumberInput label="Count" light bind:value={count} />
+						<NumberInput label="Count" light bind:value={count} min={1} max={4} />
 						<div style="height:30px">pills</div>
-						<NumberInput label="Frequency" light bind:value={frequency} />
+						<NumberInput label="Frequency" light bind:value={frequency} min={1} max={5} />
 						<div style="height:30px">for</div>
-						<NumberInput label="Usage Period" light bind:value={usagePeriod} />
+						<NumberInput label="Usage Period" light bind:value={usagePeriod} min={1}/>
 						<div style="height:30px">days.</div>
 						<div style="height:30px">{count * frequency * usagePeriod} units dispensed.</div>
 					</div>
-					<Select labelText="Time of Day (if specific)" style="max-width:300px" light />
-					<MultiSelect
-						titleText="Drug Warnings or Special Instructions (select up to 3)"
-						style="max-width:800px"
-						light
-					/>
+					<RadioButtonGroup
+						legendText="Drug Warnings or Special Instructions (select up to 3)"
+						bind:selected={timeOfDay}
+					>
+						{#each Object.entries(PrescriptionTimings) as [opt, translatedOpt]}
+							<RadioButton labelText={opt} value={opt} />
+						{/each}
+					</RadioButtonGroup>
+					<!-- <div style="display: flex;"> -->
+					{#each Object.entries(PrescriptionWarnings) as [opt, translatedOpt]}
+						<Checkbox labelText={opt} value={opt} bind:warnings on:change={() => {
+							if (warnings.includes(opt)) {
+								warnings = warnings.filter((w) => w !== opt);
+							} else {
+								warnings = [...warnings, opt];
+							}
+						
+						}} />
+					{/each}
+					<!-- </div> -->
 				</div>
 				<div class="buttons">
 					<Button on:click={printLabel}>Prescribe</Button>
 				</div>
 			</TabContent>
+			
 		</svelte:fragment>
 	</Tabs>
 </div>
@@ -214,7 +242,7 @@
 
 	.InstructionStatement {
 		display: flex;
-		align-items: end;
+		align-items: flex-end;
 		padding: 8px;
 		gap: 16px;
 	}

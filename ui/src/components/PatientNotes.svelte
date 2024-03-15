@@ -1,11 +1,13 @@
 <script>
-	import { Button, Tabs, Tab, TabContent, TextArea} from 'carbon-components-svelte';
+	import { Button, Tabs, Tab, TabContent, TextArea, Form } from 'carbon-components-svelte';
 	import Add from 'carbon-icons-svelte/lib/Add.svelte';
 	import MedicalRecords from './MedicalRecords.svelte';
 
 	export let patient = {};
+	export let overview = {};
 
 	let { id } = patient;
+	let { current_medication, allergies, conditions } = overview;
 </script>
 
 <div class="container">
@@ -15,34 +17,44 @@
 
 		<svelte:fragment slot="content">
 			<TabContent>
-				<div class="PatientInfo">
-					<TextArea
-						labelText="Current Medication"
-						placeholder="Placeholder text (optional)"
-						light
-						rows={7}
-					/>
-					<TextArea
-						labelText="Allergies"
-						placeholder="Placeholder text (optional)"
-						light
-						rows={7}
-					/>
-					<TextArea
-						labelText="Conditions"
-						placeholder="Placeholder text (optional)"
-						light
-						rows={7}
-					/>
-				</div>
-				<div class="buttons">
-					<a href="/prescribe/{id}">
-						<Button>Save & Prescribe</Button>
-					</a>
-				</div>
+				<Form method="POST" action="?/overview">
+					<input type="hidden" name="patient_id" value={id} />
+					<div class="PatientInfo">
+						<TextArea
+							labelText="Current Medication"
+							placeholder="Placeholder text (optional)"
+							light
+							rows={7}
+							name="current_medication"
+							bind:value={current_medication}
+						/>
+						<TextArea
+							labelText="Allergies"
+							placeholder="Placeholder text (optional)"
+							light
+							rows={7}
+							name="allergies"
+							bind:value={allergies}
+						/>
+						<TextArea
+							labelText="Conditions"
+							placeholder="Placeholder text (optional)"
+							light
+							rows={7}
+							name="conditions"
+							bind:value={conditions}
+						/>
+					</div>
+					<div class="buttons">
+						<Button type="submit" kind="secondary">Save</Button>
+						<a href="/prescribe/{id}">
+							<Button type="submit">Save & Prescribe</Button>
+						</a>
+					</div>
+				</Form>
 			</TabContent>
 				
-			<TabContent><MedicalRecords/></TabContent>
+			<TabContent><MedicalRecords /></TabContent>
 		</svelte:fragment>
 	</Tabs>
 </div>
