@@ -9,6 +9,9 @@
 	import NewPatient from '../../components/NewPatientCard.svelte';
 
 	export let data;
+
+	let useText = false;
+	let useVoice = false;
 </script>
 
 <svelte:head>
@@ -25,8 +28,8 @@
 	</p>
 </section>
 <section class="capture-container" style="background-color: #F4F4F4;">
-	<PersonalIdentifier />
-	<VoiceCapture />
+	<PersonalIdentifier toggle={() => useText = true} />
+	<VoiceCapture toggle={() => useVoice = true}/>
 </section>
 <section class="search-container" style="background-color: #F4F4F4;">
 	<div
@@ -34,8 +37,8 @@
 	>
 		<div style="display: flex; gap: 1rem; align-items: center;">
 			<p style="font-size: 0.9rem">Search With:</p>
-			<Tag icon={ErrorFilled} type="outline">Personal Identifiers</Tag>
-			<Tag icon={CheckmarkFilled} type="outline">Speech to Text</Tag>
+			<Tag icon={useText ? CheckmarkFilled : ErrorFilled} type={useText ? "green" : "outline"}>Personal Identifiers</Tag>
+			<Tag icon={useVoice ? CheckmarkFilled : ErrorFilled} type={useVoice ? "green" : "outline"}>Speech to Text</Tag>
 		</div>
 		<Button
 			icon={Search}
@@ -43,6 +46,9 @@
 				const section = document.getElementById('patient-section');
 
 				if (section) section.scrollIntoView({behavior: 'smooth'});
+
+				useText = false;
+				useVoice = false;
 			}}>Search for Patient</Button
 		>
 	</div>

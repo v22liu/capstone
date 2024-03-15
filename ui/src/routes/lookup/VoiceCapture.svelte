@@ -40,7 +40,13 @@
 	function stopRecording() {
 		// @ts-ignore
 		mediaRecorder.stop();
+		toggle();
 	}
+
+	/**
+	 * @type {() => void}
+	 */
+	 export let toggle;
 </script>
 
 <div>

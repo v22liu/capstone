@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
 	import {
 		TextInput,
 		Select,
@@ -11,12 +13,26 @@
 
 	export let patient = {};
 
-	/**
-	 * @type {string | null}
-	 */
 	export let cta = null;
+	export let toggle;
 
-	let { id, name, sex, day_of_birth, month_of_birth, year_of_birth, village, phone, natID } = patient;
+	let id, name, sex, day_of_birth, month_of_birth, year_of_birth, village, phone, natID;
+
+	id = patient.id;
+	name = patient.name
+	// sex = patient.sex
+	day_of_birth = patient.day_of_birth
+	month_of_birth = patient.month_of_birth
+	year_of_birth = patient.year_of_birth
+	village = patient.village
+	phone = patient.phone
+	natID = patient.natID
+
+	// { id, name, sex, day_of_birth, month_of_birth, year_of_birth, village, phone, natID } = patient;
+
+	$: if (name || phone || natID) {
+		toggle()
+	}
 </script>
 
 <Form method="POST" action="?/patient">
@@ -26,6 +42,7 @@
 	</FormGroup>
 	<FormGroup>
 		<Select labelText="Sex" light name="sex" bind:selected={sex}>
+			<SelectItem value={null} text="" />
 			<SelectItem value="Male" text="Male" />
 			<SelectItem value="Female" text="Female" />
 			<SelectItem value="Other" text="Other" />
