@@ -14,13 +14,13 @@
 	export let patient = {};
 
 	export let cta = null;
-	export let toggle;
+	export let toggle = () => {};
 
 	let id, name, sex, day_of_birth, month_of_birth, year_of_birth, village, phone, natID;
 
 	id = patient.id;
 	name = patient.name
-	// sex = patient.sex
+	sex = patient.sex
 	day_of_birth = patient.day_of_birth
 	month_of_birth = patient.month_of_birth
 	year_of_birth = patient.year_of_birth
