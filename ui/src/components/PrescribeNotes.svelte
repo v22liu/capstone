@@ -48,7 +48,7 @@
 		if (type !== 'pill') {
 			count = 1;
 			frequency = 1
-		}
+		} 
 	}
 
 	$: prescription = {
@@ -157,7 +157,7 @@
 				</div>
 				<div class="medication">
 					<div>Location: {bin ? `Bin ${bin}` : 'Unknown'}</div>
-					<div>Remaining Stock: X units</div>
+					<div>Remaining Stock: 752 units</div>
 				</div>
 				<hr />
 				<h1>Prescription Instructions</h1>
@@ -174,35 +174,49 @@
 							<SelectItem value={opt} text={opt} />
 						{/each}
 					</Select>
+					<div style="display:flex; flex-direction:column">
 					<div class="InstructionStatement">
 						<div style="height:30px">take</div>
 						<NumberInput label="Count" light bind:value={count} min={1} max={4} />
 						<div style="height:30px">{type}</div>
 						<NumberInput label="Frequency" light bind:value={frequency} min={1} max={5} />
-						<div style="height:30px">for</div>
+						<div style="height:30px">a day for</div>
 						<NumberInput label="Usage Period" light bind:value={usagePeriod} min={1}/>
 						<div style="height:30px">days.</div>
-						<div style="height:30px">{count * frequency * usagePeriod} units dispensed.</div>
 					</div>
-					<RadioButtonGroup
-						legendText="Drug Warnings or Special Instructions (select up to 3)"
-						bind:selected={timeOfDay}
-					>
-						{#each Object.entries(PrescriptionTimings) as [opt, translatedOpt]}
-							<RadioButton labelText={opt} value={opt} />
-						{/each}
-					</RadioButtonGroup>
-					{#each Object.entries(PrescriptionWarnings) as [opt, translatedOpt]}
-						<Checkbox labelText={opt} value={opt} bind:warnings checked={warnings.includes(opt)} on:change={() => {
-							if (warnings.includes(opt)) {
-								warnings = warnings.filter((w) => w !== opt);
-							} else {
-								warnings = [...warnings, opt];
-							}
+					<div style="height:30px">{count * frequency * usagePeriod} units dispensed.</div>
+					</div>
+
+					<div style="display:flex; flex-direction:column; gap:4px">
+					<p> Drug Warnings and Special Instructions (select up to 3) </p>
+					<div style="display:flex; flex-direction:row;">
 						
-						}} />
-					{/each}
+						<div style="width:200px">
+							<p> Medication Timing:</p>
+							<RadioButtonGroup orientation = "vertical"
+								bind:selected={timeOfDay}
+							>
+								{#each Object.entries(PrescriptionTimings) as [opt, translatedOpt]}
+									<RadioButton labelText={opt} value={opt} />
+								{/each}
+							</RadioButtonGroup>
+						</div>
+						<div>
+							<p> Drug Warnings:</p>
+							{#each Object.entries(PrescriptionWarnings) as [opt, translatedOpt]}
+								<Checkbox labelText={opt} value={opt} bind:warnings checked={warnings.includes(opt)} on:change={() => {
+								if (warnings.includes(opt)) {
+									warnings = warnings.filter((w) => w !== opt);
+								} else {
+									warnings = [...warnings, opt];
+								}
+								}} />
+							{/each}
+						</div>
+					</div>
 				</div>
+				</div>
+
 				<div class="buttons">
 					<Button on:click={printLabel}>Prescribe</Button>
 				</div>
