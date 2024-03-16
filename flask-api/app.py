@@ -1,9 +1,12 @@
 from flask import Flask, request
 from flask_restful import Api, Resource
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 import asr_utils
+import os
 
 app = Flask(__name__)
+CORS(app, origins="*")
 api = Api(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../../db/database.sqlite'
@@ -234,32 +237,45 @@ class SpeakerRecognition(Resource):
     Matching between an input audio file and all patients' voice recordings
     """
     def post(self):
-        json_data = request.get_json()
+        files = request.files
+        file = files.get('file')
+        if not file:
+            return {'message': 'No file uploaded'}, 400
 
-        # TODO: add filters for other patient details
+        audio_stream = file.read()
+        audio_file_dir = os.path.join(os.path.dirname(__file__), 'audios')
+        audio_path = os.path.join(audio_file_dir, 'temp.wav')
+        with open(audio_path, 'wb') as f:
+            f.write(audio_stream)
+            f.close()
+            asr_utils.convert_audio_file(audio_path, audio_path[:-4] + '.wav')
 
-        file_path = json_data.get('file_path')
-        try:
-            asr_utils.convert_audio_file(file_path, file_path[:-4] + '.wav')
-            file_path = file_path[:-4] + '.wav'
-        except Exception as e:
-            return {'message': 'An error occurred with audio conversion: ' + str(e)}, 500
+        return {'message': 'File received successfully'}
 
-        patients = Patient.query.all()
-        matching_patients = []
-        for patient in patients:
-            voice_clip_path = patient.voice_recording_path    # should already be in correct audio format
-            if not voice_clip_path:
-                continue
+        # json_data = request.get_json()
 
-            try:
-                # isMatch = asr_utils.speaker_recognition(file_path, voice_clip_path)
-                # if isMatch:
-                #     matching_patients.append(patient.serialize())
-                matching_patients.append(patient.serialize())
-            except Exception as e:
-                return {'message': 'An error occurred with audio conversion or speaker model: ' + str(e)}, 500
-        return {'matching_patients': matching_patients}
+        # file_path = json_data.get('file_path')
+        # try:
+        #     asr_utils.convert_audio_file(file_path, file_path[:-4] + '.wav')
+        #     file_path = file_path[:-4] + '.wav'
+        # except Exception as e:
+        #     return {'message': 'An error occurred with audio conversion: ' + str(e)}, 500
+
+        # patients = Patient.query.all()
+        # matching_patients = []
+        # for patient in patients:
+        #     voice_clip_path = patient.voice_recording_path    # should already be in correct audio format
+        #     if not voice_clip_path:
+        #         continue
+
+        #     try:
+        #         # isMatch = asr_utils.speaker_recognition(file_path, voice_clip_path)
+        #         # if isMatch:
+        #         #     matching_patients.append(patient.serialize())
+        #         matching_patients.append(patient.serialize())
+        #     except Exception as e:
+        #         return {'message': 'An error occurred with audio conversion or speaker model: ' + str(e)}, 500
+        # return {'matching_patients': matching_patients}
 
 
 api.add_resource(PatientResource, '/patients')
