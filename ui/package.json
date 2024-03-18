@@ -38,6 +38,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"audio-recorder": "^0.8.0",
 		"dexie": "^3.2.5"
 	}
 }

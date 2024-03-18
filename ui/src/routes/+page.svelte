@@ -14,23 +14,19 @@
 <section>
 	<h2>Welcome to Mission Trip 2024!</h2>
 	<div>
-		<button>
-			<Search size={100} />
-			<p>Patient Lookup</p>
-		</button>
-		<button>
-			<Undo size={100} />
-			<p>Last Patient</p></button
-		>
-		<button>
+		<a href= /lookup>
+			<Search size={100}/> <p>Patient Lookup</p>
+		</a>
+		<a href= /create>
 			<AddAlt size={100} />
-			<p>New Patient</p></button
-		>
-		<button>
+			<p>New Patient</p>
+		</a>
+		<a href= /catalogue>
 			<Catalog size={100} />
-			<p>Drug Catalogue</p></button
-		>
+			<p>Drug Catalogue</p>
+		</a>
 	</div>
+	
 </section>
 
 <style>
@@ -40,7 +36,7 @@
 		justify-content: center;
 		align-items: flex-start;
 		height: 80vh;
-		width: 65vw;
+		width: 50vw;
 		margin: 0 auto;
 	}
 	h2 {
@@ -53,7 +49,13 @@
 		justify-content: space-between;
 		width: 100%;
 	}
-	button {
+	a {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		color: black;
+		background-color: #f4f4f4;
 		font-size: 1.5rem;
 		border: none;
 		height: 15rem;
