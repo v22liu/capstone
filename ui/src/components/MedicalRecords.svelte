@@ -3,46 +3,62 @@
 	import Add from 'carbon-icons-svelte/lib/Add.svelte';
 
 	export let patient = {};
+	export let notes = []
 	let { id } = patient;
+
+	const fakeNotes = [
+		{
+			title: 'Clinic Visit',
+			date: new Date('2024-05-21'),
+			note_id: '1',
+			notes: 'This is a note about the patient in the Spring of 2024.'
+		},
+		{
+			title: 'Clinic Visit',
+			date: new Date('2023-08-21'),
+			note_id: '2',
+			notes: 'This is a note about the patient in the Fall of 2023.'
+		},
+		{
+			title: 'Clinic Visit',
+			date: new Date('2023-06-21'),
+			note_id: '3',
+			notes: 'This is a note about the patient in the Summer of 2023.'
+		}
+	]
+	
+	let selectedNote = fakeNotes[0]
 </script>
 
-<div style="display:none; width:100%">
-	<section id="EmptyRecord" style="display:flex; flex-direction:column; gap:16px;">
-		<TextInput light labelText="Record Name" placeholder="Clinic Notes 2024"></TextInput>
+<div class="medicalRecords">
+	<div class="RecordsList">
+		<ButtonSet stacked>
+			{#each fakeNotes as note, index}
+				<Button kind="ghost" size="lg" on:click={() => selectedNote = fakeNotes[index]}>
+					<div style="display: flex; flex-direction: column;">
+						<p>
+							{note.title}
+						</p>
+						<p>
+							{note.date.toLocaleString('en-US', { month: 'long', year: 'numeric' })}
+						</p>
+					</div>
+				</Button>
+			{/each}
+		</ButtonSet>
+		<Button icon={Add}>
+			New Record
+		</Button>
+	</div>
+	<section id="FullRecord">
+		<TextInput light labelText="Record Name" placeholder="Clinic Notes" bind:value={selectedNote.title}></TextInput>
 		<TextArea
 			labelText="Record Details"
 			placeholder="Placeholder text (optional)"
 			light
 			rows={25}
+			bind:value={selectedNote.notes}
 		/>
-		<Button
-			on:click={() => {
-				const section = document.getElementById('EmptyRecord');
-				if (section) section.replaceWith(FullRecord);
-			}}>Save Record</Button
-		>
-	</section>
-</div>
-
-<div class="medicalRecords">
-	<div class="RecordsList">
-		<div>
-			<ButtonSet stacked>
-				<Button kind="ghost">X-ray 2024</Button>
-				<Button kind="ghost">Check up 2023</Button>
-				<Button kind="ghost">Surgery 2023</Button>
-			</ButtonSet>
-		</div>
-		<Button
-			icon={Add}
-			on:click={() => {
-				const section = document.getElementById('FullRecord');
-				if (section) section.replaceWith(EmptyRecord);
-			}}>New Record</Button
-		>
-	</div>
-	<section id="FullRecord">
-		<TextArea placeholder="Placeholder text (optional)" light rows={33} />
 	</section>
 </div>
 
@@ -55,7 +71,7 @@
 	}
 	.RecordsList {
 		display: flex;
-		width: 15%;
+		width: 25%;
 		padding: 16px;
 		gap: 8px;
 		border-bottom: #8d8d8d;
@@ -71,5 +87,11 @@
 	}
 	section {
 		width: 100%;
+	}
+
+	#FullRecord {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
 	}
 </style>
