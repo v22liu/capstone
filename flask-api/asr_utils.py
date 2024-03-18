@@ -41,6 +41,17 @@ Output:
 # 	decision = speaker_model.verify_speakers(file_path_1, file_path_2)
 # 	return decision
 
+def write_audio_to_file(file):
+    audio_stream = file.read()
+    audio_file_dir = os.path.join(os.path.dirname(__file__), 'assets/audio')
+    audio_path = os.path.join(audio_file_dir, 'temp.wav')
+    with open(audio_path, 'wb') as f:
+        f.write(audio_stream)
+        f.close()
+    convert_audio_file(audio_path, audio_path[:-4] + '.wav')
+
+
+
 # TODO: add function for cleaning audio files (remove noise, etc.)
 
 # TODO: add function for speech-to-text

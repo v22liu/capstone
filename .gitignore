@@ -1,3 +1,7 @@
 __pycache__/
 instance/
 machine-learning/data/
+*/.DS_Store
+
+# ignore temp audio files
+*/temp.wav

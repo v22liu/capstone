@@ -1,17 +1,21 @@
 <script>
 	import Button from 'carbon-components-svelte/src/Button/Button.svelte';
-	import profilePic from '$lib/images/profile_photo.png';
+	// import profilePic from '$lib/images/profile/profile_photo.png';
 
 	export let patient = {};
 	/**
 	 * @type {any}
 	 */
-	let { name, sex, day_of_birth, month_of_birth, year_of_birth, village, phone, id, natID } = patient;
+	let { name, sex, day_of_birth, month_of_birth, year_of_birth, village, phone, id, natID, photo_file_path, audio_file_path } = patient;
+	let photoPath = photo_file_path ? `$lib/images/profile/${photo_file_path}` : '$lib/images/profile/profile_photo.png';
+	const profilePics = import.meta.glob('$lib/images/profile/*', { eager: true });
 </script>
 
 <div class="card">
 	<div class="profile_pic">
-		<img src={profilePic} />
+		<!-- {
+			profilePics[photoPath] || <img src={profilePics[photoPath]} />
+		} -->
 	</div>
 
 	<div class="card_info">

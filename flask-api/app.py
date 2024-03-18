@@ -1,9 +1,12 @@
 from flask import Flask, request
 from flask_restful import Api, Resource
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 import asr_utils
+import os
 
 app = Flask(__name__)
+CORS(app, origins="*")
 api = Api(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../../db/database.sqlite'
@@ -234,17 +237,18 @@ class SpeakerRecognition(Resource):
     Matching between an input audio file and all patients' voice recordings
     """
     def post(self):
-        json_data = request.get_json()
+        files = request.files
+        file = files.get('file')
+        if not file:
+            return {'message': 'No file uploaded'}, 400
 
-        # TODO: add filters for other patient details
-
-        file_path = json_data.get('file_path')
         try:
-            asr_utils.convert_audio_file(file_path, file_path[:-4] + '.wav')
-            file_path = file_path[:-4] + '.wav'
+            asr_utils.write_audio_to_file(file)
         except Exception as e:
-            return {'message': 'An error occurred with audio conversion: ' + str(e)}, 500
+            return {'message': 'An error occurred with saving audio to file: ' + str(e)}, 500
+        print('Audio file saved successfully')
 
+        # return {'message': 'File received successfully'}
         patients = Patient.query.all()
         matching_patients = []
         for patient in patients:

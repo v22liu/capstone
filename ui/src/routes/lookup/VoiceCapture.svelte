@@ -24,9 +24,26 @@
 				console.log('no audio');
 				return;
 			}
-			const blob = new Blob(media, { type: 'audio/ogg; codecs=opus' });
+			const audioBlob = new Blob(media, { type: 'audio/wav' });
+			audio.src = URL.createObjectURL(audioBlob);
 			media = [];
-			audio.src = window.URL.createObjectURL(blob);
+
+			var data = new FormData();
+			data.append('file', audioBlob, audio.src);
+			console.log(data.get('file'));
+
+			fetch('http://127.0.0.1:8000/speaker-recognition', {
+				method: 'POST',
+				body: data,
+				cache: 'no-cache',
+			})
+				.then((response) => response.json())
+				.then((data) => {
+					console.log('Success:', data);
+				})
+				.catch((error) => {
+					console.error('Error:', error);
+				});
 		};
 	});
 	
