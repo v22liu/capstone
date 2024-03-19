@@ -71,6 +71,18 @@ export async function updatePatientOverview(patient_id: string, overview: Patien
 	// console.log(data.message);
 }
 
+export async function speakerRecognition(audioData: FormData) {
+	console.log('finding matching patient for audio data');
+	const response = await fetch(`${BASE_URL}/speaker-recognition`, {
+		method: 'POST',
+		body: audioData,
+		cache: 'no-cache'
+	});
+	const data = await response.json();
+
+	return data;
+}
+
 export async function getClinicNotes(patient_id: string) {
 	console.log('retrieving notes for', patient_id);
 	// const response = await fetch(`${BASE_URL}/notes?patient_id=${patient_id}`);

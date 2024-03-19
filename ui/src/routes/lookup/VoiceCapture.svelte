@@ -28,24 +28,14 @@
 			audio.src = URL.createObjectURL(audioBlob);
 			media = [];
 
-			var data = new FormData();
-			data.append('file', audioBlob, audio.src);
-			console.log(data.get('file'));
-
-			fetch('http://127.0.0.1:8000/speaker-recognition', {
-				method: 'POST',
-				body: data,
-				cache: 'no-cache',
-			})
-				.then((response) => response.json())
-				.then((data) => {
-					console.log('Success:', data);
-				})
-				.catch((error) => {
-					console.error('Error:', error);
-				});
+			saveAudioFormData(audioBlob, audio.src);
 		};
 	});
+
+	/**
+	 * @type {(blob: Blob, filename: string) => void}
+	 */
+	export let saveAudioFormData;
 	
 	function startRecording() {
 		// @ts-ignore

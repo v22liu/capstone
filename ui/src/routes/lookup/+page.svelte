@@ -12,6 +12,14 @@
 
 	let useText = false;
 	let useVoice = false;
+	/** @type {FormData} */
+	let audioRecordingData;
+
+	function saveAudioData(blob, filename) {
+		audioRecordingData = new FormData();
+		audioRecordingData.append('file', blob, filename);
+		console.log(audioRecordingData);
+	}
 </script>
 
 <svelte:head>
@@ -28,8 +36,8 @@
 	</p>
 </section>
 <section class="capture-container" style="background-color: #F4F4F4;">
-	<PersonalIdentifier toggle={() => useText = true} />
-	<VoiceCapture toggle={() => useVoice = true}/>
+	<PersonalIdentifier toggle={() => useText = true}/>
+	<VoiceCapture toggle={() => useVoice = true}  saveAudioFormData={saveAudioData}/>
 </section>
 <section class="search-container" style="background-color: #F4F4F4;">
 	<div
@@ -43,8 +51,13 @@
 		<Button
 			icon={Search}
 			on:click={() => {
-				const section = document.getElementById('patient-section');
+				// Submit the search
+				console.log('Searching for patient');
+				console.log(audioRecordingData); 
+				// TODO: Call the API with the audioRecordingData
 
+				// Scroll to the patient section
+				const section = document.getElementById('patient-section');
 				if (section) section.scrollIntoView({behavior: 'smooth'});
 
 				useText = false;
