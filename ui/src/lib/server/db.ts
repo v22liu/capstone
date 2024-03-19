@@ -105,3 +105,17 @@ export async function updateClinicNote(note: Omit<ClinicNotes, 'date'>) {
 	// const data = await response.json();
 	// console.log(data.message);
 }
+
+export async function filterPatients(record: Omit<PatientRecord, 'id'>) {
+	const response = await fetch(`${BASE_URL}/patients-by-identifier`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(record)
+	});
+
+	const data = await response.json();
+
+	return data;
+}

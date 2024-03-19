@@ -1,4 +1,5 @@
-import { getPatientRecords } from '$lib/server/db';
+import { getPatientRecords, filterPatients } from '$lib/server/db';
+import type { PatientRecord } from '$lib/types/types.js';
 
 export async function load() {
 	const data = await getPatientRecords();
@@ -12,12 +13,7 @@ export const actions = {
 	patient: async ({ request }) => {
 		const formData = await request.formData();
 
-		if (!formData.get('id')?.toString()) {
-			return fail(400, { message: 'Missing required fields' });
-		}
-
-		const record: PatientRecord = {
-			id: formData.get('id')?.toString() ?? '',
+		const record: Omit<PatientRecord, 'id'> = {
 			name: formData.get('name')?.toString() || '',
 			day_of_birth: formData.get('day_of_birth')?.toString() || '1',
 			month_of_birth: formData.get('month_of_birth')?.toString() || '1',
@@ -28,8 +24,11 @@ export const actions = {
 			natID: formData.get('natID')?.toString() || ''
 		};
 
-		// await updatePatientRecord(record);
+		const response = await filterPatients(record);
 
-		return { success: true };
+		return {
+			records: response,
+			success: true,
+		};
 	}
 };

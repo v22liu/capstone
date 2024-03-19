@@ -7,35 +7,23 @@
 	import ErrorFilled from 'carbon-icons-svelte/lib/ErrorFilled.svelte';
 	import Search from 'carbon-icons-svelte/lib/Search.svelte';
 	import NewPatient from '../../components/NewPatientCard.svelte';
+	import { enhance } from '$app/forms';
 
 	export let data;
+	export let form;
 
 	let useText = false;
 	let useVoice = false;
 
 	let personalIdentifier = {};
-	let records = data.records;
+	$: records = form?.records ?? data.records;
+	$: console.log(form?.success)
 
 	async function submitPatientSearch() {
-		const form = new FormData();
-		form.append('name', personalIdentifier.name);
-		form.append('phone', personalIdentifier.phone);
-		form.append('natID', personalIdentifier.natID);
-		form.append('natID', personalIdentifier.sex);
-		form.append('natID', personalIdentifier.village);
-		
-
-		const response = await fetch('http://127.0.0.1:8000/patients-by-identifier', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				
-			},
-			body: JSON.stringify(Object.fromEntries(form))
-
-		})
-
-		records = await response.json();
+		const form = document.getElementById('identifier-search');
+		if (form) {
+			form.submit();
+		}
 	}
 </script>
 
@@ -56,6 +44,13 @@
 	<PersonalIdentifier toggle={() => useText = true} search={(e) => personalIdentifier = e}/>
 	<VoiceCapture toggle={() => useVoice = true}/>
 </section>
+<form action="?/patient" method="POST" use:enhance id="identifier-search">
+	<input type="hidden" name="name" value={personalIdentifier.name} />
+	<input type="hidden" name="phone" value={personalIdentifier.phone} />
+	<input type="hidden" name="natID" value={personalIdentifier.natID} />
+	<input type="hidden" name="village" value={personalIdentifier.village} />
+	<input type="hidden" name="sex" value={personalIdentifier.sex} />
+</form>
 <section class="search-container" style="background-color: #F4F4F4;">
 	<div
 		style="display: flex; align-items: center; gap:2rem; background-color: white; width: fit-content; padding: 0.75rem"
@@ -84,7 +79,7 @@
 <section class="patient-section" id="patient-section" >
 	<h1>Possible Patient Matches</h1>
 	<div style="display: flex; flex-wrap:wrap; gap:32px;">
-		{#each records as patient}
+		{#each form?.records ?? data.records as patient}
 			<PatientCard {patient} />
 		{/each}
 			<NewPatient/>

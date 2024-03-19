@@ -142,21 +142,16 @@ class PatientByIdentifierResource(Resource):
     def post(self):
         json_data = request.get_json()
         name = json_data.get('name')
-        # sex = json_data.get('sex')
-        # village = json_data.get('village')
+        sex = json_data.get('sex')
+        village = json_data.get('village')
         phone = json_data.get('phone')
         natID = json_data.get('natID')
-        print(name, phone, natID)
         patients = Patient.query.filter(
             ((Patient.name.contains(name)) & (name != '')) | 
-            ((Patient.phone.contains(phone)) & (phone != ''))
-            # ((Patient.phone.contains(natId)) & (natId != '')) 
-            # ((Patient.phone.contains(sex)) & (sex != '')) |
-            # ((Patient.phone.contains(village)) & (village != '')) 
-            # (Patient.phone.contains(phone)) & (phone != '')
-            # (Patient.phone.contains(natId)) & (natId != '') 
-            # (Patient.name.contains(sex)) & (sex != '') |
-            # (Patient.name.contains(village)) & (village != '') |
+            ((Patient.phone.contains(phone)) & (phone != '')) | 
+            ((Patient.natID.contains(natID)) & (natID != '')) |
+            ((Patient.sex == sex) & (sex != '')) |
+            ((Patient.village.contains(village)) & (village != '')) 
         ).all()
         if patients:
             print(patients)
