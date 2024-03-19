@@ -52,7 +52,6 @@ export async function updatePatientRecord(record: PatientRecord) {
 }
 
 export async function getPatientOverview(patient_id: string) {
-	console.log('retrieving overview for', patient_id);
 	const response = await fetch(`${BASE_URL}/patient-overview/${patient_id}`);
 	const data = await response.json();
 
@@ -60,7 +59,6 @@ export async function getPatientOverview(patient_id: string) {
 }
 
 export async function updatePatientOverview(patient_id: string, overview: PatientOverview) {
-	console.log('updating overview for', patient_id, overview);
 	const response = await fetch(`${BASE_URL}/patient-overview/${patient_id}`, {
 		method: 'PUT',
 		headers: {
@@ -75,7 +73,7 @@ export async function updatePatientOverview(patient_id: string, overview: Patien
 
 export async function getClinicNotes(patient_id: string) {
 	console.log('retrieving notes for', patient_id);
-	// const response = await fetch(`${BASE_URL}/clinic-notes/${patient_id}`);
+	// const response = await fetch(`${BASE_URL}/notes?patient_id=${patient_id}`);
 	// const data = await response.json();
 
 	// return data;

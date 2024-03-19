@@ -13,6 +13,7 @@ export async function load({ params }) {
 	const record = await getPatientRecord(params.id);
 	const overview = await getPatientOverview(params.id);
 	const notes = await getClinicNotes(params.id);
+	console.log('notes', notes);
 
 	return {
 		record,
