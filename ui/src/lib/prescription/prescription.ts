@@ -57,7 +57,9 @@ export const PrescriptionTimings = {
 
 export const Medications = [
 	'Albendazole',
+	'Albendazole/Mebendazole Liquid',
 	'Aminophylline',
+	'Amitriptyline',
 	'Amoxicillin Liquid',
 	'Amoxicillin Tab',
 	'Anusol Suppositories',
@@ -89,7 +91,8 @@ export const Medications = [
 	'Multivitamin',
 	'Nifedipine',
 	'Omeprazole',
-	'Paracetamol',
+	'Paracetamol Tab',
+	'Paracetamol Liquid',
 	'Praziquantel',
 	'Penicillin V',
 	'Polybamycin Ointment',
