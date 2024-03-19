@@ -243,26 +243,27 @@ class SpeakerRecognition(Resource):
             return {'message': 'No file uploaded'}, 400
 
         try:
-            asr_utils.write_audio_to_file(file)
+            file_path = asr_utils.write_audio_to_file(file)
         except Exception as e:
             return {'message': 'An error occurred with saving audio to file: ' + str(e)}, 500
         print('Audio file saved successfully')
 
-        # return {'message': 'File received successfully'}
         patients = Patient.query.all()
         matching_patients = []
         for patient in patients:
-            voice_clip_path = patient.voice_recording_path    # should already be in correct audio format
+            # patient's saved voice clip should already be in correct audio format
+            voice_clip_path = os.path.join('./assets/audio', patient.voice_recording_path)
             if not voice_clip_path:
                 continue
 
             try:
-                # isMatch = asr_utils.speaker_recognition(file_path, voice_clip_path)
-                # if isMatch:
-                #     matching_patients.append(patient.serialize())
-                matching_patients.append(patient.serialize())
+                isMatch = asr_utils.speaker_recognition(file_path, voice_clip_path)
+                print('isMatch:', isMatch)
             except Exception as e:
                 return {'message': 'An error occurred with audio conversion or speaker model: ' + str(e)}, 500
+
+            if isMatch == True:
+                matching_patients.append(patient.serialize())
         return {'matching_patients': matching_patients}
 
 
