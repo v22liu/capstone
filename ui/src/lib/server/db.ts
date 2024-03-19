@@ -73,24 +73,23 @@ export async function updatePatientOverview(patient_id: string, overview: Patien
 
 export async function getClinicNotes(patient_id: string) {
 	console.log('retrieving notes for', patient_id);
-	// const response = await fetch(`${BASE_URL}/notes?patient_id=${patient_id}`);
-	// const data = await response.json();
+	const response = await fetch(`${BASE_URL}/notes?patient_id=${patient_id}`);
+	const data = await response.json();
 
-	// return data;
+	return data;
 }
 
-export async function createClinicNote(note: Omit<ClinicNotes, 'date'>) {
-	console.log('creating notes for', note.id, note);
-	// const response = await fetch(`${BASE_URL}/clinic-notes`, {
-	// 	method: 'POST',
-	// 	headers: {
-	// 		'Content-Type': 'application/json'
-	// 	},
-	// 	body: JSON.stringify(note)
-	// });
+export async function createClinicNote(note: Omit<ClinicNotes, 'id' | 'date'>) {
+	const response = await fetch(`${BASE_URL}/notes`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(note)
+	});
 
-	// const data = await response.json();
-	// console.log(data.message);
+	const data = await response.json();
+	console.log(data.message);
 }
 
 export async function updateClinicNote(note: Omit<ClinicNotes, 'date'>) {

@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import asr_utils
 import os
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app, origins="*")
@@ -58,6 +59,7 @@ class Patient(db.Model):
             'allergies': self.allergies,
             'conditions': self.conditions
         }
+    
 
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -71,7 +73,7 @@ class Note(db.Model):
             'id': self.id,
             'patient_id': self.patient_id,
             'title': self.title,
-            'date': self.date,
+            'date': self.date.strftime('%Y-%m-%d'),
             'notes': self.notes
         }
 
@@ -145,8 +147,7 @@ class NoteResource(Resource):
                 return {'message': 'No clinic notes found for the patient'}, 404
             return [note.serialize() for note in notes]
         else:
-            notes = Note.query.all()
-            return [note.serialize() for note in notes]
+            return []
 
     def post(self):
         json_data = request.get_json()
@@ -154,7 +155,7 @@ class NoteResource(Resource):
         note = Note(
             patient_id=json_data.get('patient_id'),
             title=json_data.get('title'),
-            date=json_data.get('date'),
+            date=datetime.now().date(),
             notes=json_data.get('notes')
         )
 
