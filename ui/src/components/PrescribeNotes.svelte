@@ -48,7 +48,10 @@
 		if (type !== 'pill') {
 			count = 1;
 			frequency = 1
-		} 
+		}
+		if (type === 'cream') {
+			count = 'paka'
+		}
 	}
 
 	$: prescription = {
@@ -181,15 +184,18 @@
 					</Select>
 					<div style="display:flex; flex-direction:column">
 					<div class="InstructionStatement">
-						<div style="height:30px">take</div>
-						<NumberInput label="Count" light bind:value={count} min={1} max={4} />
-						<div style="height:30px">{type}</div>
+						<div style="height:30px">{type === 'cream' ? 'apply' : 'take'}</div>
+						{#if type !== 'cream'}
+							<NumberInput label="Count" light bind:value={count} min={1} max={4} />
+							<div style="height:30px">{type === 'liquid' ? 'mL' : type}</div>
+						{/if}
+
 						<NumberInput label="Frequency" light bind:value={frequency} min={1} max={5} />
-						<div style="height:30px">a day for</div>
+						<div style="height:30px">{type === 'cream' ? 'times': ''} a day for</div>
 						<NumberInput label="Usage Period" light bind:value={usagePeriod} min={1}/>
 						<div style="height:30px">days.</div>
 					</div>
-					<div style="height:30px">{count * frequency * usagePeriod} units dispensed.</div>
+					<div style="height:30px">{type !== 'pill' ? 1 : count * frequency * usagePeriod} units dispensed.</div>
 					</div>
 
 					<div style="display:flex; flex-direction:column; gap:4px">
@@ -205,17 +211,27 @@
 									<RadioButton labelText={opt} value={opt} />
 								{/each}
 							</RadioButtonGroup>
+							{#if timeOfDay}
+								<Button kind="danger-ghost" size="small" on:click={() => timeOfDay = undefined} style="margin-top: 10px">Clear</Button>
+							{/if}
 						</div>
 						<div>
 							<p> Drug Warnings:</p>
 							{#each Object.entries(PrescriptionWarnings) as [opt, translatedOpt]}
-								<Checkbox labelText={opt} value={opt} bind:warnings checked={warnings.includes(opt)} on:change={() => {
-								if (warnings.includes(opt)) {
-									warnings = warnings.filter((w) => w !== opt);
-								} else {
-									warnings = [...warnings, opt];
-								}
-								}} />
+								<Checkbox 
+									labelText={opt} 
+									value={opt} 
+									bind:warnings 
+									checked={warnings.includes(opt)} 
+									on:change={() => {
+										if (warnings.includes(opt)) {
+											warnings = warnings.filter((w) => w !== opt);
+										} else {
+											if (warnings.length < 3) warnings = [...warnings, opt];
+										}
+									}} 
+									disabled={warnings.length >= 3 && !warnings.includes(opt)}
+								/>
 							{/each}
 						</div>
 					</div>

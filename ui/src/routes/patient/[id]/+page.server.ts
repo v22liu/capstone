@@ -4,7 +4,8 @@ import {
 	getPatientOverview,
 	updatePatientOverview,
 	getClinicNotes,
-	updateClinicNote
+	updateClinicNote,
+	createClinicNote
 } from '$lib/server/db';
 import { fail } from '@sveltejs/kit';
 import type { PatientRecord, PatientOverview, ClinicNotes } from '$lib/types/types.js';
@@ -59,7 +60,7 @@ export const actions = {
 
 		return { success: true };
 	},
-	notes: async ({ request }) => {
+	updateNote: async ({ request }) => {
 		const formData = await request.formData();
 
 		const notes: Omit<ClinicNotes, 'date'> = {
@@ -69,6 +70,21 @@ export const actions = {
 		};
 
 		await updateClinicNote(notes);
+
+		return { success: true };
+	},
+	createNote: async ({ request }) => {
+		const formData = await request.formData();
+
+		const note: Omit<ClinicNotes, 'id' | 'date'> = {
+			patient_id: formData.get('patient_id')?.toString() || '',
+			title: formData.get('title')?.toString() || '',
+			notes: formData.get('notes')?.toString() || '',
+		};
+
+		// console.log('creating note', note);
+
+		await createClinicNote(note);
 
 		return { success: true };
 	}

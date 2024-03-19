@@ -16,6 +16,7 @@
 
 	export let cta = null;
 	export let toggle = () => {};
+	export let search = () => {};
 
 	let id, name, sex, day_of_birth, month_of_birth, year_of_birth, village, phone, natID;
 
@@ -29,12 +30,18 @@
 	phone = patient.phone
 	natID = patient.natID
 
-	$: if (name || phone || natID) {
+	let personalIdentifier = {}
+
+	$: if (name || phone || natID || sex || village) {
 		toggle()
+		search({
+			name, phone, natID, sex, village
+		})
 	}
+
 </script>
 
-<Form method="POST" action="?/patient">
+<Form method="POST" action="?/patient" bind:this={personalIdentifier}>
 	<input type="hidden" name="id" value={id} />
 	<FormGroup>
 		<TextInput light labelText="Name" placeholder="John Doe" bind:value={name} name="name" />

@@ -1,41 +1,21 @@
 <script>
-	import { Button, TextArea, TextInput, ButtonSet } from 'carbon-components-svelte';
+	import { Button, TextArea, TextInput, ButtonSet, Form } from 'carbon-components-svelte';
 	import Add from 'carbon-icons-svelte/lib/Add.svelte';
 
 	export let patient = {};
 	export let noEdit= false;
 	export let notes = []
 	let { id } = patient;
-
-	const fakeNotes = [
-		{
-			title: 'Clinic Visit',
-			date: new Date('2024-05-21'),
-			note_id: '1',
-			notes: 'This is a note about the patient in the Spring of 2024.'
-		},
-		{
-			title: 'Clinic Visit',
-			date: new Date('2023-08-21'),
-			note_id: '2',
-			notes: 'This is a note about the patient in the Fall of 2023.'
-		},
-		{
-			title: 'Clinic Visit',
-			date: new Date('2023-06-21'),
-			note_id: '3',
-			notes: 'This is a note about the patient in the Summer of 2023.'
-		}
-	]
 	
-	let selectedNote = fakeNotes[0]
+	let selectedNote = notes[0]
+	let creatingRecord = false;
 </script>
 
 <div class="medicalRecords">
 	<div class="RecordsList" style="min-width:200px">
 		<ButtonSet stacked>
-			{#each fakeNotes as note, index}
-				<Button kind="ghost" size="lg" on:click={() => selectedNote = fakeNotes[index]}>
+			{#each notes as note, index}
+				<Button kind="ghost" size="lg" on:click={() => selectedNote = notes[index]}>
 					<div style="display: flex; flex-direction: column;">
 						<p>
 							{note.title}
@@ -47,22 +27,43 @@
 				</Button>
 			{/each}
 		</ButtonSet>
-		{#if !noEdit}
-			<Button icon={Add}>New Record</Button>
-		{/if}
 		
+		{#if !noEdit}
+		<Button kind={!creatingRecord ? 'primary': 'danger-ghost'} icon={Add} on:click={() => creatingRecord = !creatingRecord}>
+			{creatingRecord ? 'Cancel' : 'Add Record'}
+		</Button>
+		{/if}
 	</div>
-	<section id="FullRecord">
-		<TextArea light labelText="Record Name" placeholder="Clinic Notes" bind:value={selectedNote.title} readonly={noEdit} rows={1}></TextArea>
-		<TextArea
-			labelText="Record Details"
-			placeholder="Placeholder text (optional)"
-			light
-			rows={25}
-			bind:value={selectedNote.notes}
-			readonly={noEdit}
-		/>
-	</section>
+	{#if !creatingRecord}
+		<Form style="flex: 1">
+			<section id="FullRecord">
+				<TextInput light labelText="Record Name" placeholder="Clinic Notes" bind:value={selectedNote.title} name="title"></TextInput>
+				<TextArea
+					labelText="Record Details"
+					placeholder="Placeholder text (optional)"
+					light
+					rows={25}
+					bind:value={selectedNote.notes}
+					name="notes"
+				/>
+			</section>
+		</Form>
+	{:else}
+		<Form style="flex: 1" action="?/createNote" method="POST">
+			<input type="hidden" name="patient_id" value={id} />
+			<section id="FullRecord">
+				<TextInput light labelText="Record test" placeholder="Clinic Notes" name="title"></TextInput>
+				<TextArea
+					labelText="Record Details"
+					placeholder="Placeholder text (optional)"
+					light
+					rows={25}
+					name="notes"
+				/>
+			</section>
+			<Button type="submit">Create</Button>
+		</Form>
+	{/if}
 </div>
 
 <style>

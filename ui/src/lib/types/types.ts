@@ -12,6 +12,7 @@ export interface PatientRecord {
 
 export interface ClinicNotes {
 	id: string;
+	patient_id: string;
 	title: string;
 	date: Date;
 	notes: string;
