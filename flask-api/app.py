@@ -138,6 +138,33 @@ class PatientByIdResource(Resource):
         else:
             return {'message': 'Patient not found'}, 404
 
+class PatientByIdentifierResource(Resource):
+    def post(self):
+        json_data = request.get_json()
+        name = json_data.get('name')
+        # sex = json_data.get('sex')
+        # village = json_data.get('village')
+        phone = json_data.get('phone')
+        natID = json_data.get('natID')
+        print(name, phone, natID)
+        patients = Patient.query.filter(
+            ((Patient.name.contains(name)) & (name != '')) | 
+            ((Patient.phone.contains(phone)) & (phone != ''))
+            # ((Patient.phone.contains(natId)) & (natId != '')) 
+            # ((Patient.phone.contains(sex)) & (sex != '')) |
+            # ((Patient.phone.contains(village)) & (village != '')) 
+            # (Patient.phone.contains(phone)) & (phone != '')
+            # (Patient.phone.contains(natId)) & (natId != '') 
+            # (Patient.name.contains(sex)) & (sex != '') |
+            # (Patient.name.contains(village)) & (village != '') |
+        ).all()
+        if patients:
+            print(patients)
+            return [patient.serialize() for patient in patients]
+        else:
+            print('No patients found')
+            return []
+
 class NoteResource(Resource):
     def get(self):
         patient_filter = request.args.get('patient_id')
@@ -268,6 +295,7 @@ class SpeakerRecognition(Resource):
 
 
 api.add_resource(PatientResource, '/patients')
+api.add_resource(PatientByIdentifierResource, '/patients-by-identifier')
 api.add_resource(PatientByIdResource, '/patients/<int:patient_id>')
 api.add_resource(NoteResource, '/notes')
 api.add_resource(NoteByIdResource, '/notes/<int:note_id>')

@@ -12,6 +12,31 @@
 
 	let useText = false;
 	let useVoice = false;
+
+	let personalIdentifier = {};
+	let records = data.records;
+
+	async function submitPatientSearch() {
+		const form = new FormData();
+		form.append('name', personalIdentifier.name);
+		form.append('phone', personalIdentifier.phone);
+		form.append('natID', personalIdentifier.natID);
+		form.append('natID', personalIdentifier.sex);
+		form.append('natID', personalIdentifier.village);
+		
+
+		const response = await fetch('http://127.0.0.1:8000/patients-by-identifier', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				
+			},
+			body: JSON.stringify(Object.fromEntries(form))
+
+		})
+
+		records = await response.json();
+	}
 </script>
 
 <svelte:head>
@@ -28,7 +53,7 @@
 	</p>
 </section>
 <section class="capture-container" style="background-color: #F4F4F4;">
-	<PersonalIdentifier toggle={() => useText = true} />
+	<PersonalIdentifier toggle={() => useText = true} search={(e) => personalIdentifier = e}/>
 	<VoiceCapture toggle={() => useVoice = true}/>
 </section>
 <section class="search-container" style="background-color: #F4F4F4;">
@@ -49,6 +74,8 @@
 
 				useText = false;
 				useVoice = false;
+
+				submitPatientSearch();
 			}}>Search for Patient</Button
 		>
 	</div>
@@ -57,7 +84,7 @@
 <section class="patient-section" id="patient-section" >
 	<h1>Possible Patient Matches</h1>
 	<div style="display: flex; flex-wrap:wrap; gap:32px;">
-		{#each data.records as patient}
+		{#each records as patient}
 			<PatientCard {patient} />
 		{/each}
 			<NewPatient/>
