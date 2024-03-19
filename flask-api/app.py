@@ -209,30 +209,7 @@ class PatientOverviewByIdResource(Resource):
         else:
             return {'message': 'Patient overview not found'}, 404
 
-class SpeakerRecognition(Resource):
-    # for matching between two given audio files
-    # def post(self):
-    #     json_data = request.get_json()
-
-    #     file_path_1 = json_data.get('file_path_1')
-    #     file_path_2 = json_data.get('file_path_2')
-
-    #     # convert audio files to WAV, sample rate 16000, 1 channel
-    #     try:
-    #         asr_utils.convert_audio_file(file_path_1, file_path_1[:-4] + '.wav')
-    #         file_path_1 = file_path_1[:-4] + '.wav'
-    #         asr_utils.convert_audio_file(file_path_2, file_path_2[:-4] + '.wav')
-    #         file_path_2 = file_path_2[:-4] + '.wav'
-    #     except Exception as e:
-    #         return {'message': 'An error occurred with audio conversion: ' + str(e)}, 500
-
-    #     try:
-    #         isMatch = asr_utils.speaker_recognition(file_path_1, file_path_2)
-    #     except Exception as e:
-    #         return {'message': 'An error occurred with speaker model: ' + str(e)}, 500
-
-    #     return {'isMatch': isMatch}
-    
+class SpeakerRecognition(Resource):    
     """
     Matching between an input audio file and all patients' voice recordings
     """
