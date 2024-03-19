@@ -5,6 +5,7 @@
 
 	export let patient = {};
 	export let overview = {};
+	export let notes = [];
 
 	let { id } = patient;
 	let { current_medication, allergies, conditions } = overview;
@@ -53,8 +54,8 @@
 					</div>
 				</Form>
 			</TabContent>
-				
-			<TabContent><MedicalRecords /></TabContent>
+			<TabContent><MedicalRecords {patient} {notes} /></TabContent>
+
 		</svelte:fragment>
 	</Tabs>
 </div>

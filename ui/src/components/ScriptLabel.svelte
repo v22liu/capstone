@@ -13,6 +13,7 @@
 	import imgPill from '$lib/images/pill.svg';
 	import imgCream from '$lib/images/Cream.png';
 	import imgInhaler from '$lib/images/Inhaler.png';
+	import imgLiquid from '$lib/images/liquid.png';
 
 	import Worms from '$lib/prescription/reasons/worms.png';
 	import Infection from '$lib/prescription/reasons/infection.png';
@@ -59,6 +60,7 @@
 	export let usagePeriod;
 	export let timeOfDay;
 	export let warnings;
+	export let type
 
 	const reasonToImg = {
 		Worms: Worms,
@@ -100,12 +102,21 @@
 		'Do Not Drink Alcohol': Alcohol,
 		'Take With Meals': Meal,
 	}
+
+	const typeToImg = {
+		'pill': imgPill,
+		'cream': imgCream,
+		'inhaler': imgInhaler,
+		'liquid': imgLiquid
+	}
 </script>
 
 <div class="Label">
 	<div class="Header">
 		<div>{name} ({dosage})</div>
-		<div>Bin {bin}</div>
+		{#if bin}
+			<div>Bin #{bin}</div>
+		{/if}
 	</div>
 
 	<div class="Reason">
@@ -135,14 +146,16 @@
 			<tbody>
 				<tr>
 					<td class="TableHeader"> <h1>{count} X {frequency}</h1> </td>
-					<td class="TableHeader"> <h1>{usagePeriod}/7</h1> </td>
+					{#if usagePeriod}
+						<td class="TableHeader"> <h1>{usagePeriod}/7</h1> </td>
+					{/if}
 				</tr>
 				<tr>
 					<td> <img src={imgWakeUp} class="TableTimes" /> </td>
 					<td>
 						{#if (frequency == 1 && timeOfDay != "Before Bed") || frequency > 1}
 							{#each Array(count) as _, i}
-								<img src={imgPill} class="TableMedication" key={i} alt="pil;"/>
+								<img src={typeToImg[type]} class="TableMedication" key={i} alt="pil;"/>
 							{/each}
 						{/if}
 					</td>

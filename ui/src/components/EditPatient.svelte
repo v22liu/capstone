@@ -13,6 +13,7 @@
 	 * @type {string | null}
 	 */
 	export let cta = null;
+	export let takePhoto = false;
 </script>
 
 <div>
@@ -23,9 +24,11 @@
 		style="height: 10rem; width: 10rem; margin: 1rem auto 0;"
 		aria-hidden="true"
 	/>
-	<a href="/photo" style="width: 170px; margin: 1rem auto">
-		<Button kind="tertiary" icon={Camera}>Update Photo</Button>
-	</a>
+	{#if takePhoto}
+		<a href="/photo" style="width: 170px; margin: 1rem auto">
+			<Button kind="tertiary" icon={Camera}>Update Photo</Button>
+		</a>
+	{/if}
 	<PatientForm {patient} {cta} />
 </div>
 

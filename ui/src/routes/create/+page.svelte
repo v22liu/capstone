@@ -4,7 +4,7 @@
 </script>
 
 <section>
-	<EditPatient cta="Create" />
+	<EditPatient cta="Create" takePhoto />
 	<PatientNotes />
 </section>
 

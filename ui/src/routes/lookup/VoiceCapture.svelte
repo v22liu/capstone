@@ -1,16 +1,13 @@
 <script>
+// @ts-nocheck
+
 	import { ProgressBar, Button, TextInput } from 'carbon-components-svelte';
 	import Microphone from 'carbon-icons-svelte/lib/Microphone.svelte';
 	import Soundwave from '$lib/images/soundwave.jpg';
 
 	import { onMount } from 'svelte';
-	/**
-	 * @type {BlobPart[] | undefined}
-	 */
 	let media = [];
-	/**
-	 * @type {MediaRecorder | null}
-	 */
+
 	let mediaRecorder = null;
 	onMount(async () => {
 		const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -18,7 +15,6 @@
 		mediaRecorder.onstart = () => console.log('recording started');
 		mediaRecorder.ondataavailable = (e) => media.push(e.data);
 		mediaRecorder.onstop = function () {
-			console.log('stopped');
 			if (media.length === 0) {
 				console.log('no data');
 				return;
@@ -50,14 +46,35 @@
 				});
 		};
 	});
+	
 	function startRecording() {
 		// @ts-ignore
 		mediaRecorder.start();
 	}
+	let intervalId;
+
 	function stopRecording() {
 		// @ts-ignore
 		mediaRecorder.stop();
+		toggle();
+
+		let increment = 2;
+		intervalId = setInterval(() => {
+			progress += increment;
+			if (progress >= 100) {
+				clearInterval(intervalId);
+			}
+		}, 50);
 	}
+
+	/**
+	 * @type {() => void}
+	 */
+	export let toggle;
+
+	let progress = 0
+	$: helpText = progress == 0 ? "Waiting for audio to process" : progress == 100 ? "Audio processing complete" : "Audio processing in progress"
+	
 </script>
 
 <div>
@@ -68,19 +85,18 @@
 	<img src={Soundwave} alt="Soundwave" style="width: 100%; margin: 1rem 0; height: 10rem" />
 
 	<div style="display: flex; margin: 0.5rem 0 2rem; width: 100%; gap: 1rem">
-		<ProgressBar
-			value={100}
-			labelText="Recording Progress"
-			helperText="Good Recording."
-			status="finished"
-			style="width: 100%"
-		/>
-		<audio controls style="display: block;"></audio>
+		<audio controls style="display: block; flex: 1"></audio>
 		<Button kind="secondary" icon={Microphone} on:click={startRecording}>Record</Button>
 		<Button kind="danger" icon={Microphone} on:click={stopRecording}>Stop</Button>
 	</div>
-
-	<TextInput labelText="Name Identified" placeholder="John Doe" style="width:400px" />
+	<ProgressBar
+		value={progress}
+		labelText="Audio Processing"
+		helperText={helpText}
+		status={progress == 100 ? "finished": "active"}
+		style="width: 100%;"
+		max={100}
+	/>
 </div>
 
 <style>
