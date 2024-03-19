@@ -7,7 +7,6 @@
 	import ErrorFilled from 'carbon-icons-svelte/lib/ErrorFilled.svelte';
 	import Search from 'carbon-icons-svelte/lib/Search.svelte';
 	import NewPatient from '../../components/NewPatientCard.svelte';
-
 	export let data;
 
 	let useText = false;
@@ -20,6 +19,7 @@
 </svelte:head>
 
 <section class="container" style="background-color: #F4F4F4; flex: 1">
+
 	<h2 class="title">Search for Patient</h2>
 	<h2>Input available info and biomarkers, then press search.</h2>
 	<p class="subtitle">

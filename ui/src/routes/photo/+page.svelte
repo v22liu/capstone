@@ -2,6 +2,7 @@
 	// @ts-nocheck
 	import { Button } from 'carbon-components-svelte';
 	import { onMount, onDestroy } from 'svelte';
+	import Header from '../../../components/PaginationHeader.svelte';
 
 	let stream;
 	let videoRef;
@@ -27,6 +28,7 @@
 	onDestroy(stopStream);
 </script>
 
+<Header backLink={"patient"} backText={"Patient Record"} finalPage/>
 <div>
 	<video autoplay={true} bind:this={videoRef} style="width: 75%; height: 60%">
 		<track kind="captions" />
