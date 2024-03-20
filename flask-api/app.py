@@ -251,7 +251,7 @@ class SpeakerRecognition(Resource):
         print('Audio file saved successfully')
 
         patients = Patient.query.all()
-        matching_patients = [1]
+        matching_patients = []
         for patient in patients:
             # patient's saved voice clip should already be in correct audio format
             voice_clip_path = os.path.join('./assets/audio', patient.voice_recording_path)

@@ -98,7 +98,6 @@
 			on:click={() => {
 				// Submit the search
 				console.log('Searching for patient');
-				console.log(audioRecordingData); 
 				// TODO: Call the API with the audioRecordingData
 
 				// Scroll to the patient section
