@@ -15,9 +15,9 @@ export const actions = {
 
 		const personalIdentifier: Omit<PatientRecord, 'id'> = {
 			name: formData.get('name')?.toString() || '',
-			day_of_birth: formData.get('day_of_birth')?.toString() || '1',
-			month_of_birth: formData.get('month_of_birth')?.toString() || '1',
-			year_of_birth: formData.get('year_of_birth')?.toString() || '2024',
+			day_of_birth: formData.get('day_of_birth')?.toString() || '',
+			month_of_birth: formData.get('month_of_birth')?.toString() || '',
+			year_of_birth: formData.get('year_of_birth')?.toString() || '',
 			sex: formData.get('sex')?.toString() || '',
 			phone: formData.get('phone')?.toString() || '',
 			village: formData.get('village')?.toString() || '',

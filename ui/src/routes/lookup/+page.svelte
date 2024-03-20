@@ -31,23 +31,25 @@
 
 	async function submitPatientSearch() {
 		const form = document.getElementById('identifier-search');
-		const voiceForm = document.getElementById('voice-search');
-		if (form && voiceForm) {
+		if (form) {
 			form.submit();
 			// voiceForm.submit();
 		}
 
-		const formData = new FormData()
-		const audioBlob = new Blob(voiceData[0], { type: 'audio/wav' });
-		formData.append('file', audioBlob, voiceData[1]);
-		const response = await fetch('http://127.0.0.1:8000/speaker-recognition', {
-			method: 'POST',
-			body: formData,
-			cache: 'no-cache',
-		});
-
-		console.log(await response.json());
+		if (voiceData[0]) {
+			const formData = new FormData()
+			const audioBlob = new Blob(voiceData[0], { type: 'audio/wav' });
+			formData.append('file', audioBlob, voiceData[1]);
+			const response = await fetch('http://127.0.0.1:8000/speaker-recognition', {
+				method: 'POST',
+				body: formData,
+				cache: 'no-cache',
+			});
+	
+			console.log(await response.json());
+		}
 	}
+
 
 </script>
 

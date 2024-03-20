@@ -46,7 +46,7 @@
 		<TextInput light labelText="Name" placeholder="" bind:value={name} name="name" />
 	</FormGroup>
 	<FormGroup>
-		<Select labelText="Sex" light name="sex" bind:selected={sex}>
+		<Select labelText="Sex" light name="sex" bind:selected={sex} on:change={(e) => sex = e.target.value}>
 			<SelectItem value="" text="--"/>
 			<SelectItem value="Male" text="Male" />
 			<SelectItem value="Female" text="Female" />
@@ -55,7 +55,7 @@
 	</FormGroup>
 	<FormGroup legendText = "Date of Birth">
 	<div style="display: flex; flex-direction: row; gap: 8px">
-		<Select labelText="Month" light name="month_of_birth" bind:selected={month_of_birth}>
+		<Select labelText="Month" light name="month_of_birth" bind:selected={month_of_birth} on:change={(e) => month_of_birth = e.target.value}>
 			<SelectItem value="" text="--"/>
 			<SelectItem value=1 text="Jan" />
 			<SelectItem value=2 text="Feb" />
@@ -75,7 +75,7 @@
 	</div>
 	</FormGroup>
 	<FormGroup>
-		<Select labelText="Village" light name="village" bind:selected={village}>
+		<Select labelText="Village" light name="village" bind:selected={village} on:change={(e) => village = e.target.value}>
 			<SelectItem value="" text="--"/>
 			{#each Villages as village}
 				<SelectItem value={village} text={village} />
