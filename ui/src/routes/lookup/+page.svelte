@@ -19,6 +19,7 @@
 
 	let personalIdentifier = {};
 	let voiceData = [];
+	let voiceMatch = [];
 
 	onMount(() => {
 		if (form?.success) {
@@ -47,6 +48,8 @@
 		});
 
 		console.log(await response.json());
+
+		voiceMatch = await response.json();
 	}
 
 </script>
@@ -114,6 +117,9 @@
 <section class="patient-section" id="patient-section" >
 	<h1>Possible Patient Matches</h1>
 	<div style="display: flex; flex-wrap:wrap; gap:32px;">
+		{#each voiceMatch as patient}
+			<PatientCard {patient} />
+		{/each}
 		{#each form?.records ?? data.records as patient}
 			<PatientCard {patient} />
 		{/each}
