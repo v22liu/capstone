@@ -146,12 +146,18 @@ class PatientByIdentifierResource(Resource):
         village = json_data.get('village')
         phone = json_data.get('phone')
         natID = json_data.get('natID')
+        day_of_birth = json_data.get('day_of_birth')
+        month_of_birth = json_data.get('month_of_birth')
+        year_of_birth = json_data.get('year_of_birth')
         patients = Patient.query.filter(
             ((Patient.name.contains(name)) & (name != '')) | 
             ((Patient.phone.contains(phone)) & (phone != '')) | 
             ((Patient.natID.contains(natID)) & (natID != '')) |
             ((Patient.sex == sex) & (sex != '')) |
-            ((Patient.village == village) & (village != '')) 
+            ((Patient.village == village) & (village != '')) |
+            ((Patient.day_of_birth == day_of_birth) & (day_of_birth != '')) |
+            ((Patient.month_of_birth == month_of_birth) & (month_of_birth != '')) |
+            ((Patient.year_of_birth == year_of_birth) & (year_of_birth != ''))
         ).all()
         if patients:
             print(patients)

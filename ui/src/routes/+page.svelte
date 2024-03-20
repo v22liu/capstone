@@ -23,7 +23,7 @@
 		</a>
 		<a href= /catalogue>
 			<Catalog size={100} />
-			<p>Drug Catalogue</p>
+			<p>Drug Inventory</p>
 		</a>
 	</div>
 	

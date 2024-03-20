@@ -74,8 +74,6 @@
 	<h5>For speech to text.</h5>
 	<p>Ask the patient to speak their name into the microphone while recording.</p>
 
-	<img src={Soundwave} alt="Soundwave" style="width: 100%; margin: 1rem 0; height: 10rem" />
-
 	<div style="display: flex; margin: 0.5rem 0 2rem; width: 100%; gap: 1rem">
 		<audio controls style="display: block; flex: 1"></audio>
 		<Button kind="secondary" icon={Microphone} on:click={startRecording}>Record</Button>

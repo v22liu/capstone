@@ -32,25 +32,26 @@
 
 	async function submitPatientSearch() {
 		const form = document.getElementById('identifier-search');
-		const voiceForm = document.getElementById('voice-search');
-		if (form && voiceForm) {
+		if (form) {
 			form.submit();
 			// voiceForm.submit();
 		}
 
-		const formData = new FormData()
-		const audioBlob = new Blob(voiceData[0], { type: 'audio/wav' });
-		formData.append('file', audioBlob, voiceData[1]);
-		const response = await fetch('http://127.0.0.1:8000/speaker-recognition', {
-			method: 'POST',
-			body: formData,
-			cache: 'no-cache',
-		});
-
-		console.log(await response.json());
-
-		voiceMatch = await response.json();
+		if (voiceData[0]) {
+			const formData = new FormData()
+			const audioBlob = new Blob(voiceData[0], { type: 'audio/wav' });
+			formData.append('file', audioBlob, voiceData[1]);
+			const response = await fetch('http://127.0.0.1:8000/speaker-recognition', {
+				method: 'POST',
+				body: formData,
+				cache: 'no-cache',
+			});
+			
+			voiceMatch = await response.json();
+			console.log(voiceMatch);
+		}
 	}
+
 
 </script>
 
@@ -65,6 +66,9 @@
 	<input type="hidden" name="natID" value={personalIdentifier.natID} />
 	<input type="hidden" name="village" value={personalIdentifier.village} />
 	<input type="hidden" name="sex" value={personalIdentifier.sex} />
+	<input type="hidden" name="day_of_birth" value={personalIdentifier.day_of_birth} />
+	<input type="hidden" name="month_of_birth" value={personalIdentifier.month_of_birth} />
+	<input type="hidden" name="year_of_birth" value={personalIdentifier.year_of_birth} />
 </form>
 <!-- <form action="?/voice" method="POST" use:enhance id="voice-search">
 	<input type="hidden" name="voiceBlob" value={voiceData[0]} />
@@ -73,6 +77,7 @@
 </form> -->
 
 <section class="container" style="background-color: #F4F4F4; flex: 1">
+
 	<h2 class="title">Search for Patient</h2>
 	<h2>Input available info and biomarkers, then press search.</h2>
 	<p class="subtitle">

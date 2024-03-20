@@ -165,7 +165,7 @@
 					<td> 
 						{#if frequency == 5}
 							{#each Array(count) as _, i}
-								<img src={imgPill} class="TableMedication" key={i} alt="pil;"/>
+								<img src={typeToImg[type]} class="TableMedication" key={i} alt="pil;"/>
 							{/each}
 						{/if}
 					</td>
@@ -175,7 +175,7 @@
 					<td>
 						{#if frequency >= 3}
 							{#each Array(count) as _, i}
-								<img src={imgPill} class="TableMedication" key={i} alt="pil;"/>
+								<img src={typeToImg[type]} class="TableMedication" key={i} alt="pil;"/>
 							{/each}
 						{/if}
 					</td>
@@ -185,7 +185,7 @@
 					<td> 
 						{#if frequency >= 4}
 							{#each Array(count) as _, i}
-								<img src={imgPill} class="TableMedication" key={i} alt="pil;"/>
+								<img src={typeToImg[type]} class="TableMedication" key={i} alt="pil;"/>
 							{/each}
 						{/if}
 					</td>
@@ -195,7 +195,7 @@
 					<td>
 						{#if frequency >= 2 || timeOfDay == "Before Bed"}
 							{#each Array(count) as _, i}
-								<img src={imgPill} class="TableMedication" key={i} alt="pil;"/>
+								<img src={typeToImg[type]} class="TableMedication" key={i} alt="pil;"/>
 							{/each}
 						{/if}
 					</td>

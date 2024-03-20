@@ -27,7 +27,7 @@
 				>New Patient</HeaderNavItem
 			>
 			<HeaderNavItem href="/catalogue" isSelected={$page.url.pathname.includes('/catalogue')}
-				>Drug Catalogue</HeaderNavItem
+				>Drug Inventory</HeaderNavItem
 			>
 		</HeaderNav>
 		<HeaderUtilities>

@@ -5,7 +5,7 @@
 
 	export let patient = {};
 	export let overview = {};
-	export let notes = [];
+	export let notes = [{ title: '', notes: '', date: new Date() }];
 
 	let { id } = patient;
 	let { current_medication, allergies, conditions } = overview;
@@ -47,10 +47,7 @@
 						/>
 					</div>
 					<div class="buttons">
-						<Button type="submit" kind="secondary">Save</Button>
-						<a href="/prescribe/{id}">
-							<Button type="submit">Save & Prescribe</Button>
-						</a>
+						<Button type="submit" kind="tertiary">Save Changes</Button>
 					</div>
 				</Form>
 			</TabContent>
