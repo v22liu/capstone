@@ -112,13 +112,21 @@
 	</div>
 </section>
 
-<section class="patient-section" id="patient-section" >
+<section class="patient-section" id="patient-section" style="display: flex; flex-direction:column">
 	<h1>Possible Patient Matches</h1>
 	<div style="display: flex; flex-wrap:wrap; gap:32px;">
 		{#each form?.records ?? data.records as patient}
 			<PatientCard {patient} />
 		{/each}
-		<NewPatient/>
+		{#if (form?.records == null) && (data.records == null)}
+			<div style="width:255px display:flex flex-direction:column"><p>No Patient Records Found.</p>
+			<NewPatient/>
+			</div>
+			{:else}
+			<NewPatient/>
+		{/if}
+		
+		
 	</div>
 </section>
 
