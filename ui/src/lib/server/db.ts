@@ -85,24 +85,23 @@ export async function speakerRecognition(audioData: FormData) {
 
 export async function getClinicNotes(patient_id: string) {
 	console.log('retrieving notes for', patient_id);
-	// const response = await fetch(`${BASE_URL}/notes?patient_id=${patient_id}`);
-	// const data = await response.json();
+	const response = await fetch(`${BASE_URL}/notes?patient_id=${patient_id}`);
+	const data = await response.json();
 
-	// return data;
+	return data;
 }
 
-export async function createClinicNote(note: Omit<ClinicNotes, 'date'>) {
-	console.log('creating notes for', note.id, note);
-	// const response = await fetch(`${BASE_URL}/clinic-notes`, {
-	// 	method: 'POST',
-	// 	headers: {
-	// 		'Content-Type': 'application/json'
-	// 	},
-	// 	body: JSON.stringify(note)
-	// });
+export async function createClinicNote(note: Omit<ClinicNotes, 'id' | 'date'>) {
+	const response = await fetch(`${BASE_URL}/notes`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(note)
+	});
 
-	// const data = await response.json();
-	// console.log(data.message);
+	const data = await response.json();
+	console.log(data.message);
 }
 
 export async function updateClinicNote(note: Omit<ClinicNotes, 'date'>) {
@@ -117,4 +116,32 @@ export async function updateClinicNote(note: Omit<ClinicNotes, 'date'>) {
 
 	// const data = await response.json();
 	// console.log(data.message);
+}
+
+export async function filterPatients(record: Omit<PatientRecord, 'id'>) {
+	const response = await fetch(`${BASE_URL}/patients-by-identifier`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(record)
+	});
+
+	const data = await response.json();
+
+	// const voiceData = new FormData();
+	// voiceData.append('file', voice);
+	// console.log('db', voice, voiceData.get('file'));
+	// const voiceResponse = await fetch(`${BASE_URL}/speaker-recognition`, {
+	// 	method: 'POST',
+	// 	headers: {
+	// 		'Content-Type': 'multipart/form-data'
+	// 	},
+	// 	body: voiceData,
+	// 	cache: 'no-cache'
+	// });
+	// const voiceMatch = await voiceResponse.json();
+	// console.log(voiceMatch)
+
+	return data;
 }

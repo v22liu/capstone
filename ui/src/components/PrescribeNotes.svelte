@@ -22,6 +22,7 @@
 	import { PrescriptionReason, Dosages, PrescriptionWarnings, PrescriptionTimings, Medications, DefaultDrugSettings } from '$lib/prescription/prescription';
 
 	export let overview = {};
+	export let notes = {}
 
 	let bin, type;
 	let { current_medication, allergies, conditions } = overview;
@@ -132,7 +133,7 @@
 				</div>
 			</TabContent>
 			<TabContent>
-				<MedicalRecords> </MedicalRecords> 	
+				<MedicalRecords {notes}> </MedicalRecords> 	
 			</TabContent>
 			<TabContent>
 				<h1>Medication</h1>

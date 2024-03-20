@@ -6,6 +6,9 @@
 	import Soundwave from '$lib/images/soundwave.jpg';
 
 	import { onMount } from 'svelte';
+
+	export let search = () => {};
+
 	let media = [];
 
 	let mediaRecorder = null;
@@ -26,9 +29,8 @@
 			}
 			const audioBlob = new Blob(media, { type: 'audio/wav' });
 			audio.src = URL.createObjectURL(audioBlob);
+			search([media, audio.src])
 			media = [];
-
-			saveAudioFormData(audioBlob, audio.src);
 		};
 	});
 

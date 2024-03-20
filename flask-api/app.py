@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import asr_utils
 import os
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app, origins="*")
@@ -58,6 +59,7 @@ class Patient(db.Model):
             'allergies': self.allergies,
             'conditions': self.conditions
         }
+    
 
 class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -71,7 +73,7 @@ class Note(db.Model):
             'id': self.id,
             'patient_id': self.patient_id,
             'title': self.title,
-            'date': self.date,
+            'date': self.date.strftime('%Y-%m-%d'),
             'notes': self.notes
         }
 
@@ -136,17 +138,38 @@ class PatientByIdResource(Resource):
         else:
             return {'message': 'Patient not found'}, 404
 
+class PatientByIdentifierResource(Resource):
+    def post(self):
+        json_data = request.get_json()
+        name = json_data.get('name')
+        sex = json_data.get('sex')
+        village = json_data.get('village')
+        phone = json_data.get('phone')
+        natID = json_data.get('natID')
+        patients = Patient.query.filter(
+            ((Patient.name.contains(name)) & (name != '')) | 
+            ((Patient.phone.contains(phone)) & (phone != '')) | 
+            ((Patient.natID.contains(natID)) & (natID != '')) |
+            ((Patient.sex == sex) & (sex != '')) |
+            ((Patient.village == village) & (village != '')) 
+        ).all()
+        if patients:
+            print(patients)
+            return [patient.serialize() for patient in patients]
+        else:
+            print('No patients found')
+            return []
+
 class NoteResource(Resource):
     def get(self):
         patient_filter = request.args.get('patient_id')
         if patient_filter:
             notes = Note.query.filter_by(patient_id=patient_filter).all()
             if not notes:
-                return {'message': 'No clinic notes found for the patient'}, 404
+                return []
             return [note.serialize() for note in notes]
         else:
-            notes = Note.query.all()
-            return [note.serialize() for note in notes]
+            return []
 
     def post(self):
         json_data = request.get_json()
@@ -154,7 +177,7 @@ class NoteResource(Resource):
         note = Note(
             patient_id=json_data.get('patient_id'),
             title=json_data.get('title'),
-            date=json_data.get('date'),
+            date=datetime.now().date(),
             notes=json_data.get('notes')
         )
 
@@ -216,7 +239,9 @@ class SpeakerRecognition(Resource):
     def post(self):
         files = request.files
         file = files.get('file')
+        print('files', files)
         if not file:
+            print('No file uploaded')
             return {'message': 'No file uploaded'}, 400
 
         try:
@@ -226,7 +251,7 @@ class SpeakerRecognition(Resource):
         print('Audio file saved successfully')
 
         patients = Patient.query.all()
-        matching_patients = []
+        matching_patients = [1]
         for patient in patients:
             # patient's saved voice clip should already be in correct audio format
             voice_clip_path = os.path.join('./assets/audio', patient.voice_recording_path)
@@ -245,6 +270,7 @@ class SpeakerRecognition(Resource):
 
 
 api.add_resource(PatientResource, '/patients')
+api.add_resource(PatientByIdentifierResource, '/patients-by-identifier')
 api.add_resource(PatientByIdResource, '/patients/<int:patient_id>')
 api.add_resource(NoteResource, '/notes')
 api.add_resource(NoteByIdResource, '/notes/<int:note_id>')
