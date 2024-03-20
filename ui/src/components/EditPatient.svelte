@@ -44,7 +44,7 @@
 	<img
 		src={pathToPic[photo_file_path] ?? profilePic}
 		alt="Default profile picture"
-		style="height: 10rem; width: 10rem; margin: 1rem auto 0;"
+		style="height: 10rem; width: 10rem; margin: 1rem auto 0; object-fit:cover"
 		aria-hidden="true"
 	/>
 	{#if takePhoto}

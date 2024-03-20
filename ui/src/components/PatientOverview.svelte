@@ -34,7 +34,7 @@
 <div class="card">
 	<h1>Patient</h1>
 	<div class="profile_pic">
-		<img src={pathToPic[photo_file_path] ?? profilePic} />
+		<img src={pathToPic[photo_file_path] ?? profilePic} style="object-fit:cover;height: 300px; width:100%"/>
 	</div>
 
 	<div class="card_info">
@@ -71,11 +71,11 @@
 <style>
 	.card {
 		max-width: 20%;
-		padding: 8px;
 		background: #f4f4f4;
 		display: flex;
 		flex-direction: column;
 		gap: 16px;
+		padding:16px;
 	}
 
 	.card_info {
@@ -86,6 +86,7 @@
 	.profile_pic {
 		display: flex;
 		justify-content: center;
+		
 	}
 
 	.button_group {
