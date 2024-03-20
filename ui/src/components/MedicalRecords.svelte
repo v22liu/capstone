@@ -47,6 +47,7 @@
 					name="notes"
 				/>
 			</section>
+			<Button type="submit">Save</Button>
 		</Form>
 	{:else}
 		<Form style="flex: 1" action="?/createNote" method="POST">
