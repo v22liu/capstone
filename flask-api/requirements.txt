@@ -1,3 +1,4 @@
+
 absl-py==2.1.0
 aiohttp==3.9.3
 aiosignal==1.3.1
@@ -119,7 +120,7 @@ numcodecs==0.12.1
 numpy==1.23.5
 omegaconf==2.3.0
 onnx==1.15.0
-OpenCC==1.1.7
+#OpenCC==1.1.7
 optuna==3.5.0
 packaging==24.0
 pandas==2.2.1
