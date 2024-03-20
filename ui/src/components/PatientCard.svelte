@@ -27,7 +27,7 @@
 
 <div class="card">
 	<div class="profile_pic">
-		<img src={pathToPic[photo_file_path] ?? profilePic} height="297px" width="255px" alt="Profile Picture"/>
+		<img src={pathToPic[photo_file_path] ?? profilePic} style="object-fit:cover" height="297px" width="255px" alt="Profile Picture"/>
 	</div>
 
 	<div class="card_info">

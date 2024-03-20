@@ -3,6 +3,7 @@
 	import Add from 'carbon-icons-svelte/lib/Add.svelte';
 
 	export let patient = {};
+	export let noEdit= false;
 	export let notes = []
 	let { id } = patient;
 	
@@ -14,21 +15,24 @@
 	<div class="RecordsList">
 		<ButtonSet stacked>
 			{#each notes as note, index}
-				<Button kind="ghost" size="lg" on:click={() => selectedNote = notes[index]}>
-					<div style="display: flex; flex-direction: column;">
+				<Button kind="ghost" size="field" on:click={() => selectedNote = notes[index]}>
+					<div style="display: flex; flex-direction: column">
 						<p>
 							{note?.title}
 						</p>
-						<p>
-							{note?.date.toLocaleString('en-US', { month: 'long', year: 'numeric' })}
+						<p style="color:black">
+							{note.date.toLocaleString('en-US', { month: 'long', year: 'numeric' })}
 						</p>
 					</div>
 				</Button>
 			{/each}
 		</ButtonSet>
-		<Button kind={!creatingRecord ? 'primary': 'danger-ghost'} icon={Add} on:click={() => creatingRecord = !creatingRecord}>
+		
+		{#if !noEdit}
+		<Button kind={!creatingRecord ? 'secondary': 'danger-ghost'} icon={Add} on:click={() => creatingRecord = !creatingRecord}>
 			{creatingRecord ? 'Cancel' : 'Add Record'}
 		</Button>
+		{/if}
 	</div>
 	{#if !creatingRecord}
 		<Form style="flex: 1">
@@ -85,6 +89,7 @@
 		margin-top: 1rem;
 		gap: 1rem;
 	}
+	
 	section {
 		width: 100%;
 	}

@@ -9,7 +9,6 @@
 		FormGroup,
 		Button
 	} from 'carbon-components-svelte';
-	import Add from 'carbon-icons-svelte/lib/Add.svelte';
 	import { Villages } from '$lib/prescription/prescription';
 
 	export let patient = {};
@@ -44,10 +43,11 @@
 <Form method="POST" action="?/patient" bind:this={personalIdentifier}>
 	<input type="hidden" name="id" value={id} />
 	<FormGroup>
-		<TextInput light labelText="Name" placeholder="John Doe" bind:value={name} name="name" />
+		<TextInput light labelText="Name" placeholder="N/A" bind:value={name} name="name" />
 	</FormGroup>
 	<FormGroup>
 		<Select labelText="Sex" light name="sex" bind:selected={sex}>
+			<SelectItem value="" text="N/A"/>
 			<SelectItem value="Male" text="Male" />
 			<SelectItem value="Female" text="Female" />
 			<SelectItem value="Other" text="Other" />
@@ -56,6 +56,7 @@
 	<FormGroup legendText = "Date of Birth">
 	<div style="display: flex; flex-direction: row; gap: 8px">
 		<Select labelText="Month" light name="month_of_birth" bind:selected={month_of_birth}>
+			<SelectItem value="" text="N/A"/>
 			<SelectItem value=1 text="Jan" />
 			<SelectItem value=2 text="Feb" />
 			<SelectItem value=3 text="Mar" />
@@ -69,8 +70,8 @@
 			<SelectItem value=11 text="Nov" />
 			<SelectItem value=12 text="Dec" />
 		</Select>
-		<TextInput light labelText="Day" placeholder="01" bind:value={day_of_birth} name="day_of_birth" />
-		<TextInput light labelText="Year" placeholder="1990" bind:value={year_of_birth} name="year_of_birth" />
+		<TextInput light labelText="Day" placeholder="N/A" bind:value={day_of_birth} name="day_of_birth" />
+		<TextInput light labelText="Year" placeholder="N/A" bind:value={year_of_birth} name="year_of_birth" />
 	</div>
 	</FormGroup>
 	<FormGroup>
@@ -84,17 +85,17 @@
 		<TextInput
 			light
 			labelText="Phone Number"
-			placeholder="123-456-7890"
+			placeholder="N/A XX-XXX-XXXX"
 			bind:value={phone}
 			name="phone"
 		/>
 	</FormGroup>
 	<FormGroup>
-		<TextInput light labelText="National ID" placeholder="1234567" name="natID" bind:value={natID} />
+		<TextInput light labelText="National ID" placeholder="N/A XXX-XXX-XXX" name="natID" bind:value={natID} />
 	</FormGroup>
 	{#if cta !== null}
 		<div style="display: flex">
-			<Button icon={Add} style="width: 60%; margin-left: auto" type="submit">{cta}</Button>
+			<Button style=" margin-left: auto" type="submit" kind="tertiary">{cta}</Button>
 		</div>
 	{/if}
 </Form>
