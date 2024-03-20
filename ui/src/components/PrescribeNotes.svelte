@@ -22,6 +22,7 @@
 	import { PrescriptionReason, Dosages, PrescriptionWarnings, PrescriptionTimings, Medications, DefaultDrugSettings } from '$lib/prescription/prescription';
 
 	export let overview = {};
+	export let notes = {}
 
 	let bin, type;
 	let { current_medication, allergies, conditions } = overview;
@@ -132,7 +133,7 @@
 				</div>
 			</TabContent>
 			<TabContent>
-				<MedicalRecords> </MedicalRecords> 	
+				<MedicalRecords {notes}> </MedicalRecords> 	
 			</TabContent>
 			<TabContent>
 				<h1>Medication</h1>
@@ -206,17 +207,27 @@
 									<RadioButton labelText={opt} value={opt} />
 								{/each}
 							</RadioButtonGroup>
+							{#if timeOfDay}
+								<Button kind="danger-ghost" size="small" on:click={() => timeOfDay = undefined} style="margin-top: 10px">Clear</Button>
+							{/if}
 						</div>
 						<div>
 							<p> Drug Warnings:</p>
 							{#each Object.entries(PrescriptionWarnings) as [opt, translatedOpt]}
-								<Checkbox labelText={opt} value={opt} bind:warnings checked={warnings.includes(opt)} on:change={() => {
-								if (warnings.includes(opt)) {
-									warnings = warnings.filter((w) => w !== opt);
-								} else {
-									warnings = [...warnings, opt];
-								}
-								}} />
+								<Checkbox 
+									labelText={opt} 
+									value={opt} 
+									bind:warnings 
+									checked={warnings.includes(opt)} 
+									on:change={() => {
+										if (warnings.includes(opt)) {
+											warnings = warnings.filter((w) => w !== opt);
+										} else {
+											if (warnings.length < 3) warnings = [...warnings, opt];
+										}
+									}} 
+									disabled={warnings.length >= 3 && !warnings.includes(opt)}
+								/>
 							{/each}
 						</div>
 					</div>
