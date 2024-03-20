@@ -7,7 +7,7 @@
 
 <div class="container">
 	<PatientCard patient={data.record} />
-	<PrescribeNotes overview={data.overview}/>
+	<PrescribeNotes overview={data.overview} notes={data.notes}/>
 </div>
 
 <style>

@@ -151,7 +151,7 @@ class PatientByIdentifierResource(Resource):
             ((Patient.phone.contains(phone)) & (phone != '')) | 
             ((Patient.natID.contains(natID)) & (natID != '')) |
             ((Patient.sex == sex) & (sex != '')) |
-            ((Patient.village.contains(village)) & (village != '')) 
+            ((Patient.village == village) & (village != '')) 
         ).all()
         if patients:
             print(patients)
@@ -166,7 +166,7 @@ class NoteResource(Resource):
         if patient_filter:
             notes = Note.query.filter_by(patient_id=patient_filter).all()
             if not notes:
-                return {'message': 'No clinic notes found for the patient'}, 404
+                return []
             return [note.serialize() for note in notes]
         else:
             return []
@@ -262,7 +262,9 @@ class SpeakerRecognition(Resource):
     def post(self):
         files = request.files
         file = files.get('file')
+        print('files', files)
         if not file:
+            print('No file uploaded')
             return {'message': 'No file uploaded'}, 400
 
         try:
@@ -273,7 +275,7 @@ class SpeakerRecognition(Resource):
 
         # return {'message': 'File received successfully'}
         patients = Patient.query.all()
-        matching_patients = []
+        matching_patients = [1]
         for patient in patients:
             voice_clip_path = patient.voice_recording_path    # should already be in correct audio format
             if not voice_clip_path:

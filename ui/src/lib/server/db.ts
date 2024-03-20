@@ -117,5 +117,19 @@ export async function filterPatients(record: Omit<PatientRecord, 'id'>) {
 
 	const data = await response.json();
 
+	// const voiceData = new FormData();
+	// voiceData.append('file', voice);
+	// console.log('db', voice, voiceData.get('file'));
+	// const voiceResponse = await fetch(`${BASE_URL}/speaker-recognition`, {
+	// 	method: 'POST',
+	// 	headers: {
+	// 		'Content-Type': 'multipart/form-data'
+	// 	},
+	// 	body: voiceData,
+	// 	cache: 'no-cache'
+	// });
+	// const voiceMatch = await voiceResponse.json();
+	// console.log(voiceMatch)
+
 	return data;
 }

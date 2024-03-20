@@ -17,10 +17,10 @@
 				<Button kind="ghost" size="lg" on:click={() => selectedNote = notes[index]}>
 					<div style="display: flex; flex-direction: column;">
 						<p>
-							{note.title}
+							{note?.title}
 						</p>
 						<p>
-							{note.date.toLocaleString('en-US', { month: 'long', year: 'numeric' })}
+							{note?.date.toLocaleString('en-US', { month: 'long', year: 'numeric' })}
 						</p>
 					</div>
 				</Button>
