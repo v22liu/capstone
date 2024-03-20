@@ -19,7 +19,7 @@
 
 	let personalIdentifier = {};
 	let voiceData = [];
-	let voiceMatch = [];
+	$: voiceMatch = [];
 
 	onMount(() => {
 		if (form?.success) {
@@ -43,12 +43,22 @@
 			const response = await fetch('http://127.0.0.1:8000/speaker-recognition', {
 				method: 'POST',
 				body: formData,
-				cache: 'no-cache'
+				cache: 'no-cache',
+				headers: {
+					'Access-Control-Allow-Origin': '*',
+					'Access-Control-Allow-Methods': 'POST',
+					'Access-Control-Allow-Headers': 'Content-Type'
+				}
 			});
 
 			const res = await response.json();
 
 			voiceMatch = [...res.matching_patients];
+			console.log(voiceMatch);
+
+			const section = document.getElementById('patient-section');
+
+			if (section) section.scrollIntoView({ behavior: 'smooth' });
 		}
 	}
 </script>
@@ -107,8 +117,6 @@
 				// TODO: Call the API with the audioRecordingData
 
 				// Scroll to the patient section
-				const section = document.getElementById('patient-section');
-				if (section) section.scrollIntoView({ behavior: 'smooth' });
 
 				useText = false;
 				useVoice = false;
