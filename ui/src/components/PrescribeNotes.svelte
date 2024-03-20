@@ -22,6 +22,7 @@
 	import { PrescriptionReason, Dosages, PrescriptionWarnings, PrescriptionTimings, Medications, DefaultDrugSettings } from '$lib/prescription/prescription';
 
 	export let overview = {};
+	export let notes = {};
 
 	let bin, type;
 	let { current_medication, allergies, conditions } = overview;
@@ -135,7 +136,7 @@
 				</div>
 			</TabContent>
 			<TabContent>
-				<div style="height:630px"> <MedicalRecords {noEdit}> </MedicalRecords> </div>
+				<div style="height:630px"> <MedicalRecords {notes} {noEdit}> </MedicalRecords> </div>
 				<div style="display:flex; justify-content:end; margin:8px"><Button kind="tertiary">Update Patient Record</Button></div>
 				
 			</TabContent>
@@ -247,9 +248,10 @@
 	</Tabs>
 </div>
 
-<div style="display: block; background-color:#f4f4f4; padding: 16px">
+<div style="display: flex; flex-direction:column; background-color:#f4f4f4; padding: 16px; gap:16px">
 	<h1>Label Preview</h1>
-	<div style="display: block" id="label">
+	
+	<div style="display: block," id="label">
 		<ScriptLabel {...prescription} />
 	</div>
 </div>
