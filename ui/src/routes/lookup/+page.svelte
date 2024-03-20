@@ -64,6 +64,9 @@
 	<input type="hidden" name="natID" value={personalIdentifier.natID} />
 	<input type="hidden" name="village" value={personalIdentifier.village} />
 	<input type="hidden" name="sex" value={personalIdentifier.sex} />
+	<input type="hidden" name="day_of_birth" value={personalIdentifier.day_of_birth} />
+	<input type="hidden" name="month_of_birth" value={personalIdentifier.month_of_birth} />
+	<input type="hidden" name="year_of_birth" value={personalIdentifier.year_of_birth} />
 </form>
 <!-- <form action="?/voice" method="POST" use:enhance id="voice-search">
 	<input type="hidden" name="voiceBlob" value={voiceData[0]} />

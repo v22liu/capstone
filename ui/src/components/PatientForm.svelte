@@ -31,10 +31,10 @@
 
 	let personalIdentifier = {}
 
-	$: if (name || phone || natID || sex || village) {
+	$: if (name || phone || natID || sex || village || day_of_birth || month_of_birth || year_of_birth) {
 		toggle()
 		search({
-			name, phone, natID, sex, village
+			name, phone, natID, sex, village, day_of_birth, month_of_birth, year_of_birth
 		})
 	}
 

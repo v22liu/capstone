@@ -21,7 +21,7 @@ export const actions = {
 			sex: formData.get('sex')?.toString() || '',
 			phone: formData.get('phone')?.toString() || '',
 			village: formData.get('village')?.toString() || '',
-			natID: formData.get('natID')?.toString() || ''
+			natID: formData.get('natID')?.toString() || '',
 		};
 
 		// const voiceForm = new FormData();
