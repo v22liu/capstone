@@ -9,7 +9,6 @@
 		FormGroup,
 		Button
 	} from 'carbon-components-svelte';
-	import Add from 'carbon-icons-svelte/lib/Add.svelte';
 	import { Villages } from '$lib/prescription/prescription';
 
 	export let patient = {};
@@ -94,7 +93,7 @@
 	</FormGroup>
 	{#if cta !== null}
 		<div style="display: flex">
-			<Button icon={Add} style="width: 60%; margin-left: auto" type="submit">{cta}</Button>
+			<Button style=" margin-left: auto" type="submit" kind="tertiary">{cta}</Button>
 		</div>
 	{/if}
 </Form>
