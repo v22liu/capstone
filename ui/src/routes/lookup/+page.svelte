@@ -24,35 +24,33 @@
 	onMount(() => {
 		if (form?.success) {
 			const section = document.getElementById('patient-section');
-	
-			if (section) section.scrollIntoView({behavior: 'smooth'});
-		}
-	})
 
+			if (section) section.scrollIntoView({ behavior: 'smooth' });
+		}
+	});
 
 	async function submitPatientSearch() {
 		const form = document.getElementById('identifier-search');
 		if (form) {
-			form.submit();
+			// form.submit();
 			// voiceForm.submit();
 		}
 
 		if (voiceData[0]) {
-			const formData = new FormData()
+			const formData = new FormData();
 			const audioBlob = new Blob(voiceData[0], { type: 'audio/wav' });
 			formData.append('file', audioBlob, voiceData[1]);
 			const response = await fetch('http://127.0.0.1:8000/speaker-recognition', {
 				method: 'POST',
 				body: formData,
-				cache: 'no-cache',
+				cache: 'no-cache'
 			});
-			
-			voiceMatch = await response.json();
-			console.log(voiceMatch);
+
+			const res = await response.json();
+
+			voiceMatch = [...res.matching_patients];
 		}
 	}
-
-
 </script>
 
 <svelte:head>
@@ -77,7 +75,6 @@
 </form> -->
 
 <section class="container" style="background-color: #F4F4F4; flex: 1">
-
 	<h2 class="title">Search for Patient</h2>
 	<h2>Input available info and biomarkers, then press search.</h2>
 	<p class="subtitle">
@@ -86,8 +83,8 @@
 	</p>
 </section>
 <section class="capture-container" style="background-color: #F4F4F4;">
-	<PersonalIdentifier toggle={() => useText = true} search={(e) => personalIdentifier = e} />
-	<VoiceCapture toggle={() => useVoice = true} search={(e) => voiceData = e} />
+	<PersonalIdentifier toggle={() => (useText = true)} search={(e) => (personalIdentifier = e)} />
+	<VoiceCapture toggle={() => (useVoice = true)} search={(e) => (voiceData = e)} />
 </section>
 <section class="search-container" style="background-color: #F4F4F4;">
 	<div
@@ -95,8 +92,12 @@
 	>
 		<div style="display: flex; gap: 1rem; align-items: center;">
 			<p style="font-size: 0.9rem">Search With:</p>
-			<Tag icon={useText ? CheckmarkFilled : ErrorFilled} type={useText ? "green" : "outline"}>Personal Identifiers</Tag>
-			<Tag icon={useVoice ? CheckmarkFilled : ErrorFilled} type={useVoice ? "green" : "outline"}>Speech to Text</Tag>
+			<Tag icon={useText ? CheckmarkFilled : ErrorFilled} type={useText ? 'green' : 'outline'}
+				>Personal Identifiers</Tag
+			>
+			<Tag icon={useVoice ? CheckmarkFilled : ErrorFilled} type={useVoice ? 'green' : 'outline'}
+				>Speech to Text</Tag
+			>
 		</div>
 		<Button
 			icon={Search}
@@ -107,7 +108,7 @@
 
 				// Scroll to the patient section
 				const section = document.getElementById('patient-section');
-				if (section) section.scrollIntoView({behavior: 'smooth'});
+				if (section) section.scrollIntoView({ behavior: 'smooth' });
 
 				useText = false;
 				useVoice = false;
@@ -118,7 +119,7 @@
 	</div>
 </section>
 
-<section class="patient-section" id="patient-section" >
+<section class="patient-section" id="patient-section">
 	<h1>Possible Patient Matches</h1>
 	<div style="display: flex; flex-wrap:wrap; gap:32px;">
 		{#each voiceMatch as patient}
@@ -127,7 +128,7 @@
 		{#each form?.records ?? data.records as patient}
 			<PatientCard {patient} />
 		{/each}
-		<NewPatient/>
+		<NewPatient />
 	</div>
 </section>
 
@@ -157,12 +158,11 @@
 	}
 	.patient-section {
 		display: flex;
-		flex-wrap: wrap;	
-		background-color: #f4f4f4; 
+		flex-wrap: wrap;
+		background-color: #f4f4f4;
 		margin-top: 2rem;
-		padding: 1rem 2rem; 
+		padding: 1rem 2rem;
 		gap: 8px;
 		scroll-margin-top: 55px;
-		
 	}
 </style>
