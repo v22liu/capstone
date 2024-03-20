@@ -5,7 +5,7 @@
 
 	export let patient = {};
 	export let overview = {};
-	export let notes = [];
+	export let notes = [{ title: '', notes: '', date: new Date() }];
 
 	let { id } = patient;
 	let { current_medication, allergies, conditions } = overview;

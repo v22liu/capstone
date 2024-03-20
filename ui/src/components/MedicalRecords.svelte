@@ -6,7 +6,7 @@
 	export let notes = []
 	let { id } = patient;
 	
-	let selectedNote = notes[0]
+	let selectedNote = notes[0];
 	let creatingRecord = false;
 </script>
 
