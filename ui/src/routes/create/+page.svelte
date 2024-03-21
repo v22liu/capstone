@@ -7,7 +7,6 @@
 <Header backLink={"lookup"} backText={"Patient Lookup"} nextLink={"prescribe"} nextText={"Prescribe"}/>
 <section>
 	<EditPatient cta="Create" takePhoto />
-	<PatientNotes />
 </section>
 
 <style>

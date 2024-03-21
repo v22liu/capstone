@@ -85,7 +85,7 @@
 </section>
 <section class="capture-container" style="background-color: #F4F4F4;">
 	<PersonalIdentifier toggle={() => useText = true} search={(e) => personalIdentifier = e} />
-	<VoiceCapture toggle={() => useVoice = true} search={(e) => voiceData = e} />
+	<div style="width:70%"><VoiceCapture toggle={() => useVoice = true} search={(e) => voiceData = e} /></div>
 </section>
 <section class="search-container" style="background-color: #F4F4F4;">
 	<div

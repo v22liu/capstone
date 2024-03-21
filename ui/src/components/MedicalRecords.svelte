@@ -9,6 +9,15 @@
 	
 	let selectedNote = notes[0];
 	let creatingRecord = notes.length === 0; 
+
+	let updated = false;
+	function handleInput() {
+		updated = true
+  	}
+	function savedChanges() {
+		updated = false
+  	}
+
 </script>
 
 <div class="medicalRecords">
@@ -39,7 +48,7 @@
 	{#if !creatingRecord}
 		<Form style="flex: 1">
 			<section id="FullRecord">
-				<TextInput light labelText="Record Name" placeholder="Clinic Notes" bind:value={selectedNote.title} name="title"></TextInput>
+				<TextInput light labelText="Record Name" placeholder="Clinic Notes" bind:value={selectedNote.title} on:input={handleInput} name="title"></TextInput>
 				<TextArea
 					labelText="Record Details"
 					placeholder="Placeholder text (optional)"
@@ -47,10 +56,11 @@
 					rows={25}
 					bind:value={selectedNote.notes}
 					name="notes"
+					on:input={handleInput}
 				/>
 			</section>
 			{#if !noEdit}
-			<div style="display:flex; margin-top:8px; justify-content: flex-end"><Button type="submit">Save Changes</Button></div>
+			<div style="display:flex; margin-top:8px; justify-content: flex-end"><Button type="submit" disabled={!updated} on:click={savedChanges}>Save Changes</Button></div>
 			{/if}
 		</Form>
 	{:else}
