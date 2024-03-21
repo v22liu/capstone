@@ -8,6 +8,7 @@ export interface PatientRecord {
 	phone: string;
 	village: string;
 	natID: string;
+	photo_file_path: string;
 }
 
 export interface ClinicNotes {

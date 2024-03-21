@@ -4,7 +4,6 @@
 	import Camera from 'carbon-icons-svelte/lib/Camera.svelte';
 	import BlankProfile from '$lib/images/blank-profile.png';
 	
-	import profilePic from '$lib/images/profile_photo.png';
 	import Jancinta from '$lib/images/profile/1-jacinta-siago.png';
 	import Abdul from '$lib/images/profile/2-abdulkarim-ali.png';
 	import Medina from '$lib/images/profile/3-medina-maraka.png';
@@ -42,7 +41,7 @@
 <div>
 	<h4>Patient Identifiers</h4>
 	<img
-		src={pathToPic[photo_file_path] ?? profilePic}
+		src={pathToPic[photo_file_path] ?? BlankProfile}
 		alt="Default profile picture"
 		style="height: 10rem; width: 10rem; margin: 1rem auto 0; object-fit:cover"
 		aria-hidden="true"

@@ -1,6 +1,7 @@
 <script>
 	import Button from 'carbon-components-svelte/src/Button/Button.svelte';
 	import profilePic from '$lib/images/profile_photo.png';
+	import BlankProfile from '$lib/images/blank-profile.png';
 	import Jancinta from '$lib/images/profile/1-jacinta-siago.png';
 	import Abdul from '$lib/images/profile/2-abdulkarim-ali.png';
 	import Medina from '$lib/images/profile/3-medina-maraka.png';
@@ -8,10 +9,21 @@
 	import Minsu from '$lib/images/profile/5-minsu-hassan.png';
 	import Kavuwa from '$lib/images/profile/6-kavuwa-musyoka.png';
 	import Michael from '$lib/images/profile/7-sayimichael-kabelele.png';
-	import Patricia from '$lib/images/profile/8-patricia-geni.png'
+	import Patricia from '$lib/images/profile/8-patricia-geni.png';
 
 	export let patient = {};
-	let { name, sex, day_of_birth, month_of_birth, year_of_birth, village, phone, id, natID, photo_file_path } = patient;
+	let {
+		name,
+		sex,
+		day_of_birth,
+		month_of_birth,
+		year_of_birth,
+		village,
+		phone,
+		id,
+		natID,
+		photo_file_path
+	} = patient;
 
 	const pathToPic = {
 		'1-jancinta-siago.png': Jancinta,
@@ -21,13 +33,19 @@
 		'5-minsu-hassan.png': Minsu,
 		'6-kavuwa-musyoka.png': Kavuwa,
 		'7-sayimichael-kabelele.png': Michael,
-		'8-patricia-geni.png': Patricia,
-	}
+		'8-patricia-geni.png': Patricia
+	};
 </script>
 
 <div class="card">
 	<div class="profile_pic">
-		<img src={pathToPic[photo_file_path] ?? profilePic} style="object-fit:cover" height="297px" width="255px" alt="Profile Picture"/>
+		<img
+			src={pathToPic[photo_file_path] ?? BlankProfile}
+			style="object-fit:cover"
+			height="297px"
+			width="255px"
+			alt="Profile Picture"
+		/>
 	</div>
 
 	<div class="card_info">
@@ -37,7 +55,7 @@
 			<br /> Birthday:
 			<br /> Village:
 			<br /> Phone Number:
-            <br /> National ID:
+			<br /> National ID:
 		</p>
 		<p class="patient_info">
 			{name}
@@ -49,8 +67,8 @@
 			{village}
 			<br />
 			{phone}
-            <br /> 
-            {natID}
+			<br />
+			{natID}
 		</p>
 	</div>
 

@@ -17,7 +17,7 @@
 	export let toggle = () => {};
 	export let search = () => {};
 
-	let id, name, sex, day_of_birth, month_of_birth, year_of_birth, village, phone, natID;
+	let id, name, sex, day_of_birth, month_of_birth, year_of_birth, village, phone, natID, photo_file_path;
 
 	id = patient.id;
 	name = patient.name
@@ -28,6 +28,8 @@
 	village = patient.village
 	phone = patient.phone
 	natID = patient.natID
+	photo_file_path = patient.photo_file_path
+
 
 	let personalIdentifier = {}
 
@@ -42,6 +44,7 @@
 
 <Form method="POST" action="?/patient" bind:this={personalIdentifier}>
 	<input type="hidden" name="id" value={id} />
+	<input type="hidden" name="photo_file_path" value={photo_file_path} />
 	<FormGroup>
 		<TextInput light labelText="Name" placeholder="" bind:value={name} name="name" />
 	</FormGroup>
