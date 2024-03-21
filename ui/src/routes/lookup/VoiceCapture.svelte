@@ -37,6 +37,7 @@
 	function startRecording() {
 		// @ts-ignore
 		mediaRecorder.start();
+		isDisabled = !isDisabled;
 	}
 	let intervalId;
 
@@ -44,6 +45,8 @@
 		// @ts-ignore
 		mediaRecorder.stop();
 		toggle();
+		
+		isDisabled = !isDisabled;
 
 		let increment = 2;
 		intervalId = setInterval(() => {
@@ -58,6 +61,7 @@
 	 * @type {() => void}
 	 */
 	export let toggle;
+	let isDisabled = true
 
 	let progress = 0
 	$: helpText = progress == 0 ? "Waiting for audio to process" : progress == 100 ? "Audio processing complete" : "Audio processing in progress"
@@ -71,8 +75,8 @@
 
 	<div style="display: flex; margin: 0.5rem 0 2rem; width: 100%; gap: 1rem">
 		<audio controls style="display: block; flex: 1"></audio>
-		<Button kind="secondary" icon={Microphone} on:click={startRecording}>Record</Button>
-		<Button kind="danger" icon={Microphone} on:click={stopRecording}>Stop</Button>
+		<Button kind="secondary" id='startRecord' disabled={!isDisabled} icon={Microphone} on:click={startRecording}>Record</Button>
+		<Button kind="danger" id='stopRecord'  disabled={isDisabled} icon={Microphone}  on:click={stopRecording}>Stop</Button>
 	</div>
 	<ProgressBar
 		value={progress}

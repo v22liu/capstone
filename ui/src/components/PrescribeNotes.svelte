@@ -25,7 +25,7 @@
 	export let notes = [{ title: '', notes: '', date: new Date() }];
 
 	let bin, type;
-	let { current_medication, allergies, conditions } = overview;
+	let { current_medication, allergies, conditions, id } = overview;
 	let name = 'Albendazole',
 		dosage,
 		reason,
@@ -95,6 +95,7 @@
 			body.appendChild(child);
 		}
 	}
+	
 	let noEdit=true;
 </script>
 
@@ -132,13 +133,12 @@
 						readonly
 					/>
 					
-					<div style="display:flex; justify-content:end; margin:8px"><Button kind="tertiary">Update Patient Record</Button></div>
+					<div style="display:flex; justify-content:end; margin:8px"><Button kind="tertiary" href="/patient/{id}">Update Patient Record</Button></div>
 				</div>
 			</TabContent>
 			<TabContent>
 				<div style="height:630px"> <MedicalRecords {notes} {noEdit}> </MedicalRecords> </div>
-				<div style="display:flex; justify-content:end; margin:8px"><Button kind="tertiary">Update Patient Record</Button></div>
-				
+				<div style="display:flex; justify-content:end; margin:8px"><Button kind="tertiary" href="/patient/{id}">Update Patient Record</Button></div>
 			</TabContent>
 			<TabContent>
 				<h1>Medication</h1>

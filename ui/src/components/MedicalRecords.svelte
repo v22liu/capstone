@@ -49,7 +49,9 @@
 					name="notes"
 				/>
 			</section>
-			<Button type="submit">Save</Button>
+			{#if !noEdit}
+			<div style="display:flex; margin-top:8px; justify-content: flex-end"><Button type="submit">Save Changes</Button></div>
+			{/if}
 		</Form>
 	{:else}
 		<Form style="flex: 1" action="?/createNote" method="POST">
@@ -64,7 +66,7 @@
 					name="notes"
 				/>
 			</section>
-			<Button type="submit">Create</Button>
+			<div style="display:flex; margin-top:8px; justify-content: flex-end"><Button type="submit">Create</Button></div>
 		</Form>
 	{/if}
 </div>
