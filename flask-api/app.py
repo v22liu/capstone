@@ -259,10 +259,10 @@ class SpeakerRecognition(Resource):
         patients = Patient.query.all()
         matching_patients = []
         for patient in patients:
+            if not patient.voice_recording_path:
+                continue
             # patient's saved voice clip should already be in correct audio format
             voice_clip_path = os.path.join('./assets/audio', patient.voice_recording_path)
-            if not voice_clip_path:
-                continue
 
             try:
                 isMatch = asr_utils.speaker_recognition(file_path, voice_clip_path)
