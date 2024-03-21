@@ -24,7 +24,7 @@
 	name = patient.name
 	sex = patient.sex
 	day_of_birth = patient.day_of_birth
-	month_of_birth = patient.month_of_birth
+	month_of_birth = patient.month_of_birth?.toString()
 	year_of_birth = patient.year_of_birth
 	village = patient.village
 	phone = patient.phone
@@ -65,20 +65,20 @@
 	<FormGroup legendText = "Date of Birth">
 	<div style="display: flex; flex-direction: row; gap: 8px">
 		
-		<Select bind:selected={month_of_birth} labelText="Month" light name="month_of_birth" on:input={handleInput} on:change={(e) => month_of_birth = e.target.value}>
+		<Select bind:selected={month_of_birth} labelText="Month" light name="month_of_birth" on:change={(e) => month_of_birth = e.target.value}>
 			<SelectItem value="" text="--"/>
-			<SelectItem value={1} text="Jan" />
-			<SelectItem value={2} text="Feb" />
-			<SelectItem value={3} text="Mar" />
-			<SelectItem value={4} text="Apr" />
-			<SelectItem value={5} text="May" />
-			<SelectItem value={6} text="Jun" />
-			<SelectItem value={7} text="Jul" />
-			<SelectItem value={8} text="Aug" />
-			<SelectItem value={9} text="Sept" />
-			<SelectItem value={10} text="Oct" />
-			<SelectItem value={11} text="Nov" />
-			<SelectItem value={12} text="Dec" />
+			<SelectItem value={"1"} text="Jan" />
+			<SelectItem value={"2"} text="Feb" />
+			<SelectItem value={"3"} text="Mar" />
+			<SelectItem value={"4"} text="Apr" />
+			<SelectItem value={"5"} text="May" />
+			<SelectItem value={"6"} text="Jun" />
+			<SelectItem value={"7"} text="Jul" />
+			<SelectItem value={"8"} text="Aug" />
+			<SelectItem value={"9"} text="Sept" />
+			<SelectItem value={"10"} text="Oct" />
+			<SelectItem value={"11"} text="Nov" />
+			<SelectItem value={"12"} text="Dec" />
 		</Select>
 		
 		<TextInput light labelText="Day" placeholder="" bind:value={day_of_birth} on:input={handleInput} name="day_of_birth" />
@@ -111,7 +111,7 @@
 	{/if}
 	{#if cta == "Create"}
 		<div style="display: flex">
-			<Button style=" margin-left: auto" type="submit" kind="tertiary" disabled={!updated} on:click={updated=false} href="/patient/{id}">{cta}</Button>
+			<Button style=" margin-left: auto" type="submit" kind="tertiary" disabled={!updated} on:click={updated=false}>{cta}</Button>
 		</div>
 	{/if}
 	{#if cta !== "Create" && cta !== null}
