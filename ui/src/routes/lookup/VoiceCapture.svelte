@@ -70,7 +70,6 @@
 
 <div>
 	<h4>Voice Recording</h4>
-	<h5>For speech to text.</h5>
 	<p>Ask the patient to speak their name into the microphone while recording.</p>
 
 	<div style="display: flex; margin: 0.5rem 0 2rem; width: 100%; gap: 1rem">
@@ -89,9 +88,6 @@
 </div>
 
 <style>
-	div {
-		width: 70%;
-	}
 	h4 {
 		font-weight: bold;
 	}

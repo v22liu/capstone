@@ -10,9 +10,11 @@
 		Button
 	} from 'carbon-components-svelte';
 	import { Villages } from '$lib/prescription/prescription';
-
+	import VoiceCapture from '../routes/lookup/VoiceCapture.svelte';
+	
 	export let patient = {};
-
+	export let currentlyLookup = false;
+	export let TEST = false;
 	export let cta = null;
 	export let toggle = () => {};
 	export let search = () => {};
@@ -102,6 +104,10 @@
 	<FormGroup>
 		<TextInput light labelText="National ID" placeholder="XXX-XXX-XXX" name="natID" bind:value={natID} on:input={handleInput}/>
 	</FormGroup>
+	{#if currentlyLookup==false}
+		<VoiceCapture />
+	{/if}
+	{#if TEST==true} <H1>WTF</H1> {/if}
 	{#if cta == "Create"}
 		<div style="display: flex">
 			<Button style=" margin-left: auto" type="submit" kind="tertiary" disabled={!updated} on:click={updated=false} href="/patient/{id}">{cta}</Button>
