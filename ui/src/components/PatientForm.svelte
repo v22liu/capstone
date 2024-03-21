@@ -14,7 +14,6 @@
 	
 	export let patient = {};
 	export let currentlyLookup = false;
-	export let TEST = false;
 	export let cta = null;
 	export let toggle = () => {};
 	export let search = () => {};
@@ -107,13 +106,12 @@
 	{#if currentlyLookup==false}
 		<VoiceCapture />
 	{/if}
-	{#if TEST==true} <H1>WTF</H1> {/if}
 	{#if cta == "Create"}
 		<div style="display: flex">
 			<Button style=" margin-left: auto" type="submit" kind="tertiary" disabled={!updated} on:click={updated=false} href="/patient/{id}">{cta}</Button>
 		</div>
 	{/if}
-	{#if  cta !== "Create" && cta !== null}
+	{#if cta !== "Create" && cta !== null}
 		<div style="display: flex">
 			<Button style=" margin-left: auto" type="submit" kind="tertiary" disabled={!updated} on:click={updated=false} >{cta}</Button>
 		</div>

@@ -1,5 +1,5 @@
 <script>
-// @ts-nocheck
+	// @ts-nocheck
 
 	import { ProgressBar, Button, TextInput } from 'carbon-components-svelte';
 	import Microphone from 'carbon-icons-svelte/lib/Microphone.svelte';
@@ -8,9 +8,13 @@
 	import { onMount } from 'svelte';
 
 	export let search = () => {};
+	export let toggle = () => {};
+
+	let isDisabled = true;
+	let intervalId;
+	let progress = 0;
 
 	let media = [];
-
 	let mediaRecorder = null;
 	onMount(async () => {
 		const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -29,23 +33,22 @@
 			}
 			const audioBlob = new Blob(media, { type: 'audio/wav' });
 			audio.src = URL.createObjectURL(audioBlob);
-			search([media, audio.src])
+			search([media, audio.src]);
 			media = [];
 		};
 	});
-	
+
 	function startRecording() {
 		// @ts-ignore
 		mediaRecorder.start();
 		isDisabled = !isDisabled;
 	}
-	let intervalId;
 
 	function stopRecording() {
 		// @ts-ignore
 		mediaRecorder.stop();
 		toggle();
-		
+
 		isDisabled = !isDisabled;
 
 		let increment = 2;
@@ -57,15 +60,12 @@
 		}, 50);
 	}
 
-	/**
-	 * @type {() => void}
-	 */
-	export let toggle;
-	let isDisabled = true
-
-	let progress = 0
-	$: helpText = progress == 0 ? "Waiting for audio to process" : progress == 100 ? "Audio processing complete" : "Audio processing in progress"
-	
+	$: helpText =
+		progress == 0
+			? 'Waiting for audio to process'
+			: progress == 100
+				? 'Audio processing complete'
+				: 'Audio processing in progress';
 </script>
 
 <div>
@@ -74,14 +74,26 @@
 
 	<div style="display: flex; margin: 0.5rem 0 2rem; width: 100%; gap: 1rem">
 		<audio controls style="display: block; flex: 1"></audio>
-		<Button kind="secondary" id='startRecord' disabled={!isDisabled} icon={Microphone} on:click={startRecording}>Record</Button>
-		<Button kind="danger" id='stopRecord'  disabled={isDisabled} icon={Microphone}  on:click={stopRecording}>Stop</Button>
+		<Button
+			kind="secondary"
+			id="startRecord"
+			disabled={!isDisabled}
+			icon={Microphone}
+			on:click={startRecording}>Record</Button
+		>
+		<Button
+			kind="danger"
+			id="stopRecord"
+			disabled={isDisabled}
+			icon={Microphone}
+			on:click={stopRecording}>Stop</Button
+		>
 	</div>
 	<ProgressBar
 		value={progress}
 		labelText="Audio Processing"
 		helperText={helpText}
-		status={progress == 100 ? "finished": "active"}
+		status={progress == 100 ? 'finished' : 'active'}
 		style="width: 100%;"
 		max={100}
 	/>
