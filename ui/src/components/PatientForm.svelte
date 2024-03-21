@@ -102,7 +102,12 @@
 	<FormGroup>
 		<TextInput light labelText="National ID" placeholder="XXX-XXX-XXX" name="natID" bind:value={natID} on:input={handleInput}/>
 	</FormGroup>
-	{#if cta !== null}
+	{#if cta == "Create"}
+		<div style="display: flex">
+			<Button style=" margin-left: auto" type="submit" kind="tertiary" disabled={!updated} on:click={updated=false} href="/patient/{id}">{cta}</Button>
+		</div>
+	{/if}
+	{#if  cta !== "Create" && cta !== null}
 		<div style="display: flex">
 			<Button style=" margin-left: auto" type="submit" kind="tertiary" disabled={!updated} on:click={updated=false} >{cta}</Button>
 		</div>
