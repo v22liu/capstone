@@ -62,9 +62,7 @@
 	</div>
 
 	<div class="button_group">
-		<a href="/patient/{id}">
-			<Button kind="tertiary">Update Patient Record</Button>
-		</a>
+		<Button href="/patient/{id}" kind="tertiary">Update Patient Record</Button>
 	</div>
 </div>
 
