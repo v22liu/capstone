@@ -22,8 +22,8 @@ export const actions = {
 			voice_recording_path: formData.get('voice_recording_path')?.toString() || ''
 		};
 
-		await createRecord(record);
+		const response = await createRecord(record);
 
-		return { success: true };
+		return { id: response.id, success: true };
 	}
 };

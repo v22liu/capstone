@@ -107,7 +107,7 @@ class PatientResource(Resource):
         db.session.add(patient)
         db.session.commit()
 
-        return {'message': 'Patient record created successfully'}, 201     
+        return {'id': patient.id, 'message': 'Patient record created successfully'}, 201     
 
 class PatientByIdResource(Resource):
     def get(self, patient_id):
@@ -208,7 +208,6 @@ class NoteByIdResource(Resource):
             json_data = request.get_json()
 
             note.title = json_data.get('title')
-            note.date = json_data.get('date')
             note.notes = json_data.get('notes')
 
             db.session.commit()

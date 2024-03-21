@@ -18,8 +18,10 @@
 	let useVoice = false;
 
 	let personalIdentifier = {};
+	let status = '';
+	let identifierMatches = [];
 	let voiceData = [];
-	$: voiceMatch = [];
+	$: voiceMatches = [];
 
 	onMount(() => {
 		if (form?.success) {
@@ -30,17 +32,33 @@
 	});
 
 	async function submitPatientSearch() {
-		const form = document.getElementById('identifier-search');
-		if (form) {
-			// form.submit();
-			// voiceForm.submit();
+		// const form = document.getElementById('identifier-search');
+		// if (form) {
+		// 	// form.submit();
+		// 	// voiceForm.submit();
+		// }
+		const BASE_URL = 'http://127.0.0.1:8000';
+
+		if ('name' in personalIdentifier) {
+			const identifierResponse = await fetch(`${BASE_URL}/patients-by-identifier`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(personalIdentifier)
+			});
+
+			const res = await identifierResponse.json();
+			identifierMatches = [...res];
+			console.log('Identifier Matches:', identifierMatches);
 		}
 
 		if (voiceData[0]) {
+			status = 'active';
 			const formData = new FormData();
 			const audioBlob = new Blob(voiceData[0], { type: 'audio/wav' });
 			formData.append('file', audioBlob, voiceData[1]);
-			const response = await fetch('http://127.0.0.1:8000/speaker-recognition', {
+			const response = await fetch(`${BASE_URL}/speaker-recognition`, {
 				method: 'POST',
 				body: formData,
 				cache: 'no-cache',
@@ -51,15 +69,19 @@
 				}
 			});
 
+			status = 'finished';
 			const res = await response.json();
 
-			voiceMatch = [...res.matching_patients];
-			console.log(voiceMatch);
-
-			const section = document.getElementById('patient-section');
-
-			if (section) section.scrollIntoView({ behavior: 'smooth' });
+			voiceMatches = [...res.matching_patients];
+			console.log('Voice Matches:', voiceMatches);
+		} else {
+			voiceMatches = [];
+			console.log('No voice data');
 		}
+		const section = document.getElementById('patient-section');
+		if (section) section.scrollIntoView({ behavior: 'smooth' });
+
+		voiceData = [];
 	}
 </script>
 
@@ -68,7 +90,7 @@
 	<meta name="description" content="About this app" />
 </svelte:head>
 
-<form action="?/patient" method="POST" use:enhance id="identifier-search">
+<!-- <form action="?/patient" method="POST" use:enhance id="identifier-search">
 	<input type="hidden" name="name" value={personalIdentifier.name} />
 	<input type="hidden" name="phone" value={personalIdentifier.phone} />
 	<input type="hidden" name="natID" value={personalIdentifier.natID} />
@@ -77,7 +99,7 @@
 	<input type="hidden" name="day_of_birth" value={personalIdentifier.day_of_birth} />
 	<input type="hidden" name="month_of_birth" value={personalIdentifier.month_of_birth} />
 	<input type="hidden" name="year_of_birth" value={personalIdentifier.year_of_birth} />
-</form>
+</form> -->
 <!-- <form action="?/voice" method="POST" use:enhance id="voice-search">
 	<input type="hidden" name="voiceBlob" value={voiceData[0]} />
 	<input type="hidden" name="voiceSrc" value={voiceData[1]} />
@@ -95,7 +117,7 @@
 <section class="capture-container" style="background-color: #F4F4F4;">
 	<PersonalIdentifier toggle={() => (useText = true)} search={(e) => (personalIdentifier = e)} />
 	<div style="width:70%">
-		<VoiceCapture toggle={() => (useVoice = true)} search={(e) => (voiceData = e)} />
+		<VoiceCapture toggle={() => (useVoice = true)} search={(e) => (voiceData = e)} {status} showProcessing={true} />
 	</div>
 </section>
 <section class="search-container" style="background-color: #F4F4F4;">
@@ -114,11 +136,7 @@
 		<Button
 			icon={Search}
 			on:click={() => {
-				// Submit the search
 				console.log('Searching for patient');
-				// TODO: Call the API with the audioRecordingData
-
-				// Scroll to the patient section
 
 				useText = false;
 				useVoice = false;
@@ -128,16 +146,32 @@
 		>
 	</div>
 </section>
-
 <section class="patient-section" id="patient-section" style="display: flex; flex-direction:column">
 	<h1>Possible Patient Matches</h1>
 	<div style="display: flex; flex-wrap:wrap; gap:32px;">
-		{#each voiceMatch as patient}
+		{#each voiceMatches as patient}
 			<PatientCard {patient} />
 		{/each}
-		{#each form?.records ?? data.records as patient}
+		{#each identifierMatches as patient}
 			<PatientCard {patient} />
 		{/each}
+
+		{#if form?.records == null && data.records == null}
+			<div style="width:255px display:flex flex-direction:column">
+				<p>No Patient Records Found.</p>
+				<NewPatient />
+			</div>
+		{/if}
+	</div>
+</section>
+
+<section class="record-section" id="record-section" style="display: flex; flex-direction:column">
+	<h1>Patient Records</h1>
+	<div style="display: flex; flex-wrap:wrap; gap:32px;">
+		{#each data.records as patient}
+			<PatientCard {patient} />
+		{/each}
+
 		{#if form?.records == null && data.records == null}
 			<div style="width:255px display:flex flex-direction:column">
 				<p>No Patient Records Found.</p>
@@ -173,7 +207,8 @@
 		justify-content: flex-end;
 		padding: 1rem 2rem;
 	}
-	.patient-section {
+	.patient-section,
+	.record-section {
 		display: flex;
 		flex-wrap: wrap;
 		background-color: #f4f4f4;

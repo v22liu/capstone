@@ -83,7 +83,6 @@ export const actions = {
 			notes: formData.get('notes')?.toString() || '',
 		};
 
-		// console.log('creating note', note);
 
 		await createClinicNote(note);
 
