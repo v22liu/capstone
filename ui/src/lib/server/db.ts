@@ -12,7 +12,7 @@ export async function createRecord(record: Omit<PatientRecord, 'id'>) {
 			body: JSON.stringify(record)
 		});
 
-		console.log(response);
+		return response.json();
 	} catch (error) {
 		console.error('Error creating patient record:', error);
 		throw error;

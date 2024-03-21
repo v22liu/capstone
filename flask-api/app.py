@@ -105,7 +105,7 @@ class PatientResource(Resource):
         db.session.add(patient)
         db.session.commit()
 
-        return {'message': 'Patient record created successfully'}, 201     
+        return {'id': patient.id, 'message': 'Patient record created successfully'}, 201     
 
 class PatientByIdResource(Resource):
     def get(self, patient_id):

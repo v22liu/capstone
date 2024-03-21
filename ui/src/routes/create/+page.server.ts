@@ -18,11 +18,11 @@ export const actions = {
 			phone: formData.get('phone')?.toString() || '',
 			village: formData.get('village')?.toString() || '',
 			natID: formData.get('natID')?.toString() || '',
-			photo_file_path: formData.get('photo_file_path')?.toString() || '',
+			photo_file_path: formData.get('photo_file_path')?.toString() || ''
 		};
 
-		await createRecord(record);
+		const response = await createRecord(record);
 
-		return { success: true };
+		return { id: response.id, success: true };
 	}
 };
