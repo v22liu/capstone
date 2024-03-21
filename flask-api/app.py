@@ -206,7 +206,6 @@ class NoteByIdResource(Resource):
             json_data = request.get_json()
 
             note.title = json_data.get('title')
-            note.date = json_data.get('date')
             note.notes = json_data.get('notes')
 
             db.session.commit()

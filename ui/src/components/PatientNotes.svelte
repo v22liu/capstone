@@ -12,12 +12,11 @@
 
 	let updated = false;
 	function handleInput() {
-		updated = true
-  	}
+		updated = true;
+	}
 	function savedChanges() {
-		updated = false
-  	}
-
+		updated = false;
+	}
 </script>
 
 <div class="container">
@@ -59,12 +58,11 @@
 						/>
 					</div>
 					<div class="buttons">
-						<Button type="submit" kind="tertiary" disabled={!updated} on:click={savedChanges}>Save Changes</Button>
+						<Button type="submit" kind="tertiary" disabled={!updated}>Save Changes</Button>
 					</div>
 				</Form>
 			</TabContent>
 			<TabContent><MedicalRecords {patient} {notes} /></TabContent>
-
 		</svelte:fragment>
 	</Tabs>
 </div>
@@ -94,7 +92,7 @@
 		flex-direction: column;
 		justify-content: space-between;
 		width: 20%;
-		padding: 16px;		
+		padding: 16px;
 		border-bottom: #8d8d8d;
 		background-color: white;
 	}

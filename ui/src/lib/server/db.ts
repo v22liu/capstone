@@ -106,16 +106,16 @@ export async function createClinicNote(note: Omit<ClinicNotes, 'id' | 'date'>) {
 
 export async function updateClinicNote(note: Omit<ClinicNotes, 'date'>) {
 	console.log('updating notes for', note.id, note);
-	// const response = await fetch(`${BASE_URL}/clinic-notes/${notes.id}`, {
-	// 	method: 'PUT',
-	// 	headers: {
-	// 		'Content-Type': 'application/json'
-	// 	},
-	// 	body: JSON.stringify(note)
-	// });
+	const response = await fetch(`${BASE_URL}/notes/${note.id}`, {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(note)
+	});
 
-	// const data = await response.json();
-	// console.log(data.message);
+	const data = await response.json();
+	console.log(data.message);
 }
 
 export async function filterPatients(record: Omit<PatientRecord, 'id'>) {

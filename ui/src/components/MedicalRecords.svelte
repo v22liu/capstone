@@ -46,8 +46,9 @@
 		</div>
 	{/if}
 	{#if !creatingRecord}
-		<Form style="flex: 1">
+		<Form style="flex: 1" action="?/updateNote" method="POST">
 			<section id="FullRecord">
+				<input type="hidden" name="id" value={selectedNote.id} />
 				<TextInput light labelText="Record Name" placeholder="Clinic Notes" bind:value={selectedNote.title} on:input={handleInput} name="title"></TextInput>
 				<TextArea
 					labelText="Record Details"
@@ -60,7 +61,7 @@
 				/>
 			</section>
 			{#if !noEdit}
-			<div style="display:flex; margin-top:8px; justify-content: flex-end"><Button type="submit" disabled={!updated} on:click={savedChanges}>Save Changes</Button></div>
+			<div style="display:flex; margin-top:8px; justify-content: flex-end"><Button type="submit" disabled={!updated}>Save Changes</Button></div>
 			{/if}
 		</Form>
 	{:else}
