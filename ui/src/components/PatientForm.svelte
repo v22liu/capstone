@@ -60,21 +60,23 @@
 	</FormGroup>
 	<FormGroup legendText = "Date of Birth">
 	<div style="display: flex; flex-direction: row; gap: 8px">
-		<Select labelText="Month" light name="month_of_birth" bind:selected={month_of_birth} on:input={handleInput} on:change={(e) => month_of_birth = e.target.value}>
+		
+		<Select bind:selected={month_of_birth} labelText="Month" light name="month_of_birth" on:input={handleInput} on:change={(e) => month_of_birth = e.target.value}>
 			<SelectItem value="" text="--"/>
-			<SelectItem value=1 text="Jan" />
-			<SelectItem value=2 text="Feb" />
-			<SelectItem value=3 text="Mar" />
-			<SelectItem value=4 text="Apr" />
-			<SelectItem value=5 text="May" />
-			<SelectItem value=6 text="Jun" />
-			<SelectItem value=7 text="Jul" />
-			<SelectItem value=8 text="Aug" />
-			<SelectItem value=9 text="Sept" />
-			<SelectItem value=10 text="Oct" />
-			<SelectItem value=11 text="Nov" />
-			<SelectItem value=12 text="Dec" />
+			<SelectItem value={1} text="Jan" />
+			<SelectItem value={2} text="Feb" />
+			<SelectItem value={3} text="Mar" />
+			<SelectItem value={4} text="Apr" />
+			<SelectItem value={5} text="May" />
+			<SelectItem value={6} text="Jun" />
+			<SelectItem value={7} text="Jul" />
+			<SelectItem value={8} text="Aug" />
+			<SelectItem value={9} text="Sept" />
+			<SelectItem value={10} text="Oct" />
+			<SelectItem value={11} text="Nov" />
+			<SelectItem value={12} text="Dec" />
 		</Select>
+		
 		<TextInput light labelText="Day" placeholder="" bind:value={day_of_birth} on:input={handleInput} name="day_of_birth" />
 		<TextInput light labelText="Year" placeholder="" bind:value={year_of_birth} on:input={handleInput} name="year_of_birth" />
 	</div>
