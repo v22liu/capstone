@@ -22,7 +22,7 @@
 	import { PrescriptionReason, Dosages, PrescriptionWarnings, PrescriptionTimings, Medications, DefaultDrugSettings } from '$lib/prescription/prescription';
 
 	export let overview = {};
-	export let notes = {};
+	export let notes = [{ title: '', notes: '', date: new Date() }];
 
 	let bin, type;
 	let { current_medication, allergies, conditions } = overview;

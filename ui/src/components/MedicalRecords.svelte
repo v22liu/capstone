@@ -8,32 +8,34 @@
 	let { id } = patient;
 	
 	let selectedNote = notes[0];
-	let creatingRecord = false;
+	let creatingRecord = notes.length === 0; 
 </script>
 
 <div class="medicalRecords">
-	<div class="RecordsList">
-		<ButtonSet stacked>
-			{#each notes as note, index}
-				<Button kind="ghost" size="field" on:click={() => selectedNote = notes[index]}>
-					<div style="display: flex; flex-direction: column">
-						<p>
-							{note?.title}
-						</p>
-						<p style="color:black">
-							{note.date.toLocaleString('en-US', { month: 'long', year: 'numeric' })}
-						</p>
-					</div>
-				</Button>
-			{/each}
-		</ButtonSet>
-		
-		{#if !noEdit}
-		<Button kind={!creatingRecord ? 'secondary': 'danger-ghost'} icon={Add} on:click={() => creatingRecord = !creatingRecord}>
-			{creatingRecord ? 'Cancel' : 'Add Record'}
-		</Button>
-		{/if}
-	</div>
+	{#if notes.length > 0}
+		<div class="RecordsList">
+			<ButtonSet stacked>
+				{#each notes as note, index}
+					<Button kind="ghost" size="field" on:click={() => selectedNote = notes[index]}>
+						<div style="display: flex; flex-direction: column">
+							<p>
+								{note?.title}
+							</p>
+							<p style="color:black">
+								{note.date.toLocaleString('en-US', { month: 'long', year: 'numeric' })}
+							</p>
+						</div>
+					</Button>
+				{/each}
+			</ButtonSet>
+			
+			{#if !noEdit}
+			<Button kind={!creatingRecord ? 'secondary': 'danger-ghost'} icon={Add} on:click={() => creatingRecord = !creatingRecord}>
+				{creatingRecord ? 'Cancel' : 'Add Record'}
+			</Button>
+			{/if}
+		</div>
+	{/if}
 	{#if !creatingRecord}
 		<Form style="flex: 1">
 			<section id="FullRecord">
