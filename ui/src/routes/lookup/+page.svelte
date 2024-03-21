@@ -94,7 +94,9 @@
 </section>
 <section class="capture-container" style="background-color: #F4F4F4;">
 	<PersonalIdentifier toggle={() => (useText = true)} search={(e) => (personalIdentifier = e)} />
-	<VoiceCapture toggle={() => (useVoice = true)} search={(e) => (voiceData = e)} />
+	<div style="width:70%">
+		<VoiceCapture toggle={() => (useVoice = true)} search={(e) => (voiceData = e)} />
+	</div>
 </section>
 <section class="search-container" style="background-color: #F4F4F4;">
 	<div
@@ -127,7 +129,7 @@
 	</div>
 </section>
 
-<section class="patient-section" id="patient-section">
+<section class="patient-section" id="patient-section" style="display: flex; flex-direction:column">
 	<h1>Possible Patient Matches</h1>
 	<div style="display: flex; flex-wrap:wrap; gap:32px;">
 		{#each voiceMatch as patient}
@@ -136,7 +138,14 @@
 		{#each form?.records ?? data.records as patient}
 			<PatientCard {patient} />
 		{/each}
-		<NewPatient />
+		{#if form?.records == null && data.records == null}
+			<div style="width:255px display:flex flex-direction:column">
+				<p>No Patient Records Found.</p>
+				<NewPatient />
+			</div>
+		{:else}
+			<NewPatient />
+		{/if}
 	</div>
 </section>
 

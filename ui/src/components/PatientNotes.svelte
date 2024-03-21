@@ -9,6 +9,15 @@
 
 	let { id } = patient;
 	let { current_medication, allergies, conditions } = overview;
+
+	let updated = false;
+	function handleInput() {
+		updated = true
+  	}
+	function savedChanges() {
+		updated = false
+  	}
+
 </script>
 
 <div class="container">
@@ -28,6 +37,7 @@
 							rows={7}
 							name="current_medication"
 							bind:value={current_medication}
+							on:input={handleInput}
 						/>
 						<TextArea
 							labelText="Allergies"
@@ -36,6 +46,7 @@
 							rows={7}
 							name="allergies"
 							bind:value={allergies}
+							on:input={handleInput}
 						/>
 						<TextArea
 							labelText="Conditions"
@@ -44,10 +55,11 @@
 							rows={7}
 							name="conditions"
 							bind:value={conditions}
+							on:input={handleInput}
 						/>
 					</div>
 					<div class="buttons">
-						<Button type="submit" kind="tertiary">Save Changes</Button>
+						<Button type="submit" kind="tertiary" disabled={!updated} on:click={savedChanges}>Save Changes</Button>
 					</div>
 				</Form>
 			</TabContent>

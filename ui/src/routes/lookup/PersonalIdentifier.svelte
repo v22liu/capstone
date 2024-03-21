@@ -3,11 +3,13 @@
 
 	 export let toggle;
 	 export let search = () => {};
+
+	 let currentlyLookup = true;
 </script>
 
 <div>
 	<h4>Personal Identifiers</h4>
-	<PatientForm toggle={() => toggle()} {search}/>
+	<PatientForm {currentlyLookup} toggle={() => toggle()} {search}/>
 </div>
 
 <style>
