@@ -18,6 +18,7 @@
 	let useVoice = false;
 
 	let personalIdentifier = {};
+	let status = '';
 	let identifierMatches = [];
 	let voiceData = [];
 	$: voiceMatches = [];
@@ -53,6 +54,7 @@
 		}
 
 		if (voiceData[0]) {
+			status = 'active';
 			const formData = new FormData();
 			const audioBlob = new Blob(voiceData[0], { type: 'audio/wav' });
 			formData.append('file', audioBlob, voiceData[1]);
@@ -67,6 +69,7 @@
 				}
 			});
 
+			status = 'finished';
 			const res = await response.json();
 
 			voiceMatches = [...res.matching_patients];
@@ -75,7 +78,6 @@
 			voiceMatches = [];
 			console.log('No voice data');
 		}
-
 		const section = document.getElementById('patient-section');
 		if (section) section.scrollIntoView({ behavior: 'smooth' });
 
@@ -115,7 +117,7 @@
 <section class="capture-container" style="background-color: #F4F4F4;">
 	<PersonalIdentifier toggle={() => (useText = true)} search={(e) => (personalIdentifier = e)} />
 	<div style="width:70%">
-		<VoiceCapture toggle={() => (useVoice = true)} search={(e) => (voiceData = e)} />
+		<VoiceCapture toggle={() => (useVoice = true)} search={(e) => (voiceData = e)} {status} showProcessing={true} />
 	</div>
 </section>
 <section class="search-container" style="background-color: #F4F4F4;">

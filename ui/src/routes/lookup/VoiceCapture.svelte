@@ -9,9 +9,10 @@
 
 	export let search = () => {};
 	export let toggle = () => {};
+	export let status;
+	export let showProcessing = false;
 
 	let isDisabled = true;
-	let intervalId;
 	let progress = 0;
 
 	let media = [];
@@ -51,19 +52,12 @@
 
 		isDisabled = !isDisabled;
 
-		let increment = 2;
-		intervalId = setInterval(() => {
-			progress += increment;
-			if (progress >= 100) {
-				clearInterval(intervalId);
-			}
-		}, 50);
 	}
 
 	$: helpText =
-		progress == 0
+		status == ''
 			? 'Waiting for audio to process'
-			: progress == 100
+			: status =='complete'
 				? 'Audio processing complete'
 				: 'Audio processing in progress';
 </script>
@@ -89,14 +83,15 @@
 			on:click={stopRecording}>Stop</Button
 		>
 	</div>
-	<ProgressBar
-		value={progress}
-		labelText="Audio Processing"
-		helperText={helpText}
-		status={progress == 100 ? 'finished' : 'active'}
-		style="width: 100%;"
-		max={100}
-	/>
+	{#if showProcessing}
+		<ProgressBar
+			labelText="Audio Processing"
+			helperText={helpText}
+			status={status}
+			style="width: 100%;"
+			max={100}
+		/>
+	{/if}
 </div>
 
 <style>
