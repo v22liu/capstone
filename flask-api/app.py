@@ -5,6 +5,8 @@ from flask_cors import CORS
 import asr_utils
 import os
 from datetime import datetime
+import random
+import string
 
 app = Flask(__name__)
 CORS(app, origins="*")
@@ -273,6 +275,22 @@ class SpeakerRecognition(Resource):
             if isMatch == True:
                 matching_patients.append(patient.serialize())
         return {'matching_patients': matching_patients}
+    
+class SaveAudioFile(Resource):
+    def post(self):
+        files = request.files
+        file = files.get('file')
+
+        # Generate a random 10-digit filename
+        filename = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
+
+        if not file:
+            return {'message': 'No file uploaded'}, 400
+        try:
+            file_path = asr_utils.write_audio_to_file(file, filename + '.wav')
+        except Exception as e:
+            return {'message': 'An error occurred with saving audio to file: ' + str(e)}, 500
+        return {'message': 'Audio file saved successfully', 'filename': filename + '.wav'}
 
 
 api.add_resource(PatientResource, '/patients')
@@ -283,6 +301,7 @@ api.add_resource(NoteByIdResource, '/notes/<int:note_id>')
 api.add_resource(PatientOverviewByIdResource, '/patient-overview/<int:patient_id>')
 
 api.add_resource(SpeakerRecognition, '/speaker-recognition')
+api.add_resource(SaveAudioFile, '/save-audio-file')
 
 if __name__ == '__main__':
     app.run(port=8000, debug=True)

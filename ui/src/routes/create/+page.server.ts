@@ -19,6 +19,7 @@ export const actions = {
 			village: formData.get('village')?.toString() || '',
 			natID: formData.get('natID')?.toString() || '',
 			photo_file_path: formData.get('photo_file_path')?.toString() || '',
+			voice_recording_path: formData.get('voice_recording_path')?.toString() || ''
 		};
 
 		await createRecord(record);

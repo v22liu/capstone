@@ -9,6 +9,8 @@
 
 	export let search = () => {};
 	export let toggle = () => {};
+	export let createAudioFile = false;
+	export let getFileName = () => {};
 
 	let isDisabled = true;
 	let intervalId;
@@ -35,8 +37,29 @@
 			audio.src = URL.createObjectURL(audioBlob);
 			search([media, audio.src]);
 			media = [];
+			if (createAudioFile) {
+				saveAudioFile(audioBlob)
+			}
 		};
 	});
+
+	async function saveAudioFile(audioBlob) {
+		const formData = new FormData();
+		formData.append('file', audioBlob, 'voice.wav');
+		const response = await fetch('http://127.0.0.1:8000/save-audio-file', {
+			method: 'POST',
+			body: formData,
+			cache: 'no-cache',
+			headers: {
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Methods': 'POST',
+				'Access-Control-Allow-Headers': 'Content-Type'
+			}
+		});
+		const res = await response.json();
+		console.log(res.filename);
+		getFileName(res.filename);
+	}
 
 	function startRecording() {
 		// @ts-ignore

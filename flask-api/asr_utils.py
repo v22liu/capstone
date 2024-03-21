@@ -41,10 +41,10 @@ def speaker_recognition(file_path_1, file_path_2):
 	decision = speaker_model.verify_speakers(file_path_1, file_path_2)
 	return decision
 
-def write_audio_to_file(file):
+def write_audio_to_file(file, filename='temp.wav'):
     audio_stream = file.read()
     audio_file_dir = os.path.join(os.path.dirname(__file__), 'assets/audio')
-    audio_path = os.path.join(audio_file_dir, 'temp.wav')
+    audio_path = os.path.join(audio_file_dir, filename)
     with open(audio_path, 'wb') as f:
         f.write(audio_stream)
         f.close()

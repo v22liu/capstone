@@ -9,6 +9,7 @@ export interface PatientRecord {
 	village: string;
 	natID: string;
 	photo_file_path: string;
+	voice_recording_path: string;
 }
 
 export interface ClinicNotes {
